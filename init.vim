@@ -20,19 +20,6 @@ set undofile
 set gdefault
 let mapleader = ","
 
-" I am arrow key nazi!  No arrow key for you!
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
-" j and k go by visible lines, not textual ones
-nnoremap j gj
-nnoremap k gk
 
 " Use hjkl to move between splits
 nnoremap <C-h> <C-w>h
@@ -130,6 +117,23 @@ augroup pencil
   autocmd FileType markdown,mkd call pencil#init() | set spell spl=en
   autocmd FileType text         call pencil#init() | set spell spl=en 
 augroup END
+
+" Arrow key / direction config, after vim-pencil so it overrides that stuff
+" I am arrow key nazi!  No arrow key for you!
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" j and k go by visible lines, not textual ones
+nnoremap j gj
+nnoremap k gk
+
+
 " Make misspelled / rare works highlighted less aggressively
 hi SpellBad ctermfg=015 ctermbg=016 cterm=none 
 hi SpellLocal ctermfg=015 ctermbg=000 cterm=none
@@ -142,52 +146,3 @@ hi SpellCap ctermfg=015 ctermbg=000 cterm=none
 "autocmd BufRead,BufNewFile *.c,*.cpp,*.h CScopeStart /home/neophile/.cscope/cscope.cfg
 "autocmd BufRead,BufNewFile *.c,*.cpp,*.h cscope add /home/neophile/.cscope/cscope.out
 
-
-" " curlyC.vim
-" " From Long Truong : Vim Tip #125.
-" " Automatically comments {} in C/C++/Java.
-" 
-" au BufNewFile,BufRead *.c,*.cc,*.h imap }<CR> <Esc>:call CurlyBracket()<CR>a
-" au BufNewFile,BufRead *.cpp,*.C imap }<CR> <Esc>:call CurlyBracket()<CR>a
-" au BufNewFile,BufRead *.java,*.idl imap }<CR> <Esc>:call CurlyBracket()<CR>a
-" 
-" function CurlyBracket()
-"  let l:startline = line(".")
-"  let l:result1 = searchpair('{', '', '}', 'bW')
-"  if (result1 > 0)
-"  let l:linenum = line(".")
-"  let l:string1 = substitute(getline(l:linenum), '^\s*\(.*\)\s*$', '\1', "")
-"  if (l:string1 =~ '^{')
-"  let l:string1 = substitute(getline(l:linenum - 1), '^\s*\(.*\)\s*$', '\1', "") . " " . l:string1
-"  sil exe "normal k"
-"  endif
-" 
-"  " get else part if necessary
-"  if (l:string1 =~ "^}")
-"  sil exe "normal 0"
-"  let l:result2 = searchpair('{', '', '}', 'bW')
-"  if (l:result2 > 0)
-"  let l:linenum = line(".")
-"  let l:string2 = substitute(getline(l:linenum), '^\s*\(.*\)\s*$', '\1', "")
-"  if (l:string2 =~ '^{')
-"  let l:string2 = substitute(getline(l:linenum - 1), '^\s*\(.*\)\s*$', '\1', "") . " " . l:string2
-"  endif
-"  let l:string1 = l:string2 . " ... " . l:string1
-"  endif
-"  endif
-" 
-"  " remove trailing whitespaces and curly brace
-"  let l:my_string = substitute(l:string1, '\s*{[^{]*$', '', "")
-"  let l:my_strlen = strlen(l:my_string)
-"  if (l:my_strlen > 30)
-"  let l:my_string = strpart(l:my_string,0,30)."..."
-"  endif
-" 
-"  sil exe ":" . l:startline
-"  sil exe "normal i}"
-"  if ((l:startline - l:linenum) > 10)
-"  sil exe "normal a /* " . l:my_string . " */"
-"  endif
-" 
-"  endif
-" endfunction
