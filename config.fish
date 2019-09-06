@@ -32,10 +32,10 @@ end
 alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
 
-abbr -a l="ls"
-abbr -a s="ls"
-abbr -a c="cd"
-abbr -a b="cd .."
+abbr -a l "ls"
+abbr -a s "ls"
+abbr -a c "cd"
+abbr -a b "cd .."
 
 
 function ev --wraps=evince
