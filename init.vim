@@ -95,6 +95,25 @@ Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 Plug 'tpope/vim-sleuth' " Automatic indentation
 call plug#end()
 
+let g:rbpt_colorpairs = [
+    \ ['darkred',     'SeaGreen3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['brown',       'firebrick3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
 " Let gitgutter work in larger files
 let gitgutter_max_signs=5000
 
