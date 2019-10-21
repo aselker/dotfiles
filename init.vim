@@ -19,6 +19,7 @@ set nofixeol " Don't automatically add an EOL at the end of the file
 set undofile
 set gdefault
 let mapleader = ","
+set scrolloff=4
 
 
 " Use hjkl to move between splits
