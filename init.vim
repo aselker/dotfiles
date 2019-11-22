@@ -140,14 +140,14 @@ augroup END
 
 " Arrow key / direction config, after vim-pencil so it overrides that stuff
 " I am arrow key nazi!  No arrow key for you!
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+"nnoremap <up> <nop>
+"nnoremap <down> <nop>
+"nnoremap <left> <nop>
+"nnoremap <right> <nop>
+"inoremap <up> <nop>
+"inoremap <down> <nop>
+"inoremap <left> <nop>
+"inoremap <right> <nop>
 
 " j and k go by visible lines, not textual ones
 nnoremap j gj
