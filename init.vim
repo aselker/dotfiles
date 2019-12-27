@@ -32,14 +32,14 @@ nnoremap <C-l> <C-w>l
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
+au BufNewFile,BufRead *.ino set filetype=cpp "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.sage set filetype=python 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
 au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-" Better for Python, and maybe faster
-autocmd FileType python set foldmethod=indent
+autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
 set foldcolumn=1
 
 " au BufWritePost *.go GoFmt " Unnecessary because GoImports runs gofmt
@@ -90,11 +90,43 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'majutsushi/tagbar'
-Plug 'lfv89/vim-interestingwords'
+Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 Plug 'tpope/vim-sleuth' " Automatic indentation
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
+let g:deoplete#enable_smart_case = 1
+
+" Snippets
+"Plug 'SirVer/ultisnips'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+"Plug 'MarcWeber/vim-addon-mw-utils'       " dependencies #1
+"Plug 'tomtom/tlib_vim'                    " dependencies #2
+"Plug 'honza/vim-snippets'                 " snippets repo
+
 call plug#end()
+
+
+"" Snippets
+"" TODO: Fix this.  It just prints the text, for some reason.
+"" Enable snipMate compatibility feature.
+"let g:neosnippet#enable_snipmate_compatibility = 1
+"" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <C-k> <Plug>(neosnippet_expand_or_jump)
+"smap <C-k> <Plug>(neosnippet_expand_or_jump)
+"xmap <C-k> <Plug>(neosnippet_expand_target)
+"inoremap <silent> <c-u> <c-r>=cm#sources#neosnippet#trigger_or_popup("\<Plug>(neosnippet_expand_or_jump)")<cr>
+"let g:neosnippet#enable_completed_snippet=1
+
+"" For conceal markers.
+"if has('conceal')
+  "set conceallevel=2 concealcursor=niv
+"endif
+"
 
 let g:rbpt_colorpairs = [
     \ ['darkred',     'SeaGreen3'],
