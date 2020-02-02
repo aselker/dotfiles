@@ -253,7 +253,11 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-				status_command ~/.config/i3/mem.sh
+        # disable scrollign to change workspaces
+        bindsym button4 nop
+        bindsym button5 nop
+
+        status_command ~/.config/i3/mem.sh
 }
 
 exec /bin/bash ~/.xinitrc #Run the xinitrc script, regardless of how i3 was started.
