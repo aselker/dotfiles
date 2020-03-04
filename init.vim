@@ -21,6 +21,10 @@ set gdefault
 let mapleader = ","
 set scrolloff=4
 
+" Map f1 to esc because I usually hit it while trying to press esc
+nmap <F1> <Esc>
+imap <F1> <Esc>
+
 
 " Use hjkl to move between splits
 nnoremap <C-h> <C-w>h
@@ -32,7 +36,10 @@ nnoremap <C-l> <C-w>l
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
-au BufNewFile,BufRead *.ino set filetype=cpp "Use C-style highlighting for openscad files
+au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
+au BufNewFile,BufRead *.pde set filetype=cpp "Consider Arduino files as C++
+au BufNewFile,BufRead *.c set filetype=cpp "Consider C files C++ (!)
+au BufNewFile,BufRead *.h set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.sage set filetype=python 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
