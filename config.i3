@@ -84,12 +84,23 @@ bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 # kill focused window
 bindsym $mod+q kill
 
+# 2020-03-04: Switched to _wrapper programs which are wrappers with these contents:
+
+# #!/bin/bash
+# 
+# unset GTK_IM_MODULE
+# unset QT_IM_MODULE
+# unset XMODIFIERS
+# dmenu_run , or i3-dmenu-desktop
+
+# This is a workaround for https://bugs.archlinux.org/task/61673
+
 # start dmenu (a program launcher) for all programs
-bindsym $mod+Shift+p exec dmenu_run
+bindsym $mod+Shift+p exec dmenu_run_wrapper
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+p exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+p exec --no-startup-id i3-dmenu-desktop_wrapper
 
 # change focus
 bindsym $mod+j focus left
