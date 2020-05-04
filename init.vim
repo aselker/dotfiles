@@ -99,7 +99,8 @@ Plug 'kien/rainbow_parentheses.vim'
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jamessan/vim-gnupg'
 Plug 'joom/latex-unicoder.vim'
-Plug 'ambv/black' " Python formatter
+Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
+"Plug 'psf/black' " Python formatter
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
 Plug 'severin-lemaignan/vim-minimap'
