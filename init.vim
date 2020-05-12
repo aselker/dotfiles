@@ -25,6 +25,7 @@ set scrolloff=4
 nmap <F1> <Esc>
 imap <F1> <Esc>
 
+noremap q: :q
 
 " Use hjkl to move between splits
 nnoremap <C-h> <C-w>h
