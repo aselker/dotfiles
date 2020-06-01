@@ -17,15 +17,15 @@
 	#cd ..
 #end	
 
-function --wraps=mkdir mkcd
+function mkcd --wraps=mkdir 
 	mkdir -p $argv; and cd $argv
 end
 
-function --wraps=cd cl
+function cl --wraps=cd 
   cd $argv; and ls
 end
 
-function --wraps=rg pg
+function pg --wraps=rg 
 	ps -ef | rg $argv
 end
 
