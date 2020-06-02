@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 i3status | (read line && echo "$line" && read line && echo "$line" && read line && echo "$line" && while :
 do
