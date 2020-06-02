@@ -66,9 +66,9 @@ end
 # It's a security thing
 alias sudo='sudo'
 
-alias cmaker='python3 ~/Joby/Joby/Tools/blue_sky/cmaker.py'
-alias udpflash='~/Joby/Joby/Tools/udp_image_loader/udp_image_loader_linux_exe'
-alias runpyenv='python3 ~/Joby/Joby/Tools/runpyenv.py'
+alias cmaker='python3 ~/Joby/Tools/blue_sky/cmaker.py'
+alias udpflash='~/Joby/Tools/udp_image_loader/udp_image_loader_linux_exe'
+alias runpyenv='python3 ~/Joby/Tools/runpyenv.py'
 
 
 
@@ -83,12 +83,11 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")
 
 set -gx EDITOR nvim
 
-set -x PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin $PATH 
-set -x PATH ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin $PATH
+set -x PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin $PATH
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash
-source ~/.cargo/env
+# source ~/.cargo/env
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end
