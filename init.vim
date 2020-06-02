@@ -20,11 +20,14 @@ set undofile
 set gdefault
 let mapleader = ","
 set scrolloff=4
+"set list " Display tabs
+"set listchars=tab:>·,trail:·
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
 imap <F1> <Esc>
 
+" More typo reduction
 noremap q: :q
 
 " Use hjkl to move between splits
@@ -125,6 +128,9 @@ Plug 'Shougo/neosnippet-snippets'
 "Plug 'honza/vim-snippets'                 " snippets repo
 
 call plug#end()
+
+" Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
+let g:rustfmt_autosave = 1
 
 
 "" Snippets
