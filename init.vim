@@ -51,10 +51,11 @@ au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
 au BufNewFile,BufRead *.pde set filetype=cpp "Consider Arduino files as C++
 au BufNewFile,BufRead *.c set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.h set filetype=cpp "Consider C files C++ (!)
+au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
 au BufNewFile,BufRead *.sage set filetype=python 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
-au BufWritePre *.py execute ':Black'
+" au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
 autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
@@ -110,11 +111,19 @@ Plug 'mfulz/cscope.nvim'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'majutsushi/tagbar'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
+" Way more interestingWords colors, but they're kinda dark / not vibrant
+" let g:interestingWordsTermColors = ['28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
+
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 Plug 'tpope/vim-sleuth' " Automatic indentation
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'leafgarland/typescript-vim'
+Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
+let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
+nnoremap <Leader>s :SemanticHighlightToggle<cr>
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
 let g:deoplete#enable_smart_case = 1
@@ -128,6 +137,7 @@ Plug 'Shougo/neosnippet-snippets'
 "Plug 'honza/vim-snippets'                 " snippets repo
 
 call plug#end()
+
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1

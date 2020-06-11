@@ -1,3 +1,6 @@
+# Ctrl-delete to delete a word forward
+bind \e\[3\;5~ kill-word
+
 function mkcd --wraps=mkdir 
 	mkdir -p $argv; and cd $argv
 end
@@ -21,6 +24,8 @@ abbr -a l "ls"
 abbr -a s "ls"
 abbr -a c "cd"
 abbr -a b "cd .."
+abbr -a - "cd -"
+abbr -a dr "docker"
 
 function xterm
 	 command xterm -bg black -fg white
@@ -66,11 +71,8 @@ end
 # It's a security thing
 alias sudo='sudo'
 
-alias cmaker='python3 ~/Joby/Tools/blue_sky/cmaker.py'
-alias udpflash='~/Joby/Tools/udp_image_loader/udp_image_loader_linux_exe'
-alias runpyenv='python3 ~/Joby/Tools/runpyenv.py'
-
-
+# Joby-specific aliases are in another file
+source ~/.config/fish/joby_aliases.fish
 
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
