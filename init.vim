@@ -1,5 +1,6 @@
 set modelines=0 " Because they're vulnerable
 set cursorline
+hi CursorLine guibg=#222222
 set tabstop=2
 set shiftwidth=2 " aka sw
 set noexpandtab
@@ -10,6 +11,7 @@ set ignorecase " necessary for the next line.
 set smartcase
 set mouse=a
 set background=dark " so vim can choose better colors
+set termguicolors
 set clipboard=unnamedplus " so the default yank/etc. buffer is "+ for system clipboard
 filetype plugin indent on
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
@@ -61,7 +63,6 @@ set foldmethod=syntax " Better for C++ and maybe in general
 autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
 set foldcolumn=1
 
-" au BufWritePost *.go GoFmt " Unnecessary because GoImports runs gofmt
 " au BufWritePost *.go GoImports
 
 " let :W mean :w, and similar
@@ -111,8 +112,8 @@ Plug 'mfulz/cscope.nvim'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'majutsushi/tagbar'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
-" Way more interestingWords colors, but they're kinda dark / not vibrant
-" let g:interestingWordsTermColors = ['28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
+" Way more interestingWords colors, though later ones are kinda dark
+let g:interestingWordsTermColors =  ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
@@ -123,6 +124,9 @@ Plug 'leafgarland/typescript-vim'
 Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
 let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
 nnoremap <Leader>s :SemanticHighlightToggle<cr>
+
+Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
+let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python']
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
