@@ -26,13 +26,19 @@ abbr -a c "cd"
 abbr -a b "cd .."
 abbr -a - "cd -"
 abbr -a dr "docker"
+abbr -a p "pushd"
+abbr -a po "popd"
 
 function xterm
-	 command xterm -bg black -fg white
+	command xterm -bg black -fg white
 end
 
 function ev --wraps=evince
 	evince $argv 2>/dev/null & disown
+end
+
+function loc --wraps=locate
+	locate $argv | rg -v $argv[1].\*/
 end
 
 #function fuck -d 'Correct your previous console command'

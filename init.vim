@@ -1,3 +1,11 @@
+" TODO:
+" More colors for interesting-words
+" More colors for Colorcoder
+" Make comments more visible
+" C++ tooling, e.g. CTags
+
+
+
 set modelines=0 " Because they're vulnerable
 set cursorline
 hi CursorLine guibg=#222222
@@ -113,7 +121,9 @@ Plug 'severin-lemaignan/vim-minimap'
 Plug 'majutsushi/tagbar'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
-let g:interestingWordsTermColors =  ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
+let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
+"let g:interestingWordsGUIColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
+"let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#b88823', '#ffa724', '#ff2c4b']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
@@ -140,6 +150,7 @@ Plug 'Shougo/neosnippet-snippets'
 "Plug 'tomtom/tlib_vim'                    " dependencies #2
 "Plug 'honza/vim-snippets'                 " snippets repo
 
+" Plug 'nathanaelkane/vim-indent-guides'
 call plug#end()
 
 
