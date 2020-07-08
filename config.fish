@@ -28,6 +28,7 @@ abbr -a - "cd -"
 abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
+abbr -a :q "exit"
 
 function xterm
 	command xterm -bg black -fg white
@@ -38,7 +39,15 @@ function ev --wraps=evince
 end
 
 function loc --wraps=locate
-	locate $argv | rg -v $argv[1].\*/
+	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/
+end
+
+function rr
+  set PREV_CMD (history | head -1)
+  set PREV_OUTPUT (eval $PREV_CMD)
+  set CMD $argv[1]
+  echo "Running '$CMD $PREV_OUTPUT'"
+  eval "$CMD $PREV_OUTPUT"
 end
 
 #function fuck -d 'Correct your previous console command'
@@ -66,6 +75,11 @@ function sendtopeachstone
 end
 
 
+function protontricks-flat
+  flatpak run --command=protontricks com.valvesoftware.Steam --no-runtime $argv
+end
+
+
 function tlog
   if [ -z "$argv" ]
     cat ~/Notes/techlog.txt
@@ -90,6 +104,7 @@ set -x LESS_TERMCAP_ue (printf "\033[0m")
 set -x LESS_TERMCAP_us (printf "\033[01;32m")  
 
 set -gx EDITOR nvim
+set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
 set -x PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin $PATH
 

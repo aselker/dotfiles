@@ -8,13 +8,13 @@
 
 set modelines=0 " Because they're vulnerable
 set cursorline
-hi CursorLine guibg=#222222
+hi CursorLine guibg=#000000
 set tabstop=2
 set shiftwidth=2 " aka sw
 set noexpandtab
 set number
 set relativenumber
-" set tw=110 " Text width, for gqq et al
+set tw=110 " Text width, for gqq et al
 set ignorecase " necessary for the next line.
 set smartcase
 set mouse=a
@@ -69,7 +69,7 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 
 set foldmethod=syntax " Better for C++ and maybe in general
 autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
-set foldcolumn=1
+set foldcolumn=0
 
 " au BufWritePost *.go GoImports
 
