@@ -151,6 +151,7 @@ Plug 'Shougo/neosnippet-snippets'
 "Plug 'honza/vim-snippets'                 " snippets repo
 
 " Plug 'nathanaelkane/vim-indent-guides'
+Plug 'chaoren/vim-wordmotion'
 call plug#end()
 
 
