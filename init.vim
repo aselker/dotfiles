@@ -154,6 +154,16 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'chaoren/vim-wordmotion'
 call plug#end()
 
+let g:wordmotion_mappings = {
+\ 'w' : '<M-w>',
+\ 'b' : '<M-b>',
+\ 'e' : '<M-e>',
+\ 'ge' : 'g<M-e>',
+\ 'aw' : 'a<M-w>',
+\ 'iw' : 'i<M-w>',
+\ '<C-R><C-W>' : '<C-R><M-w>'
+\ }
+
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
