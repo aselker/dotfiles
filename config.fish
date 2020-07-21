@@ -1,6 +1,9 @@
 # Ctrl-delete to delete a word forward
 bind \e\[3\;5~ kill-word
 
+# Ctrl-bksp to delete backward
+bind \cH backward-kill-word
+
 function mkcd --wraps=mkdir 
 	mkdir -p $argv; and cd $argv
 end
@@ -48,6 +51,30 @@ function rr
   set CMD $argv[1]
   echo "Running '$CMD $PREV_OUTPUT'"
   eval "$CMD $PREV_OUTPUT"
+end
+
+function bind_bang
+    switch (commandline -t)[-1]
+        case "!"
+            commandline -t $history[1]; commandline -f repaint
+        case "*"
+            commandline -i !
+    end
+end
+
+function bind_dollar
+    switch (commandline -t)[-1]
+        case "!"
+            commandline -t ""
+            commandline -f history-token-search-backward
+        case "*"
+            commandline -i '$'
+    end
+end
+
+function fish_user_key_bindings
+    bind ! bind_bang
+    bind '$' bind_dollar
 end
 
 #function fuck -d 'Correct your previous console command'

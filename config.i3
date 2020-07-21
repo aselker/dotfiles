@@ -225,7 +225,9 @@ bindsym $mod+Shift+Delete move container to workspace 35
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
 bindsym $mod+bracketleft move workspace to output up
+bindsym $mod+y move workspace to output up
 bindsym $mod+bracketright move workspace to output right
+bindsym $mod+u move workspace to output right
 # bindsym $mod+bracketright exec ~/.config/i3/i3-display-swap.sh
 
 # reload the configuration file

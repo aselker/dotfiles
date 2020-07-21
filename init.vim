@@ -9,8 +9,8 @@
 set modelines=0 " Because they're vulnerable
 set cursorline
 hi CursorLine guibg=#000000
-set tabstop=2
-set shiftwidth=2 " aka sw
+set tabstop=3
+set shiftwidth=3 " aka sw
 set noexpandtab
 set number
 set relativenumber
