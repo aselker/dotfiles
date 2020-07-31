@@ -96,11 +96,11 @@ bindsym $mod+q kill
 # This is a workaround for https://bugs.archlinux.org/task/61673
 
 # start dmenu (a program launcher) for all programs
-bindsym $mod+Shift+p exec dmenu_run
+bindsym $mod+Shift+p exec dmenu_run_wrapper
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+p exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+p exec --no-startup-id i3-dmenu-desktop_wrapper
 
 # change focus
 bindsym $mod+j focus left
