@@ -32,6 +32,8 @@ let mapleader = ","
 set scrolloff=4
 "set list " Display tabs
 "set listchars=tab:>·,trail:·
+set notimeout
+set ttimeout
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -39,6 +41,10 @@ imap <F1> <Esc>
 
 " More typo reduction
 noremap q: :q
+
+" Easier than :w / :q sometimes
+noremap <Leader>s :w<CR>
+noremap <Leader>d :q<CR>
 
 " Use hjkl to move between splits
 nnoremap <C-h> <C-w>h
@@ -133,7 +139,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'leafgarland/typescript-vim'
 Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
 let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
-nnoremap <Leader>s :SemanticHighlightToggle<cr>
+" What does this actually do?
+nnoremap <Leader>h :SemanticHighlightToggle<cr>
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python']

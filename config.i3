@@ -156,6 +156,35 @@ bindsym $mod+d focus child
 bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
+# Bind workspaces to monitors
+set $monitor_left eDP-1-1
+set $monitor_right DP-1-3
+
+workspace 0 output $monitor_left
+workspace 2 output $monitor_right
+workspace 3 output $monitor_left
+workspace 4 output $monitor_right
+workspace 5 output $monitor_left
+workspace 6 output $monitor_right
+workspace 7 output $monitor_left
+workspace 8 output $monitor_right
+workspace 9 output $monitor_left
+workspace 10 output $monitor_right
+workspace 11 output $monitor_left
+workspace 12 output $monitor_right
+workspace 22 output $monitor_right
+workspace 23 output $monitor_left
+workspace 24 output $monitor_right
+workspace 25 output $monitor_left
+workspace 26 output $monitor_right
+workspace 27 output $monitor_left
+workspace 28 output $monitor_right
+workspace 29 output $monitor_left
+workspace 30 output $monitor_right
+workspace 31 output $monitor_left
+workspace 32 output $monitor_right
+
+# Normal workspace keys
 bindsym $mod+grave workspace 0
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
