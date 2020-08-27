@@ -157,8 +157,8 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_left eDP-1-1
-set $monitor_right DP-1-3
+set $monitor_left DP-4
+set $monitor_right DP-2
 
 workspace 0 output $monitor_left
 workspace 2 output $monitor_right

@@ -168,6 +168,12 @@ let g:wordmotion_mappings = {
 \ 'ge' : 'g<M-e>',
 \ 'aw' : 'a<M-w>',
 \ 'iw' : 'i<M-w>',
+\ 'W' : '<M-W>',
+\ 'B' : '<M-B>',
+\ 'E' : '<M-E>',
+\ 'gE' : 'g<M-E>',
+\ 'aW' : 'a<M-W>',
+\ 'iW' : 'i<M-W>',
 \ '<C-R><C-W>' : '<C-R><M-w>'
 \ }
 
