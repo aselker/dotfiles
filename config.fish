@@ -77,6 +77,10 @@ function fish_user_key_bindings
     bind '$' bind_dollar
 end
 
+function show_color 
+    perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m \e[49m "};print "\n"' $argv
+end
+
 #function fuck -d 'Correct your previous console command'
 #    set -l exit_code $status
 #    set -l eval_script (mktemp 2>/dev/null ; or mktemp -t 'thefuck')

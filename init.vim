@@ -129,7 +129,7 @@ Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 "let g:interestingWordsGUIColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-"let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#b88823', '#ffa724', '#ff2c4b']
+let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
@@ -137,13 +137,15 @@ Plug 'tpope/vim-sleuth' " Automatic indentation
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'leafgarland/typescript-vim'
-Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
-let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
-" What does this actually do?
-nnoremap <Leader>h :SemanticHighlightToggle<cr>
+
+" One kind of semantic highlighting.
+"Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
+"let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
+"nnoremap <Leader>h :SemanticHighlightToggle<cr>
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python']
+let g:colorcoder_saturation = 0.7
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
