@@ -18,6 +18,7 @@ end
 
 alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
+alias frg="find | rg"
 
 # Safety!
 alias cp "cp -i"

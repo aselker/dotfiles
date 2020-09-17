@@ -34,6 +34,7 @@ set scrolloff=4
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
+set completeopt-=preview " Don't show autocomplete in a split
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -69,6 +70,8 @@ au BufNewFile,BufRead *.c set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.h set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
 au BufNewFile,BufRead *.sage set filetype=python 
+au BufNewFile,BufRead *.fish set filetype=sh 
+
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
 " au BufWritePre *.py execute ':Black'
@@ -144,40 +147,45 @@ Plug 'leafgarland/typescript-vim'
 "nnoremap <Leader>h :SemanticHighlightToggle<cr>
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
-let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python']
+let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
-let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
+Plug 'deoplete-plugins/deoplete-jedi'
 
 " Snippets
 "Plug 'SirVer/ultisnips'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+"Plug 'Shougo/neosnippet.vim'
+"Plug 'Shougo/neosnippet-snippets'
 "Plug 'MarcWeber/vim-addon-mw-utils'       " dependencies #1
 "Plug 'tomtom/tlib_vim'                    " dependencies #2
 "Plug 'honza/vim-snippets'                 " snippets repo
 
 " Plug 'nathanaelkane/vim-indent-guides'
-Plug 'chaoren/vim-wordmotion'
+"Plug 'chaoren/vim-wordmotion'
+Plug 'bkad/CamelCaseMotion'
+"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 call plug#end()
 
-let g:wordmotion_mappings = {
-\ 'w' : '<M-w>',
-\ 'b' : '<M-b>',
-\ 'e' : '<M-e>',
-\ 'ge' : 'g<M-e>',
-\ 'aw' : 'a<M-w>',
-\ 'iw' : 'i<M-w>',
-\ 'W' : '<M-W>',
-\ 'B' : '<M-B>',
-\ 'E' : '<M-E>',
-\ 'gE' : 'g<M-E>',
-\ 'aW' : 'a<M-W>',
-\ 'iW' : 'i<M-W>',
-\ '<C-R><C-W>' : '<C-R><M-w>'
-\ }
+let g:camelcasemotion_key = '<leader>'
+
+
+"let g:wordmotion_mappings = {
+"\ 'w' : '<M-w>',
+"\ 'b' : '<M-b>',
+"\ 'e' : '<M-e>',
+"\ 'ge' : 'g<M-e>',
+"\ 'aw' : 'a<M-w>',
+"\ 'iw' : 'i<M-w>',
+"\ 'W' : '<M-W>',
+"\ 'B' : '<M-B>',
+"\ 'E' : '<M-E>',
+"\ 'gE' : 'g<M-E>',
+"\ 'aW' : 'a<M-W>',
+"\ 'iW' : 'i<M-W>',
+"\ '<C-R><C-W>' : '<C-R><M-w>'
+"\ }
 
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
