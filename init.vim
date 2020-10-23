@@ -80,6 +80,7 @@ set foldmethod=syntax " Better for C++ and maybe in general
 autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
 set foldcolumn=0
 
+
 " au BufWritePost *.go GoImports
 
 " let :W mean :w, and similar
@@ -151,7 +152,8 @@ let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1 " TODO: Start only on code, not text
+let g:deoplete#enable_at_startup = 1
+autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
 " Snippets
@@ -165,10 +167,11 @@ Plug 'deoplete-plugins/deoplete-jedi'
 " Plug 'nathanaelkane/vim-indent-guides'
 "Plug 'chaoren/vim-wordmotion'
 Plug 'bkad/CamelCaseMotion'
+let g:camelcasemotion_key = '<leader>'
+
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 call plug#end()
 
-let g:camelcasemotion_key = '<leader>'
 
 
 "let g:wordmotion_mappings = {
@@ -244,9 +247,6 @@ set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-	" en_us incorrectly highlights \"Hello e.g. world\" as bad caps; en doesn't
-  " autocmd FileType markdown,mkd call pencil#init() | set spell spl=en_us
-  " autocmd FileType text         call pencil#init() | set spell spl=en_us 
   autocmd FileType markdown,mkd call pencil#init() | set spell spl=en
   autocmd FileType text         call pencil#init() | set spell spl=en 
 augroup END
