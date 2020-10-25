@@ -155,6 +155,12 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'Shougo/echodoc.vim'
+"set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+let g:echodoc#enable_at_startup = 1
+autocmd FileType text let g:echodoc#enable_at_startup = 0
+let g:echodoc#type="virtual"
+
 
 " Snippets
 "Plug 'SirVer/ultisnips'
