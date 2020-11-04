@@ -118,9 +118,18 @@ autocmd InsertLeave * set iminsert=0
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'reedes/vim-pencil'
 Plug 'airblade/vim-gitgutter'
+
 " Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'kien/rainbow_parentheses.vim'
+
+"Plug 'kien/rainbow_parentheses.vim'
+"autocmd VimEnter * RainbowParenthesesActivate
+"autocmd VimEnter * RainbowParenthesesLoadRound
+
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1 
+
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 Plug 'jamessan/vim-gnupg'
 Plug 'joom/latex-unicoder.vim'
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
@@ -155,12 +164,17 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'Shougo/echodoc.vim'
-"set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-let g:echodoc#enable_at_startup = 1
-autocmd FileType text let g:echodoc#enable_at_startup = 0
-let g:echodoc#type="virtual"
 
+set shortmess+=c
+Plug 'Shougo/echodoc.vim'
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+let g:echodoc#enable_at_startup = 1
+"autocmd FileType text let g:echodoc#enable_at_startup = 0
+"let g:echodoc#type="virtual"
+let g:echodoc#type = 'floating'
+" To use a custom highlight for the float window,
+" change Pmenu to your highlight group
+highlight link EchoDocFloat Pmenu
 
 " Snippets
 "Plug 'SirVer/ultisnips'
@@ -177,24 +191,6 @@ let g:camelcasemotion_key = '<leader>'
 
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 call plug#end()
-
-
-
-"let g:wordmotion_mappings = {
-"\ 'w' : '<M-w>',
-"\ 'b' : '<M-b>',
-"\ 'e' : '<M-e>',
-"\ 'ge' : 'g<M-e>',
-"\ 'aw' : 'a<M-w>',
-"\ 'iw' : 'i<M-w>',
-"\ 'W' : '<M-W>',
-"\ 'B' : '<M-B>',
-"\ 'E' : '<M-E>',
-"\ 'gE' : 'g<M-E>',
-"\ 'aW' : 'a<M-W>',
-"\ 'iW' : 'i<M-W>',
-"\ '<C-R><C-W>' : '<C-R><M-w>'
-"\ }
 
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
@@ -242,9 +238,6 @@ let gitgutter_max_signs=5000
 
 " Let latex-unicoder work in insert mode
 inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
-" Use raindow parens
-autocmd VimEnter * RainbowParenthesesActivate
-autocmd VimEnter * RainbowParenthesesLoadRound
 " Toggle tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 
