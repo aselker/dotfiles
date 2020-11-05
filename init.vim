@@ -127,6 +127,7 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
+let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3']}
 
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
@@ -141,7 +142,6 @@ Plug 'majutsushi/tagbar'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-"let g:interestingWordsGUIColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
