@@ -30,7 +30,7 @@ set undofile
 set gdefault
 let mapleader = ","
 set scrolloff=4
-"set list " Display tabs
+set list " Display tabs
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
