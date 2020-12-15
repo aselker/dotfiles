@@ -43,7 +43,7 @@ function ev --wraps=evince
 end
 
 function loc --wraps=locate
-	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/
+	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/
 end
 
 function rr
