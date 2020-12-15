@@ -116,7 +116,7 @@ function tlog
   if [ -z "$argv" ]
     cat ~/Notes/techlog.txt
   else
-    echo $argv >> ~/Notes/techlog.txt
+    echo \[(date)\] $argv >> ~/Notes/techlog.txt
   end
 end
 
