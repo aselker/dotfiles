@@ -1,0 +1,9 @@
+shell:
+  program: /usr/bin/fish
+  args:
+    - --login
+
+background_opacity: 0.9
+
+key_bindings:
+  - { key: N,   mods: Control|Shift, action: SpawnNewInstance }

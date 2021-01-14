@@ -3,17 +3,26 @@
 " More colors for Colorcoder
 " Make comments more visible
 " C++ tooling, e.g. CTags
+"
+" What's causing the lag?
+" * not neovim-colorcoder
+" * not echodoc
+" * Not any single line in the plug area, but commenting the whole thing out solves or makes it way rarer
+" Is it just total load, rather than some single thing?
+" Turning off relativenumber might help?
 
 
 
 set modelines=0 " Because they're vulnerable
-set cursorline
+"set cursorline
+set nocursorline
 hi CursorLine guibg=#000000
 set tabstop=3
 set shiftwidth=3 " aka sw
-set noexpandtab
+set expandtab
 set number
 set relativenumber
+"set norelativenumber
 set tw=110 " Text width, for gqq et al
 set ignorecase " necessary for the next line.
 set smartcase
@@ -35,6 +44,7 @@ set list " Display tabs
 set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
+"set regexpengine=1 " More performant?
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -116,46 +126,49 @@ autocmd InsertLeave * set iminsert=0
 
 " Plug stuff
 call plug#begin('~/.local/share/nvim/plugged')
+" Chunk 1
 Plug 'reedes/vim-pencil'
 Plug 'airblade/vim-gitgutter'
-
-" Plug 'junegunn/rainbow_parentheses.vim'
-
-"Plug 'kien/rainbow_parentheses.vim'
-"autocmd VimEnter * RainbowParenthesesActivate
-"autocmd VimEnter * RainbowParenthesesLoadRound
-
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
 let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3']}
 
+" Plug 'junegunn/rainbow_parentheses.vim'
+"Plug 'kien/rainbow_parentheses.vim'
+"autocmd VimEnter * RainbowParenthesesActivate
+"autocmd VimEnter * RainbowParenthesesLoadRound
+
+
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" Chunk 2
 Plug 'jamessan/vim-gnupg'
 Plug 'joom/latex-unicoder.vim'
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
 "Plug 'psf/black' " Python formatter
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
-Plug 'severin-lemaignan/vim-minimap'
-Plug 'majutsushi/tagbar'
+"Plug 'severin-lemaignan/vim-minimap'
+"Plug 'majutsushi/tagbar'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
+" Chunk 3
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 Plug 'tpope/vim-sleuth' " Automatic indentation
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'leafgarland/typescript-vim'
+"Plug 'MattesGroeger/vim-bookmarks'
+"Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'leafgarland/typescript-vim'
 
 " One kind of semantic highlighting.
 "Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
 "let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
 "nnoremap <Leader>h :SemanticHighlightToggle<cr>
 
+" Chunk 4
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
@@ -165,16 +178,17 @@ let g:deoplete#enable_at_startup = 1
 autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
-set shortmess+=c
-Plug 'Shougo/echodoc.vim'
-set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-let g:echodoc#enable_at_startup = 1
-"autocmd FileType text let g:echodoc#enable_at_startup = 0
-"let g:echodoc#type="virtual"
-let g:echodoc#type = 'floating'
-" To use a custom highlight for the float window,
-" change Pmenu to your highlight group
-highlight link EchoDocFloat Pmenu
+" Fn documentation -- disabled
+"  set shortmess+=c
+"  Plug 'Shougo/echodoc.vim'
+"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"  let g:echodoc#enable_at_startup = 1
+"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
+"  "let g:echodoc#type="virtual"
+"  let g:echodoc#type = 'floating'
+"  " To use a custom highlight for the float window,
+"  " change Pmenu to your highlight group
+"  highlight link EchoDocFloat Pmenu
 
 " Snippets
 "Plug 'SirVer/ultisnips'
@@ -184,12 +198,16 @@ highlight link EchoDocFloat Pmenu
 "Plug 'tomtom/tlib_vim'                    " dependencies #2
 "Plug 'honza/vim-snippets'                 " snippets repo
 
-" Plug 'nathanaelkane/vim-indent-guides'
 "Plug 'chaoren/vim-wordmotion'
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
 
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+
+"Plug 'psliwka/vim-smoothie'
+"let g:smoothie_experimental_mappings = 1
+
+Plug 'michaeljsmith/vim-indent-object'
 call plug#end()
 
 
@@ -214,24 +232,25 @@ let g:rustfmt_autosave = 1
 "endif
 "
 
-let g:rbpt_colorpairs = [
-    \ ['darkred',     'SeaGreen3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['brown',       'firebrick3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+" For kien/rainbow_parentheses
+"let g:rbpt_colorpairs = [
+    "\ ['darkred',     'SeaGreen3'],
+    "\ ['black',       'SeaGreen3'],
+    "\ ['darkgreen',   'RoyalBlue3'],
+    "\ ['darkcyan',    'SeaGreen3'],
+    "\ ['brown',       'RoyalBlue3'],
+    "\ ['Darkblue',    'SeaGreen3'],
+    "\ ['darkgray',    'DarkOrchid3'],
+    "\ ['gray',        'RoyalBlue3'],
+    "\ ['darkmagenta', 'DarkOrchid3'],
+    "\ ['darkred',     'DarkOrchid3'],
+    "\ ['Darkblue',    'firebrick3'],
+    "\ ['brown',       'firebrick3'],
+    "\ ['darkgreen',   'firebrick3'],
+    "\ ['darkmagenta', 'DarkOrchid3'],
+    "\ ['darkcyan',    'RoyalBlue3'],
+    "\ ['red',         'firebrick3'],
+    "\ ]
 
 " Let gitgutter work in larger files
 let gitgutter_max_signs=5000
