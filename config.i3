@@ -251,6 +251,37 @@ bindsym $mod+Shift+Print move container to workspace 33
 bindsym $mod+Shift+Insert move container to workspace 34
 bindsym $mod+Shift+Delete move container to workspace 35
 
+bindsym $mod+Ctrl+grave exec i3_swap_workspaces.sh 0
+bindsym $mod+Ctrl+1 exec i3_swap_workspaces.sh 1
+bindsym $mod+Ctrl+2 exec i3_swap_workspaces.sh 2
+bindsym $mod+Ctrl+3 exec i3_swap_workspaces.sh 3
+bindsym $mod+Ctrl+4 exec i3_swap_workspaces.sh 4
+bindsym $mod+Ctrl+5 exec i3_swap_workspaces.sh 5
+bindsym $mod+Ctrl+6 exec i3_swap_workspaces.sh 6
+bindsym $mod+Ctrl+7 exec i3_swap_workspaces.sh 7
+bindsym $mod+Ctrl+8 exec i3_swap_workspaces.sh 8
+bindsym $mod+Ctrl+9 exec i3_swap_workspaces.sh 9
+bindsym $mod+Ctrl+0 exec i3_swap_workspaces.sh 10
+bindsym $mod+Ctrl+minus exec i3_swap_workspaces.sh 11
+bindsym $mod+Ctrl+equal exec i3_swap_workspaces.sh 12
+bindsym $mod+Ctrl+BackSpace exec i3_swap_workspaces.sh 13
+bindsym $mod+Ctrl+Escape exec i3_swap_workspaces.sh 20
+bindsym $mod+Ctrl+F1 exec i3_swap_workspaces.sh 21
+bindsym $mod+Ctrl+F2 exec i3_swap_workspaces.sh 22
+bindsym $mod+Ctrl+F3 exec i3_swap_workspaces.sh 23
+bindsym $mod+Ctrl+F4 exec i3_swap_workspaces.sh 24
+bindsym $mod+Ctrl+F5 exec i3_swap_workspaces.sh 25
+bindsym $mod+Ctrl+F6 exec i3_swap_workspaces.sh 26
+bindsym $mod+Ctrl+F7 exec i3_swap_workspaces.sh 27
+bindsym $mod+Ctrl+F8 exec i3_swap_workspaces.sh 28
+bindsym $mod+Ctrl+F9 exec i3_swap_workspaces.sh 29
+bindsym $mod+Ctrl+F10 exec i3_swap_workspaces.sh 30
+bindsym $mod+Ctrl+F11 exec i3_swap_workspaces.sh 31
+bindsym $mod+Ctrl+F12 exec i3_swap_workspaces.sh 32
+bindsym $mod+Ctrl+Print exec i3_swap_workspaces.sh 33
+bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 34
+bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
+
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
 bindsym $mod+bracketleft move workspace to output up

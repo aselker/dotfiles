@@ -140,7 +140,7 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
-set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin ~/Documents/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
+set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash
