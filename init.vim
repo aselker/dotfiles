@@ -10,6 +10,8 @@
 " * Not any single line in the plug area, but commenting the whole thing out solves or makes it way rarer
 " Is it just total load, rather than some single thing?
 " Turning off relativenumber might help?
+" I think switching to alacritty solved it.  Rewriting the screen in gnome terminal was sometimes slow, and
+" both relativenumber and cursorline cause a lot of rewriting.  But in alacritty + compton, it's faster.
 
 
 
@@ -44,7 +46,6 @@ set list " Display tabs
 set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
-"set regexpengine=1 " More performant?
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>

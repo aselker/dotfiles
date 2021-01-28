@@ -157,7 +157,7 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_left DP-2
+set $monitor_left HDMI-0
 set $monitor_right DP-0
 
 workspace 0 output $monitor_left
@@ -285,8 +285,8 @@ bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
 bindsym $mod+bracketleft move workspace to output up
-bindsym $mod+y move workspace to output up
-bindsym $mod+bracketright move workspace to output right
+bindsym $mod+y move workspace to output left
+bindsym $mod+bracketright move workspace to output down
 bindsym $mod+u move workspace to output right
 # bindsym $mod+bracketright exec ~/.config/i3/i3-display-swap.sh
 

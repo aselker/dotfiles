@@ -3,6 +3,9 @@ shell:
   args:
     - --login
 
+font:
+  size: 12
+
 background_opacity: 0.9
 
 key_bindings:
