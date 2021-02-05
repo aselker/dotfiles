@@ -47,6 +47,9 @@ set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
 
+" C and D act to end of line, Y should too
+nmap Y y$
+
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
 imap <F1> <Esc>
