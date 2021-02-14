@@ -116,17 +116,14 @@ end
 
 function tlog
   if [ -z "$argv" ]
-    cat ~/Notes/techlog.txt
+    cat ~/Documents/Notes/techlog.txt
   else
-    echo \[(date)\] $argv >> ~/Notes/techlog.txt
+    echo \[(date)\] $argv >> ~/Documents/Notes/techlog.txt
   end
 end
 
 # It's a security thing
 alias sudo='sudo'
-
-# Joby-specific aliases are in another file
-source ~/.config/fish/joby_aliases.fish
 
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
@@ -145,7 +142,7 @@ set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash
-# source ~/.cargo/env
+ source ~/.cargo/env
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end
