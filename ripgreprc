@@ -1,0 +1,6 @@
+--max-columns=2048
+--max-columns-preview
+
+--glob=!*jeopardy.json
+
+--smart-case

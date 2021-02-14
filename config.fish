@@ -1,3 +1,9 @@
+# Ctrl-delete to delete a word forward
+bind \e\[3\;5~ kill-word
+
+# Ctrl-bksp to delete backward
+bind \cH backward-kill-word
+
 function mkcd --wraps=mkdir 
 	mkdir -p $argv; and cd $argv
 end
@@ -12,6 +18,7 @@ end
 
 alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
+alias frg="find | rg"
 
 # Safety!
 alias cp "cp -i"
@@ -21,13 +28,60 @@ abbr -a l "ls"
 abbr -a s "ls"
 abbr -a c "cd"
 abbr -a b "cd .."
+abbr -a -- - "cd -"
+abbr -a dr "docker"
+abbr -a p "pushd"
+abbr -a po "popd"
+abbr -a :q "exit"
 
 function xterm
-	 command xterm -bg black -fg white
+	command xterm -bg black -fg white
 end
 
 function ev --wraps=evince
 	evince $argv 2>/dev/null & disown
+end
+
+function loc --wraps=locate
+	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/
+end
+
+function rr
+  set PREV_CMD (history | head -1)
+  set PREV_OUTPUT (eval $PREV_CMD)
+  set CMD $argv[1]
+  echo "Running '$CMD $PREV_OUTPUT'"
+  eval "$CMD $PREV_OUTPUT"
+end
+
+function bind_bang
+    switch (commandline -t)[-1]
+        case "!"
+            commandline -t $history[1]; commandline -f repaint
+        case "*"
+            commandline -i !
+    end
+end
+
+function bind_dollar
+    switch (commandline -t)[-1]
+        case "!"
+            commandline -t ""
+            commandline -f history-token-search-backward
+        case "*"
+            commandline -i '$'
+    end
+end
+
+function fish_user_key_bindings
+    bind ! bind_bang
+    bind '$' bind_dollar
+    bind \e\[3\;5~ kill-word
+    bind \cH backward-kill-path-component
+end
+
+function show_color 
+    perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m \e[49m "};print "\n"' $argv
 end
 
 #function fuck -d 'Correct your previous console command'
@@ -55,22 +109,24 @@ function sendtopeachstone
 end
 
 
+function protontricks-flat
+  flatpak run --command=protontricks com.valvesoftware.Steam --no-runtime $argv
+end
+
+
 function tlog
   if [ -z "$argv" ]
-    cat ~/Documents/Notes/techlog.txt
+    cat ~/Notes/techlog.txt
   else
-    echo $argv >> ~/Documents/Notes/techlog.txt
+    echo \[(date)\] $argv >> ~/Notes/techlog.txt
   end
 end
 
 # It's a security thing
 alias sudo='sudo'
 
-alias cmaker='python3 ~/Joby/Joby/Tools/blue_sky/cmaker.py'
-alias udpflash='~/Joby/Joby/Tools/udp_image_loader/udp_image_loader_linux_exe'
-alias runpyenv='python3 ~/Joby/Joby/Tools/runpyenv.py'
-
-
+# Joby-specific aliases are in another file
+source ~/.config/fish/joby_aliases.fish
 
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
@@ -82,13 +138,14 @@ set -x LESS_TERMCAP_ue (printf "\033[0m")
 set -x LESS_TERMCAP_us (printf "\033[01;32m")  
 
 set -gx EDITOR nvim
+set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
-set -x PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin $PATH 
-set -x PATH ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin $PATH
+set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin 
+# set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash
-source ~/.cargo/env
+# source ~/.cargo/env
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end

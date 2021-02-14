@@ -1,6 +1,6 @@
 [user]
 	name = Adam Selker
-	email = adamselker@gmail.com
+	email = adam.selker@joby.aero
 
 [alias]
   git = !exec git

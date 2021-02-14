@@ -76,9 +76,9 @@ bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 5%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 
-bindsym XF86MonBrightnessDown exec brightnessctl set 20-
+bindsym XF86MonBrightnessDown exec brightnessctl set 2400-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
-bindsym XF86MonBrightnessUp exec brightnessctl set 20+
+bindsym XF86MonBrightnessUp exec brightnessctl set 2400+
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 # kill focused window
@@ -103,10 +103,10 @@ bindsym $mod+Shift+p exec dmenu_run_wrapper
 bindsym $mod+p exec --no-startup-id i3-dmenu-desktop_wrapper
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -115,10 +115,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -127,7 +127,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+g split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -156,6 +156,35 @@ bindsym $mod+d focus child
 bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
+# Bind workspaces to monitors
+set $monitor_left HDMI-0
+set $monitor_right DP-0
+
+workspace 0 output $monitor_left
+workspace 2 output $monitor_right
+workspace 3 output $monitor_left
+workspace 4 output $monitor_right
+workspace 5 output $monitor_left
+workspace 6 output $monitor_right
+workspace 7 output $monitor_left
+workspace 8 output $monitor_right
+workspace 9 output $monitor_left
+workspace 10 output $monitor_right
+workspace 11 output $monitor_left
+workspace 12 output $monitor_right
+workspace 22 output $monitor_right
+workspace 23 output $monitor_left
+workspace 24 output $monitor_right
+workspace 25 output $monitor_left
+workspace 26 output $monitor_right
+workspace 27 output $monitor_left
+workspace 28 output $monitor_right
+workspace 29 output $monitor_left
+workspace 30 output $monitor_right
+workspace 31 output $monitor_left
+workspace 32 output $monitor_right
+
+# Normal workspace keys
 bindsym $mod+grave workspace 0
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -222,10 +251,43 @@ bindsym $mod+Shift+Print move container to workspace 33
 bindsym $mod+Shift+Insert move container to workspace 34
 bindsym $mod+Shift+Delete move container to workspace 35
 
+bindsym $mod+Ctrl+grave exec i3_swap_workspaces.sh 0
+bindsym $mod+Ctrl+1 exec i3_swap_workspaces.sh 1
+bindsym $mod+Ctrl+2 exec i3_swap_workspaces.sh 2
+bindsym $mod+Ctrl+3 exec i3_swap_workspaces.sh 3
+bindsym $mod+Ctrl+4 exec i3_swap_workspaces.sh 4
+bindsym $mod+Ctrl+5 exec i3_swap_workspaces.sh 5
+bindsym $mod+Ctrl+6 exec i3_swap_workspaces.sh 6
+bindsym $mod+Ctrl+7 exec i3_swap_workspaces.sh 7
+bindsym $mod+Ctrl+8 exec i3_swap_workspaces.sh 8
+bindsym $mod+Ctrl+9 exec i3_swap_workspaces.sh 9
+bindsym $mod+Ctrl+0 exec i3_swap_workspaces.sh 10
+bindsym $mod+Ctrl+minus exec i3_swap_workspaces.sh 11
+bindsym $mod+Ctrl+equal exec i3_swap_workspaces.sh 12
+bindsym $mod+Ctrl+BackSpace exec i3_swap_workspaces.sh 13
+bindsym $mod+Ctrl+Escape exec i3_swap_workspaces.sh 20
+bindsym $mod+Ctrl+F1 exec i3_swap_workspaces.sh 21
+bindsym $mod+Ctrl+F2 exec i3_swap_workspaces.sh 22
+bindsym $mod+Ctrl+F3 exec i3_swap_workspaces.sh 23
+bindsym $mod+Ctrl+F4 exec i3_swap_workspaces.sh 24
+bindsym $mod+Ctrl+F5 exec i3_swap_workspaces.sh 25
+bindsym $mod+Ctrl+F6 exec i3_swap_workspaces.sh 26
+bindsym $mod+Ctrl+F7 exec i3_swap_workspaces.sh 27
+bindsym $mod+Ctrl+F8 exec i3_swap_workspaces.sh 28
+bindsym $mod+Ctrl+F9 exec i3_swap_workspaces.sh 29
+bindsym $mod+Ctrl+F10 exec i3_swap_workspaces.sh 30
+bindsym $mod+Ctrl+F11 exec i3_swap_workspaces.sh 31
+bindsym $mod+Ctrl+F12 exec i3_swap_workspaces.sh 32
+bindsym $mod+Ctrl+Print exec i3_swap_workspaces.sh 33
+bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 34
+bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
+
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
 bindsym $mod+bracketleft move workspace to output up
-bindsym $mod+bracketright move workspace to output right
+bindsym $mod+y move workspace to output left
+bindsym $mod+bracketright move workspace to output down
+bindsym $mod+u move workspace to output right
 # bindsym $mod+bracketright exec ~/.config/i3/i3-display-swap.sh
 
 # reload the configuration file
@@ -243,16 +305,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -260,6 +322,13 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# Disable mouse warping, because it triggers the bug where a mouse with non-identity transformation matrix
+# jumps after warping.
+mouse_warping none
+
+# Make some windows default to floating
+for_window [class="Matplotlib"] floating enable
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
