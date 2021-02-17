@@ -1,21 +1,23 @@
 #!/usr/bin/env bash
 
-result=$(nmcli -f GENERAL.STATE c show aws-UDP4-443-config | grep "activated")
+network_name="aws-UDP4-443-config-linux"
+
+result=$(nmcli -f GENERAL.STATE c show $network_name | grep "activated")
 
 
 if [ "$1" = "u" ] || [ "$1" = "up" ] || [ "$1" = "on" ]
 	then
-		nmcli connection up aws-UDP4-443-config
+		nmcli connection up $network_name
 	else
 		if [ "$1" = "d" ] || [ "$1" = "dn" ] || [ "$1" = "down" ] || [ "$1" = "off" ]
 			then
-				nmcli connection down aws-UDP4-443-config
+				nmcli connection down $network_name
 			else
 				if [ -n "$result" ]
 					then
-						nmcli connection down aws-UDP4-443-config
+						nmcli connection down $network_name
 					else
-						nmcli connection up aws-UDP4-443-config
+						nmcli connection up $network_name
 				fi
 		fi
 fi
