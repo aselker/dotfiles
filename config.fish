@@ -125,9 +125,6 @@ end
 # It's a security thing
 alias sudo='sudo'
 
-# Joby-specific aliases are in another file
-source ~/.config/fish/joby_aliases.fish
-
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
 set -x LESS_TERMCAP_md (printf "\033[01;31m")  
@@ -142,6 +139,9 @@ set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
 set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin 
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
+set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
+
+
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash

@@ -18,6 +18,8 @@ font pango:DejaVu Sans Mono 8
 
 # Border settings.
 # normal # -> has title bar and #-pixel border, pixel # -> just the border, none -> no border
+#new_window pixel 1
+#new_float pixel 1
 new_window none
 new_float none
 
@@ -66,7 +68,7 @@ bindsym $mod+m exec i3lock -c 000000
 bindsym $mod+t exec toggletouchscreen
 
 # select text with OCR
-bindsym $mod+c exec ocr_cp
+bindsym $mod+c exec ~/.local/bin/ocr_cp
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
@@ -328,7 +330,7 @@ bindsym $mod+r mode "resize"
 mouse_warping none
 
 # Make some windows default to floating
-for_window [class="Matplotlib"] floating enable
+# for_window [class="Matplotlib"] floating enable
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

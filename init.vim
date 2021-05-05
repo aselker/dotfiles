@@ -16,16 +16,17 @@
 
 
 set modelines=0 " Because they're vulnerable
-"set cursorline
-set nocursorline
+set cursorline
+"set nocursorline
 hi CursorLine guibg=#000000
-set tabstop=3
-set shiftwidth=3 " aka sw
+set tabstop=4
+set shiftwidth=4 " aka sw
 set expandtab
 set number
 set relativenumber
 "set norelativenumber
 set tw=110 " Text width, for gqq et al
+set formatoptions-=tc " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
 set smartcase
 set mouse=a
@@ -46,16 +47,21 @@ set list " Display tabs
 set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
+set lazyredraw " Makes macros faster, among other things
 
 " C and D act to end of line, Y should too
 nmap Y y$
+
+" Center the search hit so it's easier to see
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
 imap <F1> <Esc>
 
 " More typo reduction
-noremap q: :q
+"noremap q: :q
 
 " Easier than :w / :q sometimes
 noremap <Leader>s :w<CR>
@@ -91,9 +97,8 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
+autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
 set foldcolumn=0
-
 
 " au BufWritePost *.go GoImports
 
@@ -106,6 +111,10 @@ nnoremap <esc> :noh<return><esc>
 
 " Ctrl-backspace deletes a word in insert mode
 inoremap <C-H> <C-W>
+
+" Use ctrl-e and ctrl-d as ctrl-p and ctrl-n, because they're closer to each other and more intuitive
+imap <C-E> <C-P>
+imap <C-D> <C-N>
 
 " Use space to open / close folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -130,8 +139,8 @@ autocmd InsertLeave * set iminsert=0
 
 " Plug stuff
 call plug#begin('~/.local/share/nvim/plugged')
-" Chunk 1
 Plug 'reedes/vim-pencil'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
@@ -150,6 +159,9 @@ Plug 'jamessan/vim-gnupg'
 Plug 'joom/latex-unicoder.vim'
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
 "Plug 'psf/black' " Python formatter
+"Set Black textwidth to Vim textwidth
+let g:black_linelength = &textwidth
+nnoremap <Leader>f :Black<cr>
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
 "Plug 'severin-lemaignan/vim-minimap'
@@ -212,6 +224,8 @@ let g:camelcasemotion_key = '<leader>'
 "let g:smoothie_experimental_mappings = 1
 
 Plug 'michaeljsmith/vim-indent-object'
+"Plug 'tmhedberg/SimpylFold'
+Plug 'Konfekt/FastFold'
 call plug#end()
 
 
@@ -272,6 +286,7 @@ augroup pencil
   autocmd FileType markdown,mkd call pencil#init() | set spell spl=en
   autocmd FileType text         call pencil#init() | set spell spl=en 
 augroup END
+autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText files
 
 " Arrow key / direction config, after vim-pencil so it overrides that stuff
 " I am arrow key nazi!  No arrow key for you!
