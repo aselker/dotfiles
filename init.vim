@@ -212,6 +212,7 @@ let g:camelcasemotion_key = '<leader>'
 "let g:smoothie_experimental_mappings = 1
 
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'machakann/vim-highlightedyank'
 call plug#end()
 
 
