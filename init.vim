@@ -226,6 +226,7 @@ let g:camelcasemotion_key = '<leader>'
 Plug 'michaeljsmith/vim-indent-object'
 "Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
+Plug 'machakann/vim-highlightedyank'
 call plug#end()
 
 
