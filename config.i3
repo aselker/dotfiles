@@ -327,7 +327,7 @@ bindsym $mod+r mode "resize"
 
 # Disable mouse warping, because it triggers the bug where a mouse with non-identity transformation matrix
 # jumps after warping.
-mouse_warping none
+#mouse_warping none
 
 # Make some windows default to floating
 # for_window [class="Matplotlib"] floating enable
