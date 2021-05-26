@@ -161,8 +161,9 @@ bindsym $mod+Next workspace Next
 # Bind workspaces to monitors
 set $monitor_left HDMI-0
 set $monitor_right DP-0
+set $monitor_small DP-2
 
-workspace 0 output $monitor_left
+workspace 0 output $monitor_small
 workspace 2 output $monitor_right
 workspace 3 output $monitor_left
 workspace 4 output $monitor_right
@@ -174,6 +175,7 @@ workspace 9 output $monitor_left
 workspace 10 output $monitor_right
 workspace 11 output $monitor_left
 workspace 12 output $monitor_right
+workspace 13 output $monitor_small
 workspace 22 output $monitor_right
 workspace 23 output $monitor_left
 workspace 24 output $monitor_right
@@ -185,6 +187,7 @@ workspace 29 output $monitor_left
 workspace 30 output $monitor_right
 workspace 31 output $monitor_left
 workspace 32 output $monitor_right
+workspace 13 output $monitor_small
 
 # Normal workspace keys
 bindsym $mod+grave workspace 0
