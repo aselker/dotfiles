@@ -68,7 +68,7 @@ bindsym $mod+m exec i3lock -c 000000
 bindsym $mod+t exec toggletouchscreen
 
 # select text with OCR
-bindsym $mod+c exec ~/.local/bin/ocr_cp
+bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
@@ -187,7 +187,7 @@ workspace 29 output $monitor_left
 workspace 30 output $monitor_right
 workspace 31 output $monitor_left
 workspace 32 output $monitor_right
-workspace 13 output $monitor_small
+workspace 35 output $monitor_small
 
 # Normal workspace keys
 bindsym $mod+grave workspace 0
