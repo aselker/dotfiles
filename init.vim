@@ -194,17 +194,17 @@ let g:deoplete#enable_at_startup = 1
 autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
-" Fn documentation -- disabled
-"  set shortmess+=c
-"  Plug 'Shougo/echodoc.vim'
-"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-"  let g:echodoc#enable_at_startup = 1
-"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
-"  "let g:echodoc#type="virtual"
-"  let g:echodoc#type = 'floating'
-"  " To use a custom highlight for the float window,
-"  " change Pmenu to your highlight group
-"  highlight link EchoDocFloat Pmenu
+" Fn documentation -- re-enabled
+set shortmess+=c
+Plug 'Shougo/echodoc.vim'
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+let g:echodoc#enable_at_startup = 1
+"autocmd FileType text let g:echodoc#enable_at_startup = 0
+"let g:echodoc#type="virtual"
+"let g:echodoc#type = 'floating'
+" To use a custom highlight for the float window,
+" change Pmenu to your highlight group
+"highlight link EchoDocFloat Pmenu
 
 " Snippets
 "Plug 'SirVer/ultisnips'
