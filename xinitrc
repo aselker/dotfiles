@@ -6,14 +6,15 @@
 #xrandr --output DP-0 --mode 3840x2160 --pos 3840x0 --output DP-2 --mode 2560x1440  --scale 1.5x1.5 
 #xrandr --output DP-2 --mode 2560x1440 --rotate right --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --pos 2160x840
 #Three monitors; last should theoretically be 4320x1110 but it's not quite centered
-xrandr --output HDMI-0 --mode 2560x1440 --rotate left --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --rotate left --pos 2160x0 --output DP-2 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 4320x1230
-# Just one...
-#xrandr --output HDMI-0 --off --output DP-2 --off --output DP-0 --mode 3840x2160 --rotate normal
+#xrandr --output HDMI-0 --mode 2560x1440 --rotate right --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --rotate right --pos 2160x0 --output DP-2 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 4320x1230
+# Laptop + 1 monitor
+#xrandr --output DP-3 --mode 2560x1440 --pos 0x0 --output eDP-1 --mode 1920x1080 --pos 640x1440
+xrandr --output DP-1 --mode 3840x2160 --rotate left --pos 3840x0 --output eDP-1 --mode 3840x2160 --pos 0x1680
 
 nm-applet &
 #compton --backend glx --unredir-if-possible --glx-no-stencil --glx-no-rebind-pixmap --glx-swap-method buffer-age --vsync opengl-swc &
-#compton --backend glx --vsync opengl-swc & 
-compton &
+compton --backend glx --vsync opengl-swc & 
+#compton &
 #killall -q xcape; 
 killall -q redshift-gtk; 
 pkill -f "Wallpaper randomizer"; 
