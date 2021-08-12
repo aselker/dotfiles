@@ -195,15 +195,17 @@ autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
 " Fn documentation -- re-enabled
-set shortmess+=c
 Plug 'Shougo/echodoc.vim'
-set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
 let g:echodoc#enable_at_startup = 1
+let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
 "autocmd FileType text let g:echodoc#enable_at_startup = 0
 "let g:echodoc#type="virtual"
 "let g:echodoc#type = 'floating'
+" These two are useful for echodoc#type=echo
+set shortmess+=c " Disable some messages that would overwrite the modeline
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
 " To use a custom highlight for the float window,
-" change Pmenu to your highlight group
+"change Pmenu to your highlight group
 "highlight link EchoDocFloat Pmenu
 
 " Snippets
@@ -227,6 +229,7 @@ Plug 'michaeljsmith/vim-indent-object'
 "Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = 400
 call plug#end()
 
 
