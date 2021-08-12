@@ -5,22 +5,30 @@
 #For new upstairs setup
 #xrandr --output DP-0 --mode 3840x2160 --pos 3840x0 --output DP-2 --mode 2560x1440  --scale 1.5x1.5 
 #xrandr --output DP-2 --mode 2560x1440 --rotate right --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --pos 2160x840
+
 #Three monitors; last should theoretically be 4320x1110 but it's not quite centered
-xrandr --output HDMI-0 --mode 2560x1440 --rotate left --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --rotate left --pos 2160x0 --output DP-2 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 4320x1230
+#xrandr --output HDMI-0 --mode 2560x1440 --rotate left --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --rotate left --pos 2160x0 --output DP-2 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 4320x1230
+
+#New 2-monitor setup at Joby
+xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x1800 --output DP-2 --mode 3840x2160 --rotate left --pos 2880x0
+
 # Just one...
 #xrandr --output HDMI-0 --off --output DP-2 --off --output DP-0 --mode 3840x2160 --rotate normal
+
+# With Kyle
+#xrandr --output DP-2 --mode 2560x1440 --rotate left --scale 1.5x1.5  --output DP-0 --primary --mode 3840x2160 --rotate left --pos 2160x0 
 
 nm-applet &
 #compton --backend glx --unredir-if-possible --glx-no-stencil --glx-no-rebind-pixmap --glx-swap-method buffer-age --vsync opengl-swc &
 #compton --backend glx --vsync opengl-swc & 
 compton &
 #killall -q xcape; 
-killall -q redshift-gtk; 
+#killall -q redshift-gtk; 
 pkill -f "Wallpaper randomizer"; 
 sleep 0.1; 
 
 # xcape -e "Control_L=Escape" &
-redshift-gtk &
+#redshift-gtk &
 bash -c "while true; do feh --bg-fill --recursive --randomize ~/Media/Pictures/Wallpaper/*; sleep 1200; done # Wallpaper randomizer" &
 
 export MOZ_USE_XINPUT2=1 # Firefox touch scrolling

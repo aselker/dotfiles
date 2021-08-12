@@ -160,8 +160,8 @@ bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
 set $monitor_left HDMI-0
-set $monitor_right DP-0
-set $monitor_small DP-2
+set $monitor_right DP-2
+set $monitor_small HDMI-0
 
 workspace 0 output $monitor_small
 workspace 2 output $monitor_right
