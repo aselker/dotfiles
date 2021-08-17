@@ -73,6 +73,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Use <Leader>r to redo syntax highlighting, if it's confused
+noremap <Leader>r :syntax sync fromstart<CR>
+
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
