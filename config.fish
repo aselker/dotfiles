@@ -85,17 +85,24 @@ function switch-comment-commandline --description 'Comment/Uncomment the current
     end
 end
 
-function comment-run-commandline --description 'Comment/Uncomment the current or every line'
-    set -l cmdlines (commandline)
-    set -l cmdlines2 (commandline -c)
-    if test "$cmdlines" = "$cmdlines2"
-        commandline -r (printf '%s\n' '#'$cmdlines)
-    else
-        set -l linenum (count $cmdlines2)
-        set cmdlines[$linenum] ('#'$cmdlines[$linenum])
-        commandline -r $cmdlines
-    end
-    commandline -f execute
+#function comment-run-commandline --description 'Comment the current line, then run'
+#    set -l cmdlines (commandline)
+#    set -l cmdlines2 (commandline -c)
+#    if test "$cmdlines" = "$cmdlines2"
+#        commandline -r (printf '%s\n' '#'$cmdlines)
+#    else
+#        set -l linenum (count $cmdlines2)
+#        echo $linenum
+#        set cmdlines[$linenum] ('#'$cmdlines[$linenum])
+#        commandline -r $cmdlines
+#    end
+#    commandline -f execute
+#end
+
+function comment-run-commandline --description 'Comment the current line, then run'
+   set -l cmdlines (commandline)
+   commandline -r (printf '%s\n' '#'$cmdlines)
+   commandline -f execute
 end
 
 function fish_user_key_bindings
