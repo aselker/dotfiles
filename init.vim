@@ -63,6 +63,13 @@ imap <F1> <Esc>
 " More typo reduction
 "noremap q: :q
 
+" Swap @ and q, because I (should) use q more
+nnoremap @ q
+nnoremap q @
+
+" ctrl-q to run a macro in normal mode
+inoremap <C-q> <C-o>@
+
 " Easier than :w / :q sometimes
 noremap <Leader>s :w<CR>
 noremap <Leader>d :q<CR>
@@ -75,6 +82,21 @@ nnoremap <C-l> <C-w>l
 
 " Use <Leader>r to redo syntax highlighting, if it's confused
 noremap <Leader>r :syntax sync fromstart<CR>
+
+" Swap words
+nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
+"nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
+
+" Three failed tries at a greek-letter hotkey
+"inoremap <C-i> "<C-k>"nr2char(getchar())*
+
+"inoremap <C-i> <C-k>*
+
+"function! Greek()
+"  let latin = input('Latin letter')
+"  return "<C-k>".latin."*"
+"endfunction
+"inoremap <expr> <C-i> Greek()
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -100,7 +122,8 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
+"autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
+autocmd FileType yaml set foldmethod=indent
 set foldcolumn=0
 
 " au BufWritePost *.go GoImports
@@ -229,10 +252,16 @@ let g:camelcasemotion_key = '<leader>'
 "let g:smoothie_experimental_mappings = 1
 
 Plug 'michaeljsmith/vim-indent-object'
-"Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 400
+
+Plug 'tommcdo/vim-exchange'
+vmap <Leader>x <Plug>(Exchange)
+nmap <Leader>x <Plug>(Exchange)
+nmap <Leader>xx <Plug>(ExchangeLine)
+nmap <Leader>xc <Plug>(ExchangeClear)
 call plug#end()
 
 
