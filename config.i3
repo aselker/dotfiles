@@ -18,16 +18,16 @@ font pango:DejaVu Sans Mono 8
 
 # Border settings.
 # normal # -> has title bar and #-pixel border, pixel # -> just the border, none -> no border
-#new_window pixel 1
-#new_float pixel 1
-new_window none
-new_float none
+new_window pixel 1
+new_float pixel 1
+#new_window none
+#new_float none
 
 # Hotkey to toggle borders
 bindsym $mod+b border toggle
 
 # Hide "unnecessary" borders on the outside of the screen
-# hide_edge_borders both
+ hide_edge_borders smart
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
