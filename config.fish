@@ -18,6 +18,7 @@ end
 
 alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
+alias rgc="rg --no-ignore -tcpp" # ripgrep for c++
 alias frg="find | rg"
 
 # Safety!
@@ -73,11 +74,44 @@ function bind_dollar
     end
 end
 
+function switch-comment-commandline --description 'Comment/Uncomment the current or every line'
+    set -l cmdlines (commandline)
+    set -l cmdlines2 (commandline -c)
+    if test "$cmdlines" = "$cmdlines2"
+        commandline -r (printf '%s\n' '#'$cmdlines | string replace -r '^##' '')
+    else
+        set -l linenum (count $cmdlines2)
+        set cmdlines[$linenum] (string replace -r '^##' '' -- '#'$cmdlines[$linenum])
+        commandline -r $cmdlines
+    end
+end
+
+#function comment-run-commandline --description 'Comment the current line, then run'
+#    set -l cmdlines (commandline)
+#    set -l cmdlines2 (commandline -c)
+#    if test "$cmdlines" = "$cmdlines2"
+#        commandline -r (printf '%s\n' '#'$cmdlines)
+#    else
+#        set -l linenum (count $cmdlines2)
+#        echo $linenum
+#        set cmdlines[$linenum] ('#'$cmdlines[$linenum])
+#        commandline -r $cmdlines
+#    end
+#    commandline -f execute
+#end
+
+function comment-run-commandline --description 'Comment the current line, then run'
+   set -l cmdlines (commandline)
+   commandline -r (printf '%s\n' '#'$cmdlines)
+   commandline -f execute
+end
+
 function fish_user_key_bindings
     bind ! bind_bang
     bind '$' bind_dollar
     bind \e\[3\;5~ kill-word
     bind \cH backward-kill-path-component
+    bind \cC comment-run-commandline
 end
 
 function show_color 

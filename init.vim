@@ -3,6 +3,9 @@
 " More colors for Colorcoder
 " Make comments more visible
 " C++ tooling, e.g. CTags
+" When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
+"  doesn't repeat the action, because the jk exit does stuff (it deletes the whitespace).  Same problem I had
+"  before with filling the default register with the deleted whitespace.
 "
 " What's causing the lag?
 " * not neovim-colorcoder
@@ -63,6 +66,13 @@ imap <F1> <Esc>
 " More typo reduction
 "noremap q: :q
 
+" Swap @ and q, because I (should) use q more
+nnoremap @ q
+nnoremap q @
+
+" ctrl-q to run a macro in normal mode
+inoremap <C-q> <C-o>@
+
 " Easier than :w / :q sometimes
 noremap <Leader>s :w<CR>
 noremap <Leader>d :q<CR>
@@ -76,6 +86,21 @@ nnoremap <C-l> <C-w>l
 " Use <Leader>r to redo syntax highlighting, if it's confused
 noremap <Leader>r :syntax sync fromstart<CR>
 
+" Swap words
+nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
+"nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
+
+" Three failed tries at a greek-letter hotkey
+"inoremap <C-i> "<C-k>"nr2char(getchar())*
+
+"inoremap <C-i> <C-k>*
+
+"function! Greek()
+"  let latin = input('Latin letter')
+"  return "<C-k>".latin."*"
+"endfunction
+"inoremap <expr> <C-i> Greek()
+
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -85,6 +110,10 @@ augroup remember_folds
   autocmd BufWinLeave * mkview
   autocmd BufWinEnter * silent! loadview
 augroup END
+
+" Automatically reload files when they change on disk (warn if unsaved edits)
+set autoread
+au CursorHold * checktime
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
@@ -100,7 +129,8 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
+"autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
+autocmd FileType yaml set foldmethod=indent
 set foldcolumn=0
 
 " au BufWritePost *.go GoImports
@@ -114,6 +144,9 @@ nnoremap <esc> :noh<return><esc>
 
 " Ctrl-backspace deletes a word in insert mode
 inoremap <C-H> <C-W>
+
+" Ctrl-delete deletes a word forward in insert mode
+inoremap <C-Del> <C-o>de
 
 " Use ctrl-e and ctrl-d as ctrl-p and ctrl-n, because they're closer to each other and more intuitive
 imap <C-E> <C-P>
@@ -172,7 +205,7 @@ Plug 'mfulz/cscope.nvim'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 " Chunk 3
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
@@ -229,10 +262,16 @@ let g:camelcasemotion_key = '<leader>'
 "let g:smoothie_experimental_mappings = 1
 
 Plug 'michaeljsmith/vim-indent-object'
-"Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 400
+
+Plug 'tommcdo/vim-exchange'
+vmap <Leader>x <Plug>(Exchange)
+nmap <Leader>x <Plug>(Exchange)
+nmap <Leader>xx <Plug>(ExchangeLine)
+nmap <Leader>xc <Plug>(ExchangeClear)
 call plug#end()
 
 
