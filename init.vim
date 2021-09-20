@@ -3,6 +3,9 @@
 " More colors for Colorcoder
 " Make comments more visible
 " C++ tooling, e.g. CTags
+" When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
+"  doesn't repeat the action, because the jk exit does stuff (it deletes the whitespace).  Same problem I had
+"  before with filling the default register with the deleted whitespace.
 "
 " What's causing the lag?
 " * not neovim-colorcoder
@@ -108,6 +111,10 @@ augroup remember_folds
   autocmd BufWinEnter * silent! loadview
 augroup END
 
+" Automatically reload files when they change on disk (warn if unsaved edits)
+set autoread
+au CursorHold * checktime
+
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
 au BufNewFile,BufRead *.pde set filetype=cpp "Consider Arduino files as C++
@@ -137,6 +144,9 @@ nnoremap <esc> :noh<return><esc>
 
 " Ctrl-backspace deletes a word in insert mode
 inoremap <C-H> <C-W>
+
+" Ctrl-delete deletes a word forward in insert mode
+inoremap <C-Del> <C-o>de
 
 " Use ctrl-e and ctrl-d as ctrl-p and ctrl-n, because they're closer to each other and more intuitive
 imap <C-E> <C-P>
@@ -195,7 +205,7 @@ Plug 'mfulz/cscope.nvim'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 " Chunk 3
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
