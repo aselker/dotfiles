@@ -12,7 +12,7 @@
 #xrandr --output DP-3 --mode 2560x1440 --pos 0x0 --output eDP-1 --mode 1920x1080 --pos 640x1440
 xrandr --output DP-1 --mode 3840x2160 --rotate left --pos 3840x0 --output eDP-1 --mode 3840x2160 --pos 0x1680
 
-nm-applet &
+#nm-applet &
 #compton --backend glx --unredir-if-possible --glx-no-stencil --glx-no-rebind-pixmap --glx-swap-method buffer-age --vsync opengl-swc &
 compton --backend glx --vsync opengl-swc & 
 #compton &
