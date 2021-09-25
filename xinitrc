@@ -9,16 +9,14 @@
 xrandr --output HDMI-0 --mode 2560x1440 --rotate right --scale 1.5x1.5 --output DP-0 --mode 3840x2160 --rotate right --pos 2160x0 --output DP-2 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 4320x1230
 
 nm-applet &
-#compton --backend glx --unredir-if-possible --glx-no-stencil --glx-no-rebind-pixmap --glx-swap-method buffer-age --vsync opengl-swc &
-#compton --backend glx --vsync opengl-swc & 
-compton &
+picom &
 #killall -q xcape; 
 killall -q redshift-gtk; 
 pkill -f "Wallpaper randomizer"; 
 sleep 0.1; 
 
 # xcape -e "Control_L=Escape" &
-redshift-gtk &
+#redshift-gtk &
 bash -c "while true; do feh --bg-fill --recursive --randomize ~/Media/Pictures/Wallpaper/*; sleep 1200; done # Wallpaper randomizer" &
 
 export MOZ_USE_XINPUT2=1 # Firefox touch scrolling
