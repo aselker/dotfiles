@@ -78,9 +78,9 @@ bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 8%- unmute
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 8%+ unmute
 
-bindsym XF86MonBrightnessDown exec brightnessctl set 2400-
+bindsym XF86MonBrightnessDown exec brightnessctl set 600-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
-bindsym XF86MonBrightnessUp exec brightnessctl set 2400+
+bindsym XF86MonBrightnessUp exec brightnessctl set 600+
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 # kill focused window
@@ -159,9 +159,9 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_left HDMI-0
-set $monitor_right DP-2
-set $monitor_small HDMI-0
+set $monitor_left eDP-1
+set $monitor_right DP-1
+set $monitor_small eDP-1
 
 workspace 0 output $monitor_small
 workspace 2 output $monitor_right
