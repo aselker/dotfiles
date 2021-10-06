@@ -73,10 +73,10 @@ bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
 bindcode 121 exec amixer -D pulse set Master toggle
-bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 5%- unmute
-bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
-bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 5%+ unmute
-bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
+bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 8%- unmute
+bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
+bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 8%+ unmute
 
 bindsym XF86MonBrightnessDown exec brightnessctl set 2400-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1

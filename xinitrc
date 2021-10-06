@@ -13,7 +13,8 @@
 #xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x1720 --output DP-2 --mode 3840x2160 --rotate left --pos 2880x0
 
 #Same, but big one is horizontal
-xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x540 --output DP-2 --mode 3840x2160 --rotate normal --pos 2880x0
+#xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x540 --output DP-2 --mode 3840x2160 --rotate normal --pos 2880x0
+xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x0 --output DP-2 --mode 3840x2160 --rotate normal --pos 2880x0
 
 # Just one...
 #xrandr --output HDMI-0 --off --output DP-2 --off --output DP-0 --mode 3840x2160 --rotate normal
@@ -24,7 +25,7 @@ xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x
 nm-applet &
 #compton --backend glx --unredir-if-possible --glx-no-stencil --glx-no-rebind-pixmap --glx-swap-method buffer-age --vsync opengl-swc &
 #compton --backend glx --vsync opengl-swc & 
-compton &
+#compton &
 #killall -q xcape; 
 #killall -q redshift-gtk; 
 pkill -f "Wallpaper randomizer"; 
