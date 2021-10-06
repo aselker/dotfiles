@@ -33,7 +33,6 @@ abbr -a -- - "cd -"
 abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
-abbr -a :q "exit"
 
 function xterm
 	command xterm -bg black -fg white
@@ -152,7 +151,7 @@ function tlog
   if [ -z "$argv" ]
     cat ~/Notes/techlog.txt
   else
-    echo \[(date)\] $argv >> ~/Notes/techlog.txt
+    echo \[(hostname) \| (date)\] $argv >> ~/Notes/techlog.txt
   end
 end
 

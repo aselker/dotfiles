@@ -78,9 +78,9 @@ bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 5%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 
-bindsym XF86MonBrightnessDown exec brightnessctl set 2400-
+bindsym XF86MonBrightnessDown exec brightnessctl set 600-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
-bindsym XF86MonBrightnessUp exec brightnessctl set 2400+
+bindsym XF86MonBrightnessUp exec brightnessctl set 600+
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 # kill focused window

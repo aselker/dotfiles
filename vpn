@@ -7,17 +7,17 @@ result=$(nmcli -f GENERAL.STATE c show $network_name | grep "activated")
 
 if [ "$1" = "u" ] || [ "$1" = "up" ] || [ "$1" = "on" ]
 	then
-		nmcli connection up $network_name
+		nmcli connection up $network_name --ask
 	else
 		if [ "$1" = "d" ] || [ "$1" = "dn" ] || [ "$1" = "down" ] || [ "$1" = "off" ]
 			then
-				nmcli connection down $network_name
+				nmcli connection down $network_name --ask
 			else
 				if [ -n "$result" ]
 					then
-						nmcli connection down $network_name
+						nmcli connection down $network_name --ask
 					else
-						nmcli connection up $network_name
+						nmcli connection up $network_name --ask
 				fi
 		fi
 fi
