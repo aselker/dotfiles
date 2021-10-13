@@ -22,7 +22,8 @@ echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" |   s
 wget -O- https://updates.signal.org/desktop/apt/keys.asc |\
   sudo apt-key add -
 
-sudo apt install fish neovim syncthing signal-desktop
+sudo apt install fish neovim exuberant-ctags syncthing signal-desktop
+pip3 install black
 
 mkdir -p .config/fish
 ln -s ~/.dotfiles/config.fish ~/.config/fish/config.fish
