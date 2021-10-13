@@ -18,14 +18,16 @@ font pango:DejaVu Sans Mono 8
 
 # Border settings.
 # normal # -> has title bar and #-pixel border, pixel # -> just the border, none -> no border
-new_window none
-new_float none
+new_window pixel 1
+new_float pixel 1
+#new_window none
+#new_float none
 
 # Hotkey to toggle borders
 bindsym $mod+b border toggle
 
 # Hide "unnecessary" borders on the outside of the screen
-# hide_edge_borders both
+ hide_edge_borders smart
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -66,15 +68,15 @@ bindsym $mod+m exec i3lock -c 000000
 bindsym $mod+t exec toggletouchscreen
 
 # select text with OCR
-bindsym $mod+c exec ocr_cp
+bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
 bindcode 121 exec amixer -D pulse set Master toggle
-bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 5%- unmute
-bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
-bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 5%+ unmute
-bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
+bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 8%- unmute
+bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
+bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 8%+ unmute
 
 bindsym XF86MonBrightnessDown exec brightnessctl set 20-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
@@ -158,9 +160,10 @@ bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
 set $monitor_left HDMI-0
-set $monitor_right DP-0
+set $monitor_right DP-2
+set $monitor_small HDMI-0
 
-workspace 0 output $monitor_left
+workspace 0 output $monitor_small
 workspace 2 output $monitor_right
 workspace 3 output $monitor_left
 workspace 4 output $monitor_right
@@ -172,6 +175,7 @@ workspace 9 output $monitor_left
 workspace 10 output $monitor_right
 workspace 11 output $monitor_left
 workspace 12 output $monitor_right
+workspace 13 output $monitor_small
 workspace 22 output $monitor_right
 workspace 23 output $monitor_left
 workspace 24 output $monitor_right
@@ -183,6 +187,7 @@ workspace 29 output $monitor_left
 workspace 30 output $monitor_right
 workspace 31 output $monitor_left
 workspace 32 output $monitor_right
+workspace 35 output $monitor_small
 
 # Normal workspace keys
 bindsym $mod+grave workspace 0
@@ -325,10 +330,10 @@ bindsym $mod+r mode "resize"
 
 # Disable mouse warping, because it triggers the bug where a mouse with non-identity transformation matrix
 # jumps after warping.
-mouse_warping none
+#mouse_warping none
 
 # Make some windows default to floating
-for_window [class="Matplotlib"] floating enable
+# for_window [class="Matplotlib"] floating enable
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

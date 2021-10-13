@@ -18,6 +18,7 @@ end
 
 alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
+alias rgc="rg --no-ignore -tcpp" # ripgrep for c++
 alias frg="find | rg"
 
 # Safety!
@@ -32,7 +33,6 @@ abbr -a -- - "cd -"
 abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
-abbr -a :q "exit"
 
 function xterm
 	command xterm -bg black -fg white
@@ -73,11 +73,44 @@ function bind_dollar
     end
 end
 
+function switch-comment-commandline --description 'Comment/Uncomment the current or every line'
+    set -l cmdlines (commandline)
+    set -l cmdlines2 (commandline -c)
+    if test "$cmdlines" = "$cmdlines2"
+        commandline -r (printf '%s\n' '#'$cmdlines | string replace -r '^##' '')
+    else
+        set -l linenum (count $cmdlines2)
+        set cmdlines[$linenum] (string replace -r '^##' '' -- '#'$cmdlines[$linenum])
+        commandline -r $cmdlines
+    end
+end
+
+#function comment-run-commandline --description 'Comment the current line, then run'
+#    set -l cmdlines (commandline)
+#    set -l cmdlines2 (commandline -c)
+#    if test "$cmdlines" = "$cmdlines2"
+#        commandline -r (printf '%s\n' '#'$cmdlines)
+#    else
+#        set -l linenum (count $cmdlines2)
+#        echo $linenum
+#        set cmdlines[$linenum] ('#'$cmdlines[$linenum])
+#        commandline -r $cmdlines
+#    end
+#    commandline -f execute
+#end
+
+function comment-run-commandline --description 'Comment the current line, then run'
+   set -l cmdlines (commandline)
+   commandline -r (printf '%s\n' '#'$cmdlines)
+   commandline -f execute
+end
+
 function fish_user_key_bindings
     bind ! bind_bang
     bind '$' bind_dollar
     bind \e\[3\;5~ kill-word
     bind \cH backward-kill-path-component
+    bind \cC comment-run-commandline
 end
 
 function show_color 
@@ -118,7 +151,7 @@ function tlog
   if [ -z "$argv" ]
     cat ~/Documents/Notes/techlog.txt
   else
-    echo \[(date)\] $argv >> ~/Documents/Notes/techlog.txt
+    echo \[(hostname) \| (date)\] $argv >> ~/Notes/techlog.txt
   end
 end
 
@@ -139,6 +172,9 @@ set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
 set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin ~/.cabal/bin
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
+set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
+
+
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash

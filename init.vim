@@ -3,6 +3,9 @@
 " More colors for Colorcoder
 " Make comments more visible
 " C++ tooling, e.g. CTags
+" When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
+"  doesn't repeat the action, because the jk exit does stuff (it deletes the whitespace).  Same problem I had
+"  before with filling the default register with the deleted whitespace.
 "
 " What's causing the lag?
 " * not neovim-colorcoder
@@ -16,16 +19,17 @@
 
 
 set modelines=0 " Because they're vulnerable
-"set cursorline
-set nocursorline
+set cursorline
+"set nocursorline
 hi CursorLine guibg=#000000
-set tabstop=3
-set shiftwidth=3 " aka sw
+set tabstop=4
+set shiftwidth=4 " aka sw
 set expandtab
 set number
 set relativenumber
 "set norelativenumber
 set tw=110 " Text width, for gqq et al
+set formatoptions-=tc " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
 set smartcase
 set mouse=a
@@ -46,16 +50,28 @@ set list " Display tabs
 set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
+set lazyredraw " Makes macros faster, among other things
 
 " C and D act to end of line, Y should too
 nmap Y y$
+
+" Center the search hit so it's easier to see
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
 imap <F1> <Esc>
 
 " More typo reduction
-noremap q: :q
+"noremap q: :q
+
+" Swap @ and q, because I (should) use q more
+nnoremap @ q
+nnoremap q @
+
+" ctrl-q to run a macro in normal mode
+inoremap <C-q> <C-o>@
 
 " Easier than :w / :q sometimes
 noremap <Leader>s :w<CR>
@@ -67,6 +83,24 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Use <Leader>r to redo syntax highlighting, if it's confused
+noremap <Leader>r :syntax sync fromstart<CR>
+
+" Swap words
+nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
+"nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
+
+" Three failed tries at a greek-letter hotkey
+"inoremap <C-i> "<C-k>"nr2char(getchar())*
+
+"inoremap <C-i> <C-k>*
+
+"function! Greek()
+"  let latin = input('Latin letter')
+"  return "<C-k>".latin."*"
+"endfunction
+"inoremap <expr> <C-i> Greek()
+
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -76,6 +110,10 @@ augroup remember_folds
   autocmd BufWinLeave * mkview
   autocmd BufWinEnter * silent! loadview
 augroup END
+
+" Automatically reload files when they change on disk (warn if unsaved edits)
+set autoread
+au CursorHold * checktime
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
@@ -91,9 +129,9 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better for Python, and maybe faster
+"autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
+autocmd FileType yaml set foldmethod=indent
 set foldcolumn=0
-
 
 " au BufWritePost *.go GoImports
 
@@ -106,6 +144,13 @@ nnoremap <esc> :noh<return><esc>
 
 " Ctrl-backspace deletes a word in insert mode
 inoremap <C-H> <C-W>
+
+" Ctrl-delete deletes a word forward in insert mode
+inoremap <C-Del> <C-o>de
+
+" Use ctrl-e and ctrl-d as ctrl-p and ctrl-n, because they're closer to each other and more intuitive
+imap <C-E> <C-P>
+imap <C-D> <C-N>
 
 " Use space to open / close folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -130,8 +175,8 @@ autocmd InsertLeave * set iminsert=0
 
 " Plug stuff
 call plug#begin('~/.local/share/nvim/plugged')
-" Chunk 1
 Plug 'reedes/vim-pencil'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
@@ -150,6 +195,9 @@ Plug 'jamessan/vim-gnupg'
 Plug 'joom/latex-unicoder.vim'
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
 "Plug 'psf/black' " Python formatter
+"Set Black textwidth to Vim textwidth
+let g:black_linelength = &textwidth
+nnoremap <Leader>f :Black<cr>
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
 "Plug 'severin-lemaignan/vim-minimap'
@@ -157,7 +205,7 @@ Plug 'mfulz/cscope.nvim'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#aeee00', '#ff0000', '#0000ff', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 " Chunk 3
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
@@ -182,17 +230,19 @@ let g:deoplete#enable_at_startup = 1
 autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
-" Fn documentation -- disabled
-"  set shortmess+=c
-"  Plug 'Shougo/echodoc.vim'
-"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-"  let g:echodoc#enable_at_startup = 1
-"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
-"  "let g:echodoc#type="virtual"
-"  let g:echodoc#type = 'floating'
-"  " To use a custom highlight for the float window,
-"  " change Pmenu to your highlight group
-"  highlight link EchoDocFloat Pmenu
+" Fn documentation -- re-enabled
+Plug 'Shougo/echodoc.vim'
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+"autocmd FileType text let g:echodoc#enable_at_startup = 0
+"let g:echodoc#type="virtual"
+"let g:echodoc#type = 'floating'
+" These two are useful for echodoc#type=echo
+set shortmess+=c " Disable some messages that would overwrite the modeline
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+" To use a custom highlight for the float window,
+"change Pmenu to your highlight group
+"highlight link EchoDocFloat Pmenu
 
 " Snippets
 "Plug 'SirVer/ultisnips'
@@ -212,6 +262,16 @@ let g:camelcasemotion_key = '<leader>'
 "let g:smoothie_experimental_mappings = 1
 
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'tmhedberg/SimpylFold'
+Plug 'Konfekt/FastFold'
+Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = 400
+
+Plug 'tommcdo/vim-exchange'
+vmap <Leader>x <Plug>(Exchange)
+nmap <Leader>x <Plug>(Exchange)
+nmap <Leader>xx <Plug>(ExchangeLine)
+nmap <Leader>xc <Plug>(ExchangeClear)
 call plug#end()
 
 
@@ -272,6 +332,7 @@ augroup pencil
   autocmd FileType markdown,mkd call pencil#init() | set spell spl=en
   autocmd FileType text         call pencil#init() | set spell spl=en 
 augroup END
+autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText files
 
 " Arrow key / direction config, after vim-pencil so it overrides that stuff
 " I am arrow key nazi!  No arrow key for you!
