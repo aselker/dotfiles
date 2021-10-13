@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt-get update
 sudo apt install fish neovim
 
 mkdir -p .config/fish
