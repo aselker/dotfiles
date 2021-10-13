@@ -348,7 +348,15 @@ autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText f
 " j and k go by visible lines, not textual ones
 nnoremap j gj
 nnoremap k gk
+" use gj and gk for textual lines, when e.g. writing a macro and repeatability is important
+nnoremap gj j
+nnoremap gk k
 
+" Spellcheck in English; disabled to avoid changing things while debugging spellcheck.
+"set spelllang=en_us
+
+" Use f11 to toggle spellcheck
+nnoremap <silent> <F11> :set spell!<cr>
 
 " Make misspelled / rare works highlighted less aggressively
 hi SpellBad ctermfg=015 ctermbg=016 cterm=none 
