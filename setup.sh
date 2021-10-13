@@ -12,7 +12,8 @@ then
 	exec fish
 fi" | cat - ~/.bashrc > /temp/bashrc && mv /temp/bashrc .bashrc
 
-sudo apt install fish neovim
+sudo apt install fish neovim exuberant-ctags
+pip3 install black
 
 mkdir -p .config/fish
 ln -s ~/.dotfiles/config.fish ~/.config/fish/config.fish
