@@ -27,7 +27,7 @@ new_float pixel 1
 bindsym $mod+b border toggle
 
 # Hide "unnecessary" borders on the outside of the screen
- hide_edge_borders smart
+hide_edge_borders smart
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
