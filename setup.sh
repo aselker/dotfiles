@@ -5,6 +5,12 @@
 # * LADSPA setup
 # * Wallpaper
 # * Symlink the rest of the config files
+# * List firefox addons
+# * Small scripts
+# * brightnessctl setuid or something?
+
+# Stuff this won't do:
+# * Firefox addons
 
 echo "# If not running interactively, don't do anything
 case $- in
@@ -29,7 +35,7 @@ wget -O- https://updates.signal.org/desktop/apt/keys.asc |\
   sudo apt-key add -
 
 sudo apt update
-sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo
+sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc
 pip3 install black
 
 # Alacritty
