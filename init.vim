@@ -121,8 +121,9 @@ au BufNewFile,BufRead *.pde set filetype=cpp "Consider Arduino files as C++
 au BufNewFile,BufRead *.c set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.h set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
-au BufNewFile,BufRead *.sage set filetype=python 
-au BufNewFile,BufRead *.fish set filetype=sh 
+au BufNewFile,BufRead *.sage set filetype=python
+au BufNewFile,BufRead *.fish set filetype=sh
+au BufNewFile,BufRead *.shader set filetype=cpp
 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
@@ -329,8 +330,8 @@ set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init() | set spell spl=en
-  autocmd FileType text         call pencil#init() | set spell spl=en 
+  autocmd FileType markdown,mkd call pencil#init() | set spell spl=en " en seems better than en_us
+  autocmd FileType text         call pencil#init() | set spell spl=en
 augroup END
 autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText files
 
@@ -352,16 +353,13 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-" Spellcheck in English; disabled to avoid changing things while debugging spellcheck.
-"set spelllang=en_us
-
 " Use f11 to toggle spellcheck
 nnoremap <silent> <F11> :set spell!<cr>
 
 " Make misspelled / rare works highlighted less aggressively
-hi SpellBad ctermfg=015 ctermbg=016 cterm=none 
-hi SpellLocal ctermfg=015 ctermbg=000 cterm=none
-hi SpellCap ctermfg=015 ctermbg=000 cterm=none
+hi SpellBad ctermfg=015 ctermbg=016 cterm=none  guibg=#442222
+hi SpellLocal ctermfg=015 ctermbg=000 cterm=none guibg=#224422
+hi SpellCap ctermfg=015 ctermbg=000 cterm=none guibg=#224422
 
 "" start cscope
 "" autocmd BufRead,BufNewFile *.cpp CScopeStart /home/neophile/.cscope/cscope.cfg
