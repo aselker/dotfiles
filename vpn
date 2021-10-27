@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-network_name="aws-UDP4-443-config-linux"
+network_name="aws-UDP4-443-config"
 
 result=$(nmcli -f GENERAL.STATE c show $network_name | grep "activated")
 
