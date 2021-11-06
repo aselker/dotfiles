@@ -27,7 +27,7 @@ new_float pixel 1
 bindsym $mod+b border toggle
 
 # Hide "unnecessary" borders on the outside of the screen
- hide_edge_borders smart
+hide_edge_borders smart
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -78,9 +78,9 @@ bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 6%- unmute
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
 
-bindsym XF86MonBrightnessDown exec brightnessctl set 600-
+bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
-bindsym XF86MonBrightnessUp exec brightnessctl set 600+
+bindsym XF86MonBrightnessUp exec brightnessctl set 2%+
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 # kill focused window
