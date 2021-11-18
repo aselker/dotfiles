@@ -101,6 +101,11 @@ nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 "endfunction
 "inoremap <expr> <C-i> Greek()
 
+" Have `cw` adhere to its actual movement `w`, instead of duplicating `ce`.
+" Disabled because cw is easier to type than ce
+nnoremap cw dwi
+nnoremap cW dWi
+
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -121,8 +126,9 @@ au BufNewFile,BufRead *.pde set filetype=cpp "Consider Arduino files as C++
 au BufNewFile,BufRead *.c set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.h set filetype=cpp "Consider C files C++ (!)
 au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
-au BufNewFile,BufRead *.sage set filetype=python 
-au BufNewFile,BufRead *.fish set filetype=sh 
+au BufNewFile,BufRead *.sage set filetype=python
+au BufNewFile,BufRead *.fish set filetype=sh
+au BufNewFile,BufRead *.shader set filetype=cpp
 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
@@ -132,6 +138,7 @@ set foldmethod=syntax " Better for C++ and maybe in general
 "autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
 autocmd FileType yaml set foldmethod=indent
 set foldcolumn=0
+" NOTE: If folding ever gets too slow, consider https://github.com/Konfekt/FastFold
 
 " au BufWritePost *.go GoImports
 
@@ -200,7 +207,8 @@ let g:black_linelength = &textwidth
 nnoremap <Leader>f :Black<cr>
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
-"Plug 'severin-lemaignan/vim-minimap'
+"Plug 'severin-lemaignan/vim-minimap' " Doesn't seem to work, not sure why
+"Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
 "Plug 'majutsushi/tagbar'
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
@@ -329,8 +337,8 @@ set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init() | set spell spl=en
-  autocmd FileType text         call pencil#init() | set spell spl=en 
+  autocmd FileType markdown,mkd call pencil#init() | set spell spl=en " en seems better than en_us
+  autocmd FileType text         call pencil#init() | set spell spl=en
 augroup END
 autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText files
 
@@ -348,12 +356,19 @@ autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText f
 " j and k go by visible lines, not textual ones
 nnoremap j gj
 nnoremap k gk
+" use gj and gk for textual lines, when e.g. writing a macro and repeatability is important
+nnoremap gj j
+nnoremap gk k
 
+" Use f11 to toggle spellcheck
+nnoremap <silent> <F11> :set spell!<cr>
 
 " Make misspelled / rare works highlighted less aggressively
-hi SpellBad ctermfg=015 ctermbg=016 cterm=none 
-hi SpellLocal ctermfg=015 ctermbg=000 cterm=none
-hi SpellCap ctermfg=015 ctermbg=000 cterm=none
+hi SpellBad ctermfg=015 ctermbg=016 cterm=none  guibg=#442222
+hi SpellLocal ctermfg=015 ctermbg=000 cterm=none guibg=#224422
+hi SpellCap ctermfg=015 ctermbg=000 cterm=none guibg=#224422
+
+hi Folded guibg=#555555 guifg=Cyan
 
 "" start cscope
 "" autocmd BufRead,BufNewFile *.cpp CScopeStart /home/neophile/.cscope/cscope.cfg

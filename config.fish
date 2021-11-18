@@ -155,6 +155,10 @@ function tlog
   end
 end
 
+function meeting_notes
+  nv ~/Notes/joby/meetings/$argv"_"(date +"%Y-%m-%d %H.%M.%S").txt
+end
+
 # It's a security thing
 alias sudo='sudo'
 
