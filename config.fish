@@ -149,7 +149,7 @@ end
 
 function tlog
   if [ -z "$argv" ]
-    cat ~/Documents/Notes/techlog.txt
+    cat ~/Notes/techlog.txt
   else
     echo \[(hostname) \| (date)\] $argv >> ~/Notes/techlog.txt
   end
