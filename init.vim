@@ -142,6 +142,10 @@ set foldcolumn=0
 
 " au BufWritePost *.go GoImports
 
+" Keyboard shortcuts to format
+au FileType python nnoremap <Leader>f :Black<cr>
+au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
+
 " let :W mean :w, and similar
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
@@ -204,7 +208,6 @@ Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
 "Plug 'psf/black' " Python formatter
 "Set Black textwidth to Vim textwidth
 let g:black_linelength = &textwidth
-nnoremap <Leader>f :Black<cr>
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
 "Plug 'severin-lemaignan/vim-minimap' " Doesn't seem to work, not sure why

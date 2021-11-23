@@ -33,6 +33,8 @@ abbr -a -- - "cd -"
 abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
+abbr -a gits "git s"
+abbr -a which "type"
 
 function xterm
 	command xterm -bg black -fg white
@@ -44,6 +46,10 @@ end
 
 function loc --wraps=locate
 	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/
+end
+
+function xcl --wraps=xclip
+	xclip -sel clip
 end
 
 function rr
