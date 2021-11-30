@@ -335,15 +335,14 @@ inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
 " Toggle tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 
-" vim-pencil stuff
+" vim-pencil stuff; also turns on spell-checking for some filetypes
 set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init() | set spell spl=en " en seems better than en_us
-  autocmd FileType text         call pencil#init() | set spell spl=en
+  autocmd FileType markdown,mkd,text,rst call pencil#init() | set spell spl=en " en seems better than en_us
 augroup END
-autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText files
+autocmd FileType rst SoftPencil " Don't hard-wrap ReStructuredText files
 
 " Arrow key / direction config, after vim-pencil so it overrides that stuff
 " I am arrow key nazi!  No arrow key for you!
