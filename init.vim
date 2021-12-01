@@ -216,7 +216,9 @@ let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '2
 let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
-Plug 'tpope/vim-sleuth' " Automatic indentation
+"Plug 'tpope/vim-sleuth' " Automatic indentation
+Plug 'timakro/vim-yadi' " Different automatic indentation
+autocmd BufRead * DetectIndent " run vim-yadi
 "Plug 'MattesGroeger/vim-bookmarks'
 "Plug 'nathanaelkane/vim-indent-guides'
 "Plug 'leafgarland/typescript-vim'
