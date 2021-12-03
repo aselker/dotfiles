@@ -24,7 +24,7 @@ set cursorline
 hi CursorLine guibg=#000000
 set tabstop=4
 set shiftwidth=4 " aka sw
-set expandtab
+set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
@@ -136,11 +136,15 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 
 set foldmethod=syntax " Better for C++ and maybe in general
 "autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
-autocmd FileType yaml set foldmethod=indent
+autocmd FileType yaml,txt set foldmethod=indent
 set foldcolumn=0
 " NOTE: If folding ever gets too slow, consider https://github.com/Konfekt/FastFold
 
 " au BufWritePost *.go GoImports
+
+" Keyboard shortcuts to format
+au FileType python nnoremap <Leader>f :Black<cr>
+au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 
 " let :W mean :w, and similar
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
@@ -194,17 +198,13 @@ let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'd
 "autocmd VimEnter * RainbowParenthesesActivate
 "autocmd VimEnter * RainbowParenthesesLoadRound
 
-
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-" Chunk 2
 Plug 'jamessan/vim-gnupg'
 Plug 'joom/latex-unicoder.vim'
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
 "Plug 'psf/black' " Python formatter
 "Set Black textwidth to Vim textwidth
 let g:black_linelength = &textwidth
-nnoremap <Leader>f :Black<cr>
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim'
 "Plug 'severin-lemaignan/vim-minimap' " Doesn't seem to work, not sure why
@@ -214,11 +214,11 @@ Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 " Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
-
-" Chunk 3
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
-Plug 'tpope/vim-sleuth' " Automatic indentation
+"Plug 'tpope/vim-sleuth' " Automatic indentation
+Plug 'timakro/vim-yadi' " Different automatic indentation
+autocmd BufRead * DetectIndent " run vim-yadi
 "Plug 'MattesGroeger/vim-bookmarks'
 "Plug 'nathanaelkane/vim-indent-guides'
 "Plug 'leafgarland/typescript-vim'
@@ -227,8 +227,6 @@ Plug 'tpope/vim-sleuth' " Automatic indentation
 "Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
 "let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
 "nnoremap <Leader>h :SemanticHighlightToggle<cr>
-
-" Chunk 4
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
@@ -282,10 +280,8 @@ nmap <Leader>xx <Plug>(ExchangeLine)
 nmap <Leader>xc <Plug>(ExchangeClear)
 call plug#end()
 
-
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
-
 
 "" Snippets
 "" TODO: Fix this.  It just prints the text, for some reason.
@@ -332,15 +328,14 @@ inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
 " Toggle tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 
-" vim-pencil stuff
+" vim-pencil stuff; also turns on spell-checking for some filetypes
 set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd call pencil#init() | set spell spl=en " en seems better than en_us
-  autocmd FileType text         call pencil#init() | set spell spl=en
+  autocmd FileType markdown,mkd,text,rst call pencil#init() | set spell spl=en " en seems better than en_us
 augroup END
-autocmd BufNewFile,BufRead *.rst SoftPencil " Don't hard-wrap ReStructuredText files
+autocmd FileType rst SoftPencil " Don't hard-wrap ReStructuredText files
 
 " Arrow key / direction config, after vim-pencil so it overrides that stuff
 " I am arrow key nazi!  No arrow key for you!

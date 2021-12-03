@@ -3,7 +3,7 @@
 	email = adamselker@gmail.com
 
 [alias]
-  git = !exec git
+	git = !exec git
 	s = status
 	amend = commit --amend
 	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
@@ -11,6 +11,9 @@
 	lg = !"git lg1"
 	d = difftool
 	cdiff = diff --compact-summary
+	;smbranch = "submodule foreach -q --recursive 'branch=\"$(git config -f $toplevel.gitmodules submodule.$name.branch)\"; git checkout $branch'"
+	;chout = !git checkout $1 && git submodule update --recursive && git smbranch && true
+	chout = !git checkout $1 && git submodule update --recursive && true
 [color]
 	ui = auto
 [diff]

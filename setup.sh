@@ -35,7 +35,7 @@ wget -O- https://updates.signal.org/desktop/apt/keys.asc |\
   sudo apt-key add -
 
 sudo apt update
-sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton
+sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh
 pip3 install black
 
 # Alacritty

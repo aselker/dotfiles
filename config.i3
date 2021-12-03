@@ -77,6 +77,7 @@ bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
 bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 6%- unmute
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
+bindsym XF86AudioPlay exec amixer set Capture toggle
 
 bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
