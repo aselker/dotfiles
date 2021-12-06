@@ -1,20 +1,14 @@
 " TODO:
+" .txt files set foldmethod=manual, but should be indent by default.
 " More colors for interesting-words
-" More colors for Colorcoder
 " Make comments more visible
 " C++ tooling, e.g. CTags
 " When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
 "  doesn't repeat the action, because the jk exit does stuff (it deletes the whitespace).  Same problem I had
 "  before with filling the default register with the deleted whitespace.
 "
-" What's causing the lag?
-" * not neovim-colorcoder
-" * not echodoc
-" * Not any single line in the plug area, but commenting the whole thing out solves or makes it way rarer
-" Is it just total load, rather than some single thing?
-" Turning off relativenumber might help?
-" I think switching to alacritty solved it.  Rewriting the screen in gnome terminal was sometimes slow, and
-" both relativenumber and cursorline cause a lot of rewriting.  But in alacritty + compton, it's faster.
+" Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
+" lot of rewriting.  But in alacritty + compton, it's faster.
 
 
 
@@ -135,12 +129,10 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-"autocmd FileType python set foldmethod=indent " Better for Python; disabled in favor of SimpylFold
+autocmd FileType python set foldmethod=indent " Better for Python; sometimes disabled in favor of SimpylFold
 autocmd FileType yaml,txt set foldmethod=indent
 set foldcolumn=0
-" NOTE: If folding ever gets too slow, consider https://github.com/Konfekt/FastFold
 
-" au BufWritePost *.go GoImports
 
 " Keyboard shortcuts to format
 au FileType python nnoremap <Leader>f :Black<cr>
@@ -186,48 +178,44 @@ autocmd InsertLeave * set iminsert=0
 
 " Plug stuff
 call plug#begin('~/.local/share/nvim/plugged')
+
 Plug 'reedes/vim-pencil'
 
 Plug 'airblade/vim-gitgutter'
+
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
 let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3']}
 
-" Plug 'junegunn/rainbow_parentheses.vim'
-"Plug 'kien/rainbow_parentheses.vim'
-"autocmd VimEnter * RainbowParenthesesActivate
-"autocmd VimEnter * RainbowParenthesesLoadRound
-
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jamessan/vim-gnupg'
+
 Plug 'joom/latex-unicoder.vim'
+
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
-"Plug 'psf/black' " Python formatter
-"Set Black textwidth to Vim textwidth
-let g:black_linelength = &textwidth
+let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
+
 Plug 'vim-scripts/taglist.vim'
+
 Plug 'mfulz/cscope.nvim'
-"Plug 'severin-lemaignan/vim-minimap' " Doesn't seem to work, not sure why
-"Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
-"Plug 'majutsushi/tagbar'
+
+Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
+
+Plug 'majutsushi/tagbar'
+" Toggle tagbar with F8
+nmap <F8> :TagbarToggle<CR>
+
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
-" Way more interestingWords colors, though later ones are kinda dark
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
-Plug 'scrooloose/nerdcommenter' " Quick block commenting
-Plug 'zhou13/vim-easyescape' " Escape with jk or kj
-"Plug 'tpope/vim-sleuth' " Automatic indentation
-Plug 'timakro/vim-yadi' " Different automatic indentation
-autocmd BufRead * DetectIndent " run vim-yadi
-"Plug 'MattesGroeger/vim-bookmarks'
-"Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'leafgarland/typescript-vim'
 
-" One kind of semantic highlighting.
-"Plug 'jaxbot/semantic-highlight.vim' " highlight every var in a different color
-"let g:semanticTermColors = [28,1,2,3,4,6,7,25,9,10,34,12,13,14,15,125,124]
-"nnoremap <Leader>h :SemanticHighlightToggle<cr>
-Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Different semantic highlighting
+Plug 'scrooloose/nerdcommenter' " Quick block commenting
+
+Plug 'zhou13/vim-easyescape' " Escape with jk or kj
+
+Plug 'timakro/vim-yadi' " Automatic indentation
+autocmd BufRead * DetectIndent " run vim-yadi
+
+Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
@@ -236,7 +224,6 @@ let g:deoplete#enable_at_startup = 1
 autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
-" Fn documentation -- re-enabled
 Plug 'Shougo/echodoc.vim'
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
@@ -250,25 +237,10 @@ set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT
 "change Pmenu to your highlight group
 "highlight link EchoDocFloat Pmenu
 
-" Snippets
-"Plug 'SirVer/ultisnips'
-"Plug 'Shougo/neosnippet.vim'
-"Plug 'Shougo/neosnippet-snippets'
-"Plug 'MarcWeber/vim-addon-mw-utils'       " dependencies #1
-"Plug 'tomtom/tlib_vim'                    " dependencies #2
-"Plug 'honza/vim-snippets'                 " snippets repo
-
-"Plug 'chaoren/vim-wordmotion'
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
 
-"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-
-"Plug 'psliwka/vim-smoothie'
-"let g:smoothie_experimental_mappings = 1
-
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 400
@@ -278,10 +250,21 @@ vmap <Leader>x <Plug>(Exchange)
 nmap <Leader>x <Plug>(Exchange)
 nmap <Leader>xx <Plug>(ExchangeLine)
 nmap <Leader>xc <Plug>(ExchangeClear)
+
+" Disabled plugins
+"Plug 'psliwka/vim-smoothie'
+"let g:smoothie_experimental_mappings = 1
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'MattesGroeger/vim-bookmarks'
+"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+"Plug 'tmhedberg/SimpylFold'
+"Plug 'chaoren/vim-wordmotion'
 call plug#end()
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
+
+" au BufWritePost *.go GoImports
 
 "" Snippets
 "" TODO: Fix this.  It just prints the text, for some reason.
@@ -325,8 +308,6 @@ let gitgutter_max_signs=5000
 
 " Let latex-unicoder work in insert mode
 inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
-" Toggle tagbar with F8
-nmap <F8> :TagbarToggle<CR>
 
 " vim-pencil stuff; also turns on spell-checking for some filetypes
 set nocompatible
