@@ -34,7 +34,7 @@ abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
-abbr -a which "type"
+abbr -a which "command -v"
 
 function xterm
 	command xterm -bg black -fg white
