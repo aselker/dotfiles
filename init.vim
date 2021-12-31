@@ -189,7 +189,7 @@ let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'd
 
 Plug 'jamessan/vim-gnupg'
 
-Plug 'joom/latex-unicoder.vim'
+"Plug 'joom/latex-unicoder.vim'
 
 Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
@@ -307,7 +307,7 @@ let g:rustfmt_autosave = 1
 let gitgutter_max_signs=5000
 
 " Let latex-unicoder work in insert mode
-inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
+"inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
 
 " vim-pencil stuff; also turns on spell-checking for some filetypes
 set nocompatible
