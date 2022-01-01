@@ -34,7 +34,7 @@ abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
-abbr -a which "type"
+abbr -a which "command -v"
 
 function xterm
 	command xterm -bg black -fg white
@@ -116,7 +116,7 @@ function fish_user_key_bindings
     bind '$' bind_dollar
     bind \e\[3\;5~ kill-word
     bind \cH backward-kill-path-component
-    bind \cC comment-run-commandline
+    bind \cU comment-run-commandline
 end
 
 function show_color 
