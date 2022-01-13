@@ -45,6 +45,9 @@ set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
 set lazyredraw " Makes macros faster, among other things
+set updatetime=100
+
+" . problem is after this
 
 " C and D act to end of line, Y should too
 nmap Y y$
@@ -97,8 +100,8 @@ nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 
 " Have `cw` adhere to its actual movement `w`, instead of duplicating `ce`.
 " Disabled because cw is easier to type than ce
-nnoremap cw dwi
-nnoremap cW dWi
+nnoremap cw ce
+nnoremap cW ce
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -175,6 +178,8 @@ for c in range(char2nr('A'), char2nr('Z'))
 endfor
 "Set it to clear itself when we leave insert mode
 autocmd InsertLeave * set iminsert=0
+
+" . problem is before this
 
 " Plug stuff
 call plug#begin('~/.local/share/nvim/plugged')
