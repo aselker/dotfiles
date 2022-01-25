@@ -47,8 +47,6 @@ set completeopt-=preview " Don't show autocomplete in a split
 set lazyredraw " Makes macros faster, among other things
 set updatetime=100
 
-" . problem is after this
-
 " C and D act to end of line, Y should too
 nmap Y y$
 
@@ -178,8 +176,6 @@ for c in range(char2nr('A'), char2nr('Z'))
 endfor
 "Set it to clear itself when we leave insert mode
 autocmd InsertLeave * set iminsert=0
-
-" . problem is before this
 
 " Plug stuff
 call plug#begin('~/.local/share/nvim/plugged')
