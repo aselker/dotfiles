@@ -67,7 +67,7 @@ bindsym $mod+m exec i3lock -c 000000
 # toggle the touchscreen
 bindsym $mod+t exec toggletouchscreen
 
-# select text with OCR
+# copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
 # volume and brightness control
@@ -77,11 +77,11 @@ bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
 bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 6%- unmute
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
-bindsym XF86AudioPlay exec amixer set Capture toggle
+bindsym $mod+apostrophe exec amixer set Capture toggle
 
-bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
+bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
-bindsym XF86MonBrightnessUp exec brightnessctl set 2%+
+bindsym XF86MonBrightnessUp exec brightnessctl set 1%+
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 # kill focused window
