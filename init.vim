@@ -201,9 +201,9 @@ let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
 Plug 'vim-scripts/taglist.vim'
 
-Plug 'mfulz/cscope.nvim'
+"Plug 'mfulz/cscope.nvim'
 
-Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
+"Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
 
 Plug 'majutsushi/tagbar'
 " Toggle tagbar with F8
@@ -211,7 +211,7 @@ nmap <F8> :TagbarToggle<CR>
 
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
@@ -224,23 +224,23 @@ Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic 
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-Plug 'deoplete-plugins/deoplete-jedi'
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"let g:deoplete#enable_at_startup = 1
+"autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+"Plug 'deoplete-plugins/deoplete-jedi'
 
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-"autocmd FileType text let g:echodoc#enable_at_startup = 0
-"let g:echodoc#type="virtual"
-"let g:echodoc#type = 'floating'
-" These two are useful for echodoc#type=echo
-set shortmess+=c " Disable some messages that would overwrite the modeline
-set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-" To use a custom highlight for the float window,
-"change Pmenu to your highlight group
-"highlight link EchoDocFloat Pmenu
+"Plug 'Shougo/echodoc.vim'
+"let g:echodoc#enable_at_startup = 1
+"let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+""autocmd FileType text let g:echodoc#enable_at_startup = 0
+""let g:echodoc#type="virtual"
+""let g:echodoc#type = 'floating'
+"" These two are useful for echodoc#type=echo
+"set shortmess+=c " Disable some messages that would overwrite the modeline
+"set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"" To use a custom highlight for the float window,
+""change Pmenu to your highlight group
+""highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
