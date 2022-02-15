@@ -9,4 +9,8 @@ font:
 background_opacity: 0.9
 
 key_bindings:
-  - { key: N,   mods: Control|Shift, action: SpawnNewInstance }
+  - { key: N,        mods: Control|Shift, action: SpawnNewInstance }
+  - { key: PageUp,   mods: Shift,         action: ScrollPageUp     }
+  - { key: PageDown, mods: Shift,         action: ScrollPageDown   }
+  - { key: End,      mods: Shift,         action: ScrollToBottom   }
+  - { key: Home,     mods: Shift,         action: ScrollToTop      }
