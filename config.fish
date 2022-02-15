@@ -165,7 +165,7 @@ function meeting_notes
   nv ~/Notes/joby/meetings/$argv"_"(date +"%Y-%m-%d %H.%M.%S").txt
 end
 
-# It's a security thing
+# a security thing
 alias sudo='sudo'
 
 #Settings for color output in man pages
@@ -184,6 +184,8 @@ set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
 
+# In Python 3.7+, have breakpoint() trigger ipdb instead of pdb
+set -x PYTHONBREAKPOINT ipdb.set_trace
 
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish

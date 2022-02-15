@@ -8,6 +8,7 @@
 # * List firefox addons
 # * Small scripts
 # * brightnessctl setuid or something?
+# * Replace fish-in-bashrc with chsh like normal.  Or not, chsh doesn't seem to work on Joby machines.
 
 # Stuff this won't do:
 # * Firefox addons

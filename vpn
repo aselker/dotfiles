@@ -4,7 +4,7 @@ if [ $(hostname) = "lxl-cjzqn13" ]
 then
 	network_name="aws-UDP4-443-config"
 else
-	network_name="aws-UDP4-443-config-linux"
+	network_name="aws-UDP4-443-config"
 fi
 
 result=$(nmcli -f GENERAL.STATE c show $network_name | grep "activated")

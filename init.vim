@@ -186,9 +186,9 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
-let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3']}
+let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3', 'darkorchid3', 'darkgoldenrod2']}
 
-Plug 'jamessan/vim-gnupg'
+"Plug 'jamessan/vim-gnupg'
 
 "Plug 'joom/latex-unicoder.vim'
 
@@ -284,26 +284,6 @@ let g:rustfmt_autosave = 1
 "endif
 "
 
-" For kien/rainbow_parentheses
-"let g:rbpt_colorpairs = [
-    "\ ['darkred',     'SeaGreen3'],
-    "\ ['black',       'SeaGreen3'],
-    "\ ['darkgreen',   'RoyalBlue3'],
-    "\ ['darkcyan',    'SeaGreen3'],
-    "\ ['brown',       'RoyalBlue3'],
-    "\ ['Darkblue',    'SeaGreen3'],
-    "\ ['darkgray',    'DarkOrchid3'],
-    "\ ['gray',        'RoyalBlue3'],
-    "\ ['darkmagenta', 'DarkOrchid3'],
-    "\ ['darkred',     'DarkOrchid3'],
-    "\ ['Darkblue',    'firebrick3'],
-    "\ ['brown',       'firebrick3'],
-    "\ ['darkgreen',   'firebrick3'],
-    "\ ['darkmagenta', 'DarkOrchid3'],
-    "\ ['darkcyan',    'RoyalBlue3'],
-    "\ ['red',         'firebrick3'],
-    "\ ]
-
 " Let gitgutter work in larger files
 let gitgutter_max_signs=5000
 
@@ -319,17 +299,6 @@ augroup pencil
 augroup END
 autocmd FileType rst SoftPencil " Don't hard-wrap ReStructuredText files
 
-" Arrow key / direction config, after vim-pencil so it overrides that stuff
-" I am arrow key nazi!  No arrow key for you!
-"nnoremap <up> <nop>
-"nnoremap <down> <nop>
-"nnoremap <left> <nop>
-"nnoremap <right> <nop>
-"inoremap <up> <nop>
-"inoremap <down> <nop>
-"inoremap <left> <nop>
-"inoremap <right> <nop>
-
 " j and k go by visible lines, not textual ones
 nnoremap j gj
 nnoremap k gk
@@ -341,7 +310,7 @@ nnoremap gk k
 nnoremap <silent> <F11> :set spell!<cr>
 
 " Make misspelled / rare works highlighted less aggressively
-hi SpellBad ctermfg=015 ctermbg=016 cterm=none  guibg=#442222
+hi SpellBad ctermfg=015 ctermbg=016 cterm=none  guibg=#552222
 hi SpellLocal ctermfg=015 ctermbg=000 cterm=none guibg=#224422
 hi SpellCap ctermfg=015 ctermbg=000 cterm=none guibg=#224422
 
