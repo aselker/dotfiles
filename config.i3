@@ -65,10 +65,12 @@ bindsym $mod+o exec nautilus
 bindsym $mod+m exec i3lock -c 000000
 
 # toggle the touchscreen
-bindsym $mod+t exec toggletouchscreen
+bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
 
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
+
+bindsym $mod+x exec xkill
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
@@ -79,9 +81,9 @@ bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
 bindsym $mod+apostrophe exec amixer set Capture toggle
 
-bindsym XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.9 - $(brightnessctl max) * 0.001; if ($(brightnessctl get) <= 1) 0 else if (x < 0) 1 else x\\" | bc)"
+bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "$(brightnessctl get) * 1.01 + $(brightnessctl max) * 0.001" | bc)
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
-bindsym XF86MonBrightnessUp exec brightnessctl set 1%+
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 # kill focused window
