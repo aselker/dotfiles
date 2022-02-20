@@ -8,6 +8,7 @@
 # * List firefox addons
 # * Small scripts
 # * brightnessctl setuid or something?
+# * Replace fish-in-bashrc with chsh like normal.  Or not, chsh doesn't seem to work on Joby machines.
 
 # Stuff this won't do:
 # * Firefox addons
@@ -35,7 +36,7 @@ wget -O- https://updates.signal.org/desktop/apt/keys.asc |\
   sudo apt-key add -
 
 sudo apt update
-sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh
+sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh tesseract-ocr
 pip3 install black
 
 # Alacritty

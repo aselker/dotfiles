@@ -45,6 +45,7 @@ set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
 set lazyredraw " Makes macros faster, among other things
+set updatetime=100
 
 " C and D act to end of line, Y should too
 nmap Y y$
@@ -97,8 +98,8 @@ nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 
 " Have `cw` adhere to its actual movement `w`, instead of duplicating `ce`.
 " Disabled because cw is easier to type than ce
-nnoremap cw dwi
-nnoremap cW dWi
+nnoremap cw ce
+nnoremap cW ce
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -185,9 +186,9 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1 
-let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3']}
+let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3', 'darkorchid3', 'darkgoldenrod2']}
 
-Plug 'jamessan/vim-gnupg'
+"Plug 'jamessan/vim-gnupg'
 
 "Plug 'joom/latex-unicoder.vim'
 
@@ -196,9 +197,9 @@ let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
 Plug 'vim-scripts/taglist.vim'
 
-Plug 'mfulz/cscope.nvim'
+"Plug 'mfulz/cscope.nvim'
 
-Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
+"Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
 
 Plug 'majutsushi/tagbar'
 " Toggle tagbar with F8
@@ -206,7 +207,7 @@ nmap <F8> :TagbarToggle<CR>
 
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
@@ -219,23 +220,23 @@ Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic 
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-Plug 'deoplete-plugins/deoplete-jedi'
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"let g:deoplete#enable_at_startup = 1
+"autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+"Plug 'deoplete-plugins/deoplete-jedi'
 
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-"autocmd FileType text let g:echodoc#enable_at_startup = 0
-"let g:echodoc#type="virtual"
-"let g:echodoc#type = 'floating'
-" These two are useful for echodoc#type=echo
-set shortmess+=c " Disable some messages that would overwrite the modeline
-set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-" To use a custom highlight for the float window,
-"change Pmenu to your highlight group
-"highlight link EchoDocFloat Pmenu
+"Plug 'Shougo/echodoc.vim'
+"let g:echodoc#enable_at_startup = 1
+"let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+""autocmd FileType text let g:echodoc#enable_at_startup = 0
+""let g:echodoc#type="virtual"
+""let g:echodoc#type = 'floating'
+"" These two are useful for echodoc#type=echo
+"set shortmess+=c " Disable some messages that would overwrite the modeline
+"set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"" To use a custom highlight for the float window,
+""change Pmenu to your highlight group
+""highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
@@ -283,26 +284,6 @@ let g:rustfmt_autosave = 1
 "endif
 "
 
-" For kien/rainbow_parentheses
-"let g:rbpt_colorpairs = [
-    "\ ['darkred',     'SeaGreen3'],
-    "\ ['black',       'SeaGreen3'],
-    "\ ['darkgreen',   'RoyalBlue3'],
-    "\ ['darkcyan',    'SeaGreen3'],
-    "\ ['brown',       'RoyalBlue3'],
-    "\ ['Darkblue',    'SeaGreen3'],
-    "\ ['darkgray',    'DarkOrchid3'],
-    "\ ['gray',        'RoyalBlue3'],
-    "\ ['darkmagenta', 'DarkOrchid3'],
-    "\ ['darkred',     'DarkOrchid3'],
-    "\ ['Darkblue',    'firebrick3'],
-    "\ ['brown',       'firebrick3'],
-    "\ ['darkgreen',   'firebrick3'],
-    "\ ['darkmagenta', 'DarkOrchid3'],
-    "\ ['darkcyan',    'RoyalBlue3'],
-    "\ ['red',         'firebrick3'],
-    "\ ]
-
 " Let gitgutter work in larger files
 let gitgutter_max_signs=5000
 
@@ -318,17 +299,6 @@ augroup pencil
 augroup END
 autocmd FileType rst SoftPencil " Don't hard-wrap ReStructuredText files
 
-" Arrow key / direction config, after vim-pencil so it overrides that stuff
-" I am arrow key nazi!  No arrow key for you!
-"nnoremap <up> <nop>
-"nnoremap <down> <nop>
-"nnoremap <left> <nop>
-"nnoremap <right> <nop>
-"inoremap <up> <nop>
-"inoremap <down> <nop>
-"inoremap <left> <nop>
-"inoremap <right> <nop>
-
 " j and k go by visible lines, not textual ones
 nnoremap j gj
 nnoremap k gk
@@ -340,7 +310,7 @@ nnoremap gk k
 nnoremap <silent> <F11> :set spell!<cr>
 
 " Make misspelled / rare works highlighted less aggressively
-hi SpellBad ctermfg=015 ctermbg=016 cterm=none  guibg=#442222
+hi SpellBad ctermfg=015 ctermbg=016 cterm=none  guibg=#552222
 hi SpellLocal ctermfg=015 ctermbg=000 cterm=none guibg=#224422
 hi SpellCap ctermfg=015 ctermbg=000 cterm=none guibg=#224422
 
