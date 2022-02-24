@@ -155,6 +155,9 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+d focus child
 
+# move to parent container
+bindsym $mod+Shift+a exec i3_move_to_parent.sh
+
 # switch to workspace
 bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
