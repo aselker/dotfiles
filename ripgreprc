@@ -4,3 +4,5 @@
 --glob=!*jeopardy.json
 
 --smart-case
+
+-L
