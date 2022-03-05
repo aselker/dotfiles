@@ -28,7 +28,7 @@ xrandr --output HDMI-0 --mode 1920x1080 --rotate normal --scale 1.5x1.5 --pos 0x
 nm-applet &
 #compton --backend glx --unredir-if-possible --glx-no-stencil --glx-no-rebind-pixmap --glx-swap-method buffer-age --vsync opengl-swc &
 #compton --backend glx --vsync opengl-swc & 
-compton --vsync opengl-swc & 
+compton --config ~/.dotfiles/compton.conf
 #killall -q xcape; 
 #killall -q redshift-gtk; 
 pkill -f "Wallpaper randomizer"; 

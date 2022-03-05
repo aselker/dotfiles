@@ -97,9 +97,10 @@ nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 "inoremap <expr> <C-i> Greek()
 
 " Have `cw` adhere to its actual movement `w`, instead of duplicating `ce`.
-" Disabled because cw is easier to type than ce
-nnoremap cw ce
-nnoremap cW ce
+" Disabled because cw is easier to type than ce, and because the old way to do it messed up repetition (.) and I don't
+" know a better way to do it
+"nnoremap cw ce
+"nnoremap cW cE
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
