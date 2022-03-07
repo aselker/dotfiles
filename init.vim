@@ -214,7 +214,7 @@ nmap <F8> :TagbarToggle<CR>
 
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#ff0000', '#0000ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
