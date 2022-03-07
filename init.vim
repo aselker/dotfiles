@@ -10,7 +10,7 @@
 " Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
 " lot of rewriting.  But in alacritty + compton, it's faster.
 
-
+let g:python3_host_prog = expand('/usr/bin/python3.8')
 
 set modelines=0 " Because they're vulnerable
 set cursorline
@@ -162,6 +162,12 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zO
 " vnoremap <Space> zf
 
+" Highlight stuff that gets yanked.  Replaces the vim-highlightedyank plugin
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
+augroup END
+
 " Ctags stuff
 set tags=./tags;$HOME " Let ctags look up directories until it finds it, or hits ~
 " Open definition in new tab
@@ -244,8 +250,6 @@ let g:camelcasemotion_key = '<leader>'
 
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
-Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = 400
 
 Plug 'tommcdo/vim-exchange'
 vmap <Leader>x <Plug>(Exchange)
