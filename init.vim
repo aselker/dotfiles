@@ -10,7 +10,7 @@
 " Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
 " lot of rewriting.  But in alacritty + compton, it's faster.
 
-
+"let g:python3_host_prog = expand('/usr/bin/python3.8')
 
 set modelines=0 " Because they're vulnerable
 set cursorline
@@ -97,9 +97,10 @@ nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 "inoremap <expr> <C-i> Greek()
 
 " Have `cw` adhere to its actual movement `w`, instead of duplicating `ce`.
-" Disabled because cw is easier to type than ce
-nnoremap cw ce
-nnoremap cW ce
+" Disabled because cw is easier to type than ce, and because the old way to do it messed up repetition (.) and I don't
+" know a better way to do it
+"nnoremap cw ce
+"nnoremap cW cE
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -161,6 +162,12 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zO
 " vnoremap <Space> zf
 
+" Highlight stuff that gets yanked.  Replaces the vim-highlightedyank plugin
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
+augroup END
+
 " Ctags stuff
 set tags=./tags;$HOME " Let ctags look up directories until it finds it, or hits ~
 " Open definition in new tab
@@ -197,9 +204,9 @@ let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
 Plug 'vim-scripts/taglist.vim'
 
-"Plug 'mfulz/cscope.nvim'
+Plug 'mfulz/cscope.nvim'
 
-"Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
+Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
 
 Plug 'majutsushi/tagbar'
 " Toggle tagbar with F8
@@ -220,31 +227,29 @@ Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic 
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"let g:deoplete#enable_at_startup = 1
-"autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-"Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+Plug 'deoplete-plugins/deoplete-jedi'
 
-"Plug 'Shougo/echodoc.vim'
-"let g:echodoc#enable_at_startup = 1
-"let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-""autocmd FileType text let g:echodoc#enable_at_startup = 0
-""let g:echodoc#type="virtual"
-""let g:echodoc#type = 'floating'
-"" These two are useful for echodoc#type=echo
-"set shortmess+=c " Disable some messages that would overwrite the modeline
-"set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-"" To use a custom highlight for the float window,
-""change Pmenu to your highlight group
-""highlight link EchoDocFloat Pmenu
+Plug 'Shougo/echodoc.vim'
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+"autocmd FileType text let g:echodoc#enable_at_startup = 0
+"let g:echodoc#type="virtual"
+"let g:echodoc#type = 'floating'
+" These two are useful for echodoc#type=echo
+set shortmess+=c " Disable some messages that would overwrite the modeline
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+" To use a custom highlight for the float window,
+"change Pmenu to your highlight group
+"highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
 
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
-Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = 400
 
 Plug 'tommcdo/vim-exchange'
 vmap <Leader>x <Plug>(Exchange)
