@@ -229,7 +229,7 @@ let g:colorcoder_saturation = 0.7
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
-autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+autocmd FileType text,markdown,mkd call deoplete#custom#option('auto_complete', v:false)
 Plug 'deoplete-plugins/deoplete-jedi'
 
 Plug 'Shougo/echodoc.vim'
