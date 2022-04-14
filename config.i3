@@ -293,6 +293,10 @@ bindsym $mod+Ctrl+Print exec i3_swap_workspaces.sh 33
 bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 34
 bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
 
+# Move windows to scratchpad, and show the scratchpad
+bindsym $mod+n scratchpad show
+bindsym $mod+Shift+n move scratchpad
+
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
 bindsym $mod+bracketleft move workspace to output up
