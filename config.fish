@@ -35,6 +35,7 @@ abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
 abbr -a which "command -v"
+abbr -a g "git"
 
 function xterm
 	command xterm -bg black -fg white
@@ -45,7 +46,7 @@ function ev --wraps=evince
 end
 
 function loc --wraps=locate
-	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/
+	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ | rg -v \^$HOME/backup-Joby/
 end
 
 function xcl --wraps=xclip

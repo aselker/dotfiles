@@ -82,7 +82,7 @@ nnoremap <C-l> <C-w>l
 noremap <Leader>r :syntax sync fromstart<CR>
 
 " Swap words
-nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
+nnoremap <silent> <Leader>p "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
 "nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
 
 " Three failed tries at a greek-letter hotkey
@@ -206,7 +206,7 @@ Plug 'vim-scripts/taglist.vim'
 
 Plug 'mfulz/cscope.nvim'
 
-Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
+Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work
 
 Plug 'majutsushi/tagbar'
 " Toggle tagbar with F8
@@ -256,6 +256,9 @@ vmap <Leader>x <Plug>(Exchange)
 nmap <Leader>x <Plug>(Exchange)
 nmap <Leader>xx <Plug>(ExchangeLine)
 nmap <Leader>xc <Plug>(ExchangeClear)
+
+Plug 'sjl/gundo.vim'
+nnoremap <F5> :GundoToggle<CR>
 
 " Disabled plugins
 "Plug 'psliwka/vim-smoothie'
