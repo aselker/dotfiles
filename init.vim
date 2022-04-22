@@ -39,13 +39,18 @@ set undofile
 set gdefault
 let mapleader = ","
 set scrolloff=4
-set list " Display tabs
+set list " Display tab characters
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
 set completeopt-=preview " Don't show autocomplete in a split
 set lazyredraw " Makes macros faster, among other things
 set updatetime=100
+set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F
+let &showbreak = '↳ '
+"set cpoptions+=n " Show the showbreak character in the line-number column -- doesn't seem to work?
+set breakindent " When wrapping a line, indent the wrapped part the same amount that the line was indented
+set linebreak " Word-wrapping, basically
 
 " C and D act to end of line, Y should too
 nmap Y y$
@@ -77,6 +82,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Use s to open the cmd window
+nnoremap s q:
 
 " Use <Leader>r to redo syntax highlighting, if it's confused
 noremap <Leader>r :syntax sync fromstart<CR>
@@ -114,7 +122,7 @@ augroup END
 
 " Automatically reload files when they change on disk (warn if unsaved edits)
 set autoread
-au CursorHold * checktime
+au CursorHold * silent! checktime " The silent! prevents a bunch of warnings when editing the command window (q:)
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
