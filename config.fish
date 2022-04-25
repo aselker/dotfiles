@@ -169,6 +169,11 @@ end
 # a security thing
 alias sudo='sudo'
 
+# Save history without deduplication
+function savehist --on-event fish_preexec
+    echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
+end
+
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
 set -x LESS_TERMCAP_md (printf "\033[01;31m")  
