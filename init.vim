@@ -22,7 +22,7 @@ set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set tw=120 " Text width, for gqq et al
+set tw=140 " Text width, for gqq et al
 set formatoptions-=tc " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
 set smartcase

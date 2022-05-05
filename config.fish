@@ -53,6 +53,10 @@ function xcl --wraps=xclip
 	xclip -sel clip
 end
 
+function ipd --wraps=ipdb3
+    python3.8 -Werror (command -v ipdb3) -cc $argv
+end
+
 function rr
   set PREV_CMD (history | head -1)
   set PREV_OUTPUT (eval $PREV_CMD)
