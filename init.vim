@@ -220,7 +220,7 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 
-Plug 'timakro/vim-yadi' " Automatic indentation
+Plug 'timakro/vim-yadi', { 'branch': 'main' } " Automatic indentation
 autocmd BufRead * DetectIndent " run vim-yadi
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic highlighting

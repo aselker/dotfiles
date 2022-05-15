@@ -35,6 +35,7 @@ abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
 abbr -a which "command -v"
+abbr -a g "git"
 
 function xterm
 	command xterm -bg black -fg white
@@ -45,7 +46,7 @@ function ev --wraps=evince
 end
 
 function loc --wraps=locate
-	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/
+	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/
 end
 
 function xcl --wraps=xclip
@@ -137,14 +138,7 @@ end
 
 
 function makeDocsBackup
-	 #Currently no 'Old', 'Wolfram Mathematica', or 'Backup' (of course)
-	 #tar -cvzf ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Old ~/Documents/Recentia ~/Documents/Models
-	 tar -cvf - ~/Documents/Notes ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz #Parallelizes compression using pigz
-end
-
-
-function sendtopeachstone
-  rsync -zlr --progress $argv[1] 192.168.0.184:\"$argv[2]\"
+	 tar -cvf - ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old ~/Documents/Careers ~/Documents/Joby | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz
 end
 
 
@@ -167,6 +161,11 @@ end
 
 # a security thing
 alias sudo='sudo'
+
+# Save history without deduplication
+function savehist --on-event fish_preexec
+    echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
+end
 
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
