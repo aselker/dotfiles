@@ -81,8 +81,8 @@ bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
 bindsym $mod+apostrophe exec amixer set Capture toggle
 
-bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.90 - $(brightnessctl max) * 0.001; if ($(brightnessctl get) <= 1) 0 else if (x < 0) 1 else x\\" | bc | awk '{printf(\\"%d\n\\",$1 + 0.5)}')"
-bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) == 0) 1 else $(brightnessctl get) * 1.10 + $(brightnessctl max) * 0.0015" | bc)
+bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.80 - $(brightnessctl max) * 0.001; if ($(brightnessctl get) <= 1) 0 else if (x < 0) 1 else x\\" | bc | awk '{printf(\\"%d\n\\",$1 + 0.5)}')"
+bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) == 0) 1 else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
@@ -160,7 +160,7 @@ bindsym $mod+a focus parent
 bindsym $mod+d focus child
 
 # move to parent container
-bindsym $mod+Shift+a exec i3_move_to_parent.sh
+bindsym $mod+Shift+a exec ~/.local/bin/i3_move_to_parent.sh
 
 # switch to workspace
 bindsym $mod+Prior workspace prev
@@ -294,6 +294,10 @@ bindsym $mod+Ctrl+F12 exec i3_swap_workspaces.sh 32
 bindsym $mod+Ctrl+Print exec i3_swap_workspaces.sh 33
 bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 34
 bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
+
+# Move windows to scratchpad, and show the scratchpad
+bindsym $mod+n scratchpad show
+bindsym $mod+Shift+n move scratchpad
 
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
