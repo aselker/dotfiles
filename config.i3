@@ -62,7 +62,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+o exec nautilus
 
 # screen lock
-bindsym $mod+m exec i3lock -c 000000
+bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -c 000000 -n; killall -SIGUSR2 dunst"
 
 # toggle the touchscreen
 bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
