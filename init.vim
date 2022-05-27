@@ -43,10 +43,10 @@ set list " Display tab characters
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
-set completeopt-=preview " Don't show autocomplete in a split
+set completeopt+=preview " show autocomplete in a split
 set lazyredraw " Makes macros faster, among other things
 set updatetime=100
-set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F
+set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F shows the full path to the file being edited
 let &showbreak = '↳ '
 "set cpoptions+=n " Show the showbreak character in the line-number column -- doesn't seem to work?
 set breakindent " When wrapping a line, indent the wrapped part the same amount that the line was indented
@@ -228,30 +228,33 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 
-Plug 'timakro/vim-yadi' " Automatic indentation
+Plug 'timakro/vim-yadi' " Automatic indentation-type detection (tabs or how many spaces?)
 autocmd BufRead * DetectIndent " run vim-yadi
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'ycm-core/YouCompleteMe'
 
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-"autocmd FileType text let g:echodoc#enable_at_startup = 0
-"let g:echodoc#type="virtual"
-"let g:echodoc#type = 'floating'
-" These two are useful for echodoc#type=echo
-set shortmess+=c " Disable some messages that would overwrite the modeline
-set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-" To use a custom highlight for the float window,
-"change Pmenu to your highlight group
-"highlight link EchoDocFloat Pmenu
+" Disabled in favor of YouCompleteMe
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"  let g:deoplete#enable_at_startup = 1
+"  autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+"  Plug 'deoplete-plugins/deoplete-jedi'
+"
+"  Plug 'Shougo/echodoc.vim'
+"  let g:echodoc#enable_at_startup = 1
+"  let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
+"  "let g:echodoc#type="virtual"
+"  "let g:echodoc#type = 'floating'
+"  " These two are useful for echodoc#type=echo
+"  set shortmess+=c " Disable some messages that would overwrite the modeline
+"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"  " To use a custom highlight for the float window,
+"  "change Pmenu to your highlight group
+"  "highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'

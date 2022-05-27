@@ -34,6 +34,7 @@ abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
+abbr -a gitpush "git push"
 abbr -a which "command -v"
 abbr -a g "git"
 
@@ -168,6 +169,12 @@ end
 
 function meeting_notes
   nv ~/Notes/joby/meetings/$argv"_"(date +"%Y-%m-%d %H.%M.%S").txt
+end
+
+function updatezoom
+    curl -sL https://zoom.us/client/latest/zoom_amd64.deb -o /tmp/zoom_amd64.deb
+    sudo dpkg -i /tmp/zoom_amd64.deb
+    rm /tmp/zoom_amd64.deb
 end
 
 # a security thing
