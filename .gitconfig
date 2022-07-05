@@ -29,3 +29,5 @@
 	required = true
 [rerere]
 	enabled = true
+;[core]
+;    pager = less -+$LESS -RS

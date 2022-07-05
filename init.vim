@@ -10,7 +10,7 @@
 " Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
 " lot of rewriting.  But in alacritty + compton, it's faster.
 
-
+let g:python3_host_prog = expand('/usr/bin/python3.8')
 
 set modelines=0 " Because they're vulnerable
 set cursorline
@@ -22,7 +22,7 @@ set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set tw=120 " Text width, for gqq et al
+set tw=140 " Text width, for gqq et al
 set formatoptions-=tc " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
 set smartcase
@@ -39,13 +39,18 @@ set undofile
 set gdefault
 let mapleader = ","
 set scrolloff=4
-set list " Display tabs
+set list " Display tab characters
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
-set completeopt-=preview " Don't show autocomplete in a split
+set completeopt+=preview " show autocomplete in a split
 set lazyredraw " Makes macros faster, among other things
 set updatetime=100
+set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F shows the full path to the file being edited
+let &showbreak = '↳ '
+"set cpoptions+=n " Show the showbreak character in the line-number column -- doesn't seem to work?
+set breakindent " When wrapping a line, indent the wrapped part the same amount that the line was indented
+set linebreak " Word-wrapping, basically
 
 " C and D act to end of line, Y should too
 nmap Y y$
@@ -78,11 +83,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Use s to open the cmd window
+nnoremap s q:
+
 " Use <Leader>r to redo syntax highlighting, if it's confused
 noremap <Leader>r :syntax sync fromstart<CR>
 
 " Swap words
-nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
+nnoremap <silent> <Leader>p "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
 "nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
 
 " Three failed tries at a greek-letter hotkey
@@ -114,7 +122,7 @@ augroup END
 
 " Automatically reload files when they change on disk (warn if unsaved edits)
 set autoread
-au CursorHold * checktime
+au CursorHold * silent! checktime " The silent! prevents a bunch of warnings when editing the command window (q:)
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
@@ -162,6 +170,12 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zO
 " vnoremap <Space> zf
 
+" Highlight stuff that gets yanked.  Replaces the vim-highlightedyank plugin
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=400}
+augroup END
+
 " Ctags stuff
 set tags=./tags;$HOME " Let ctags look up directories until it finds it, or hits ~
 " Open definition in new tab
@@ -198,9 +212,9 @@ let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
 Plug 'vim-scripts/taglist.vim'
 
-"Plug 'mfulz/cscope.nvim'
+Plug 'mfulz/cscope.nvim'
 
-"Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
+Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work
 
 Plug 'majutsushi/tagbar'
 " Toggle tagbar with F8
@@ -214,44 +228,48 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
 Plug 'zhou13/vim-easyescape' " Escape with jk or kj
 
-Plug 'timakro/vim-yadi' " Automatic indentation
+Plug 'timakro/vim-yadi' " Automatic indentation-type detection (tabs or how many spaces?)
 autocmd BufRead * DetectIndent " run vim-yadi
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic highlighting
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"let g:deoplete#enable_at_startup = 1
-"autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-"Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'ycm-core/YouCompleteMe'
 
-"Plug 'Shougo/echodoc.vim'
-"let g:echodoc#enable_at_startup = 1
-"let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-""autocmd FileType text let g:echodoc#enable_at_startup = 0
-""let g:echodoc#type="virtual"
-""let g:echodoc#type = 'floating'
-"" These two are useful for echodoc#type=echo
-"set shortmess+=c " Disable some messages that would overwrite the modeline
-"set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-"" To use a custom highlight for the float window,
-""change Pmenu to your highlight group
-""highlight link EchoDocFloat Pmenu
+" Disabled in favor of YouCompleteMe
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"  let g:deoplete#enable_at_startup = 1
+"  autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+"  Plug 'deoplete-plugins/deoplete-jedi'
+"
+"  Plug 'Shougo/echodoc.vim'
+"  let g:echodoc#enable_at_startup = 1
+"  let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
+"  "let g:echodoc#type="virtual"
+"  "let g:echodoc#type = 'floating'
+"  " These two are useful for echodoc#type=echo
+"  set shortmess+=c " Disable some messages that would overwrite the modeline
+"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"  " To use a custom highlight for the float window,
+"  "change Pmenu to your highlight group
+"  "highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
 
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
-Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = 400
 
 Plug 'tommcdo/vim-exchange'
 vmap <Leader>x <Plug>(Exchange)
 nmap <Leader>x <Plug>(Exchange)
 nmap <Leader>xx <Plug>(ExchangeLine)
 nmap <Leader>xc <Plug>(ExchangeClear)
+
+Plug 'sjl/gundo.vim'
+nnoremap <F5> :GundoToggle<CR>
 
 " Disabled plugins
 "Plug 'psliwka/vim-smoothie'

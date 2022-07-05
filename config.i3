@@ -62,7 +62,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+o exec nautilus
 
 # screen lock
-bindsym $mod+m exec i3lock -c 000000
+bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -c 000000 -n; killall -SIGUSR2 dunst"
 
 # toggle the touchscreen
 bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
@@ -292,6 +292,10 @@ bindsym $mod+Ctrl+F12 exec i3_swap_workspaces.sh 32
 bindsym $mod+Ctrl+Print exec i3_swap_workspaces.sh 33
 bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 34
 bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
+
+# Move windows to scratchpad, and show the scratchpad
+bindsym $mod+n scratchpad show
+bindsym $mod+Shift+n move scratchpad
 
 # move workspace to other RandR output
 # Right and up work for two monitors in arbitrary orientation 
