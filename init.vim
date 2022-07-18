@@ -44,6 +44,7 @@ set list " Display tab characters
 set notimeout
 set ttimeout
 set completeopt+=preview " show autocomplete in a split
+set completeopt+=longest " Insert the longest common prefix of all matches
 set lazyredraw " Makes macros faster, among other things
 set updatetime=100
 set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F shows the full path to the file being edited
@@ -270,6 +271,7 @@ nmap <Leader>xc <Plug>(ExchangeClear)
 
 Plug 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
+let g:gundo_prefer_python3 = 1
 
 " Disabled plugins
 "Plug 'psliwka/vim-smoothie'
