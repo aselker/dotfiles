@@ -165,35 +165,35 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_left HDMI-0
-set $monitor_right DP-2
-set $monitor_small HDMI-0
+set $monitor_primary DP-0
+set $monitor_secondary HDMI-0
+set $monitor_tertiary HDMI-0
 
-workspace 0 output $monitor_small
-workspace 2 output $monitor_right
-workspace 3 output $monitor_left
-workspace 4 output $monitor_right
-workspace 5 output $monitor_left
-workspace 6 output $monitor_right
-workspace 7 output $monitor_left
-workspace 8 output $monitor_right
-workspace 9 output $monitor_left
-workspace 10 output $monitor_right
-workspace 11 output $monitor_left
-workspace 12 output $monitor_right
-workspace 13 output $monitor_small
-workspace 22 output $monitor_right
-workspace 23 output $monitor_left
-workspace 24 output $monitor_right
-workspace 25 output $monitor_left
-workspace 26 output $monitor_right
-workspace 27 output $monitor_left
-workspace 28 output $monitor_right
-workspace 29 output $monitor_left
-workspace 30 output $monitor_right
-workspace 31 output $monitor_left
-workspace 32 output $monitor_right
-workspace 35 output $monitor_small
+workspace 0 output $monitor_tertiary
+workspace 2 output $monitor_primary
+workspace 3 output $monitor_secondary
+workspace 4 output $monitor_primary
+workspace 5 output $monitor_secondary
+workspace 6 output $monitor_primary
+workspace 7 output $monitor_secondary
+workspace 8 output $monitor_primary
+workspace 9 output $monitor_secondary
+workspace 10 output $monitor_primary
+workspace 11 output $monitor_secondary
+workspace 12 output $monitor_primary
+workspace 13 output $monitor_tertiary
+workspace 22 output $monitor_primary
+workspace 23 output $monitor_secondary
+workspace 24 output $monitor_primary
+workspace 25 output $monitor_secondary
+workspace 26 output $monitor_primary
+workspace 27 output $monitor_secondary
+workspace 28 output $monitor_primary
+workspace 29 output $monitor_secondary
+workspace 30 output $monitor_primary
+workspace 31 output $monitor_secondary
+workspace 32 output $monitor_primary
+workspace 35 output $monitor_tertiary
 
 # Normal workspace keys
 bindsym $mod+grave workspace 0
