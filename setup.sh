@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+# Set up a new machine.  I do not recommend running this!  It's more of a reference.
+
 # TODO:
 # * Bashrc is not perfect, might have two copies of the "don't do anything"
 # * LADSPA setup
@@ -9,6 +11,7 @@
 # * Small scripts
 # * brightnessctl setuid or something?
 # * Replace fish-in-bashrc with chsh like normal.  Or not, chsh doesn't seem to work on Joby machines.
+# * Fix adding the fish thing to the top of .bashrc.  It duplicates the first bit that makes the bashrc not do anything, and also the string is embedded incorrectly in this script.
 
 # Stuff this won't do:
 # * Firefox addons

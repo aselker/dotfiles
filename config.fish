@@ -35,6 +35,8 @@ abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
 abbr -a gitpush "git push"
+abbr -a gitpull "git pull"
+abbr -a gitdiff "git diff"
 abbr -a which "command -v"
 abbr -a g "git"
 
@@ -185,6 +187,14 @@ function savehist --on-event fish_preexec
     echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
 end
 
+function camelcase
+    perl -pe 's#(_|^)(.)#\u$2#g'
+end
+
+function namekill
+    kill (pg $argv | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/')
+end
+
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
 set -x LESS_TERMCAP_md (printf "\033[01;31m")  
@@ -197,9 +207,10 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
-set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin 
+set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
+set -x PATH $PATH ~/Tech/small_scripts
 
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
@@ -213,3 +224,7 @@ set -x PYTHONBREAKPOINT ipdb.set_trace
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end
+
+set PYENV_ROOT ~/.pyenv
+command -v pyenv >/dev/null || set -x PATH $PATH $PYENV_ROOT/bin
+pyenv init - | source
