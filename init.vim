@@ -10,7 +10,9 @@
 " Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
 " lot of rewriting.  But in alacritty + compton, it's faster.
 
-let g:python3_host_prog = expand('/usr/bin/python3.8')
+"let g:python3_host_prog = expand('/usr/bin/python3.8')
+let g:python3_host_prog = 'python3.10'
+let g:python3_host_skip_check=1
 
 set modelines=0 " Because they're vulnerable
 set cursorline
@@ -45,7 +47,7 @@ set notimeout
 set ttimeout
 set completeopt+=preview " show autocomplete in a split
 set completeopt+=longest " Insert the longest common prefix of all matches
-set lazyredraw " Makes macros faster, among other things
+set lazyredraw " Makes macros faster, among other things - but also makes search index not update when you press n or N if you also have the "nzzzv" bindings below
 set updatetime=100
 set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F shows the full path to the file being edited
 let &showbreak = '↳ '
@@ -56,9 +58,10 @@ set linebreak " Word-wrapping, basically
 " C and D act to end of line, Y should too
 nmap Y y$
 
-" Center the search hit so it's easier to see
-nnoremap n nzzzv
-nnoremap N Nzzzv
+" Center the search hit so it's easier to see - the hn fixes search count (e.g. "11/50" in the bottom bar), though it might break in the
+" first column?
+nnoremap n nzzzvhn
+nnoremap N Nzzzvhn
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -134,6 +137,7 @@ au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
 au BufNewFile,BufRead *.sage set filetype=python
 au BufNewFile,BufRead *.fish set filetype=sh
 au BufNewFile,BufRead *.shader set filetype=cpp
+au BufNewFile,BufRead *.hy set filetype=lisp
 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 " Format Python code 
@@ -208,7 +212,7 @@ let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'd
 
 "Plug 'joom/latex-unicoder.vim'
 
-Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
+Plug 'psf/black', { 'tag': '19.10b0', 'for': ['python']} " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
 Plug 'vim-scripts/taglist.vim'
@@ -227,7 +231,15 @@ let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '
 
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 
-Plug 'zhou13/vim-easyescape' " Escape with jk or kj
+" NOTE: easyescape seems to slow down nvim's startup by a lot, like 100ms.  I think it's because it requires python3 to be started, or
+" something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering insert mode.
+Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
+
+augroup load_on_insert " Load easyescape (and maybe others?) on first entering insert mode
+  autocmd!
+  autocmd InsertEnter * call plug#load('vim-easyescape')
+                     \| autocmd! load_on_insert
+augroup END
 
 Plug 'timakro/vim-yadi' " Automatic indentation-type detection (tabs or how many spaces?)
 autocmd BufRead * DetectIndent " run vim-yadi
@@ -236,27 +248,28 @@ Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic 
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-Plug 'ycm-core/YouCompleteMe'
-"let g:loaded_youcompleteme = 1 # Disable YouCompleteMe
+" Disabled in favor of deoplete
+"Plug 'ycm-core/YouCompleteMe'
+""let g:loaded_youcompleteme = 1 # Disable YouCompleteMe
 
-" Disabled in favor of YouCompleteMe
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"  let g:deoplete#enable_at_startup = 1
-"  autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-"  Plug 'deoplete-plugins/deoplete-jedi'
-"
-"  Plug 'Shougo/echodoc.vim'
-"  let g:echodoc#enable_at_startup = 1
-"  let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
-"  "let g:echodoc#type="virtual"
-"  "let g:echodoc#type = 'floating'
-"  " These two are useful for echodoc#type=echo
-"  set shortmess+=c " Disable some messages that would overwrite the modeline
-"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-"  " To use a custom highlight for the float window,
-"  "change Pmenu to your highlight group
-"  "highlight link EchoDocFloat Pmenu
+"Disabled in favor of YouCompleteMe, then re-enabled
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+Plug 'deoplete-plugins/deoplete-jedi'
+
+Plug 'Shougo/echodoc.vim'
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+"autocmd FileType text let g:echodoc#enable_at_startup = 0
+"let g:echodoc#type="virtual"
+"let g:echodoc#type = 'floating'
+" These two are useful for echodoc#type=echo
+set shortmess+=c " Disable some messages that would overwrite the modeline
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+" To use a custom highlight for the float window,
+"change Pmenu to your highlight group
+"highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
