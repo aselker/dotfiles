@@ -57,7 +57,8 @@ function xcl --wraps=xclip
 end
 
 function ipd --wraps=ipdb3
-    python3.8 -Werror (command -v ipdb3) -cc $argv
+    #python3 -Werror (command -v ipdb3) -cc $argv
+    ipdb3 -cc $argv
 end
 
 function rr
