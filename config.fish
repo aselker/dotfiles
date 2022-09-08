@@ -5,7 +5,7 @@ bind \e\[3\;5~ kill-word
 bind \cH backward-kill-word
 
 function mkcd --wraps=mkdir 
-	mkdir -p $argv; and cd $argv
+    mkdir -p $argv; and cd $argv
 end
 
 function cl --wraps=cd 
@@ -13,7 +13,11 @@ function cl --wraps=cd
 end
 
 function pg --wraps=rg 
-	ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+    ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+end
+
+function hisg --wraps rg
+    rg $argv ~/Notes/cmd_history
 end
 
 alias nv="nvim" # So flag completion is better
@@ -41,24 +45,25 @@ abbr -a which "command -v"
 abbr -a g "git"
 
 function xterm
-	command xterm -bg black -fg white
+    command xterm -bg black -fg white
 end
 
 function ev --wraps=evince
-	evince $argv 2>/dev/null & disown
+    evince $argv 2>/dev/null & disown
 end
 
 function loc --wraps=locate
-	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ | rg -v \^$HOME/backup-Joby/
+    locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ | rg -v \^$HOME/backup-Joby/
 end
 
 function xcl --wraps=xclip
-	xclip -sel clip
+    xclip -sel clip
 end
 
 function ipd --wraps=ipdb3
     #python3 -Werror (command -v ipdb3) -cc $argv
     ipdb3 -cc $argv
+    #python3 -Werror -m ipdb -- -cc $argv
 end
 
 function rr
@@ -146,9 +151,9 @@ end
 
 
 function makeDocsBackup
-	 #Currently no 'Old', 'Wolfram Mathematica', or 'Backup' (of course)
-	 #tar -cvzf ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Old ~/Documents/Recentia ~/Documents/Models
-	 tar -cvf - ~/Documents/Notes ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz #Parallelizes compression using pigz
+    #Currently no 'Old', 'Wolfram Mathematica', or 'Backup' (of course)
+    #tar -cvzf ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Old ~/Documents/Recentia ~/Documents/Models
+    tar -cvf - ~/Documents/Notes ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz #Parallelizes compression using pigz
 end
 
 
