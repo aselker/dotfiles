@@ -9,6 +9,9 @@
 "  lot of rewriting.  But in alacritty + compton, it's faster.
 " Autocomplete could be better.  Try coc.nvim?
 " Startup could be faster.  About 150ms right now.
+"   * Try lewis6991/impatient.nvim once I'm on neovim 0.7+
+"   * https://www.reddit.com/r/neovim/comments/opipij/guide_tips_and_tricks_to_reduce_startup_and/
+"   * Once on 0.7+, switch to filetype.lua ('let g:do_filetype_lua = 1', 'let g:did_load_filetypes = 0')
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = 'python3.10'
@@ -199,7 +202,6 @@ autocmd InsertLeave * set iminsert=0
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'reedes/vim-pencil'
-Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mfulz/cscope.nvim', {'for': ['c', 'cpp']}
 Plug 'wfxr/minimap.vim', {'on': 'Minimap'} " Requires nvim 0.5.0+ to work
@@ -207,8 +209,11 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
 
+"Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end
+
 Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1 
+let g:rainbow_active = 1
 let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3', 'darkorchid3', 'darkgoldenrod2']}
 
 Plug 'psf/black', { 'tag': '19.10b0', 'on': 'Black'} " Python formatter
@@ -288,6 +293,7 @@ nnoremap <F5> :GundoToggle<CR>
 "Plug 'jamessan/vim-gnupg'
 "Plug 'joom/latex-unicoder.vim'
 call plug#end()
+lua require('gitsigns').setup()
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
