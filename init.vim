@@ -1,16 +1,21 @@
 " TODO:
-" .txt files set foldmethod=manual, but should be indent by default.
 " More colors for interesting-words
 " Make comments more visible
 " C++ tooling, e.g. CTags
 " When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
 "  doesn't repeat the action, because the jk exit does stuff (it deletes the whitespace).  Same problem I had
 "  before with filling the default register with the deleted whitespace.
-"
 " Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
-" lot of rewriting.  But in alacritty + compton, it's faster.
+"  lot of rewriting.  But in alacritty + compton, it's faster.
+" Autocomplete could be better.  Try coc.nvim?
+" Startup could be faster.  About 150ms right now.
+"   * Try lewis6991/impatient.nvim once I'm on neovim 0.7+
+"   * https://www.reddit.com/r/neovim/comments/opipij/guide_tips_and_tricks_to_reduce_startup_and/
+"   * Once on 0.7+, switch to filetype.lua ('let g:do_filetype_lua = 1', 'let g:did_load_filetypes = 0')
 
-let g:python3_host_prog = expand('/usr/bin/python3.8')
+"let g:python3_host_prog = expand('/usr/bin/python3.8')
+let g:python3_host_prog = 'python3.10'
+"let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
 set cursorline
@@ -45,7 +50,7 @@ set notimeout
 set ttimeout
 set completeopt+=preview " show autocomplete in a split
 set completeopt+=longest " Insert the longest common prefix of all matches
-set lazyredraw " Makes macros faster, among other things
+set lazyredraw " Makes macros faster, among other things - but also makes search index not update when you press n or N if you also have the "nzzzv" bindings below
 set updatetime=100
 set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F shows the full path to the file being edited
 let &showbreak = '↳ '
@@ -56,9 +61,10 @@ set linebreak " Word-wrapping, basically
 " C and D act to end of line, Y should too
 nmap Y y$
 
-" Center the search hit so it's easier to see
-nnoremap n nzzzv
-nnoremap N Nzzzv
+" Center the search hit so it's easier to see - the hn fixes search count (e.g. "11/50" in the bottom bar), though it might break in the
+" first column?
+nnoremap n nzzzvhn
+nnoremap N Nzzzvhn
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -134,14 +140,13 @@ au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
 au BufNewFile,BufRead *.sage set filetype=python
 au BufNewFile,BufRead *.fish set filetype=sh
 au BufNewFile,BufRead *.shader set filetype=cpp
+au BufNewFile,BufRead *.hy set filetype=lisp
 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
-" Format Python code 
-" au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
 autocmd FileType python set foldmethod=indent " Better for Python; sometimes disabled in favor of SimpylFold
-autocmd FileType yaml,txt set foldmethod=indent
+autocmd FileType yaml,text set foldmethod=indent
 set foldcolumn=0
 
 
@@ -149,7 +154,7 @@ set foldcolumn=0
 au FileType python nnoremap <Leader>f :Black<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 
-" let :W mean :w, and similar
+" let :W mean :w, and :Q mean :q
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
 
@@ -197,27 +202,24 @@ autocmd InsertLeave * set iminsert=0
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'reedes/vim-pencil'
+Plug 'vim-scripts/taglist.vim'
+Plug 'mfulz/cscope.nvim', {'for': ['c', 'cpp']}
+Plug 'wfxr/minimap.vim', {'on': 'Minimap'} " Requires nvim 0.5.0+ to work
+Plug 'scrooloose/nerdcommenter' " Quick block commenting
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'Konfekt/FastFold'
 
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end
 
 Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1 
+let g:rainbow_active = 1
 let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3', 'darkorchid3', 'darkgoldenrod2']}
 
-"Plug 'jamessan/vim-gnupg'
-
-"Plug 'joom/latex-unicoder.vim'
-
-Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
+Plug 'psf/black', { 'tag': '19.10b0', 'on': 'Black'} " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
-Plug 'vim-scripts/taglist.vim'
-
-Plug 'mfulz/cscope.nvim'
-
-Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work
-
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 " Toggle tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 
@@ -225,9 +227,16 @@ Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 
-Plug 'scrooloose/nerdcommenter' " Quick block commenting
+" NOTE: easyescape seems slow to start, so if you load it on startup, it slows down startup by a lot (~100ms).  I think it's because it
+" requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
+" insert mode.  This also introduced a lag, but it seems more tolerable this way.
+Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
 
-Plug 'zhou13/vim-easyescape' " Escape with jk or kj
+augroup load_on_insert " Load easyescape (and maybe others later!) on first entering insert mode
+  autocmd!
+  autocmd InsertEnter * call plug#load('vim-easyescape') " Can add stuff here in a comma-separated list
+                     \| autocmd! load_on_insert
+augroup END
 
 Plug 'timakro/vim-yadi' " Automatic indentation-type detection (tabs or how many spaces?)
 autocmd BufRead * DetectIndent " run vim-yadi
@@ -236,32 +245,33 @@ Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic 
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
-Plug 'ycm-core/YouCompleteMe'
+" Disabled in favor of deoplete
+"Plug 'ycm-core/YouCompleteMe'
+""let g:loaded_youcompleteme = 1 # Disable YouCompleteMe
 
-" Disabled in favor of YouCompleteMe
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"  let g:deoplete#enable_at_startup = 1
-"  autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
-"  Plug 'deoplete-plugins/deoplete-jedi'
-"
-"  Plug 'Shougo/echodoc.vim'
-"  let g:echodoc#enable_at_startup = 1
-"  let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
-"  "autocmd FileType text let g:echodoc#enable_at_startup = 0
-"  "let g:echodoc#type="virtual"
-"  "let g:echodoc#type = 'floating'
-"  " These two are useful for echodoc#type=echo
-"  set shortmess+=c " Disable some messages that would overwrite the modeline
-"  set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
-"  " To use a custom highlight for the float window,
-"  "change Pmenu to your highlight group
-"  "highlight link EchoDocFloat Pmenu
+"Disabled in favor of YouCompleteMe, then re-enabled
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+Plug 'deoplete-plugins/deoplete-jedi'
+
+" This doesn't seem to work...
+Plug 'Shougo/echodoc.vim'
+let g:echodoc#enable_at_startup = 1
+"let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+"autocmd FileType text let g:echodoc#enable_at_startup = 0
+"let g:echodoc#type="virtual"
+"let g:echodoc#type = 'floating'
+" These two are useful for echodoc#type=echo
+set shortmess+=c " Disable some messages that would overwrite the modeline
+set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"set cmdheight=2
+" To use a custom highlight for the float window,
+"change Pmenu to your highlight group
+"highlight link EchoDocFloat Pmenu
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
-
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'Konfekt/FastFold'
 
 Plug 'tommcdo/vim-exchange'
 vmap <Leader>x <Plug>(Exchange)
@@ -281,7 +291,10 @@ let g:gundo_prefer_python3 = 1
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 "Plug 'tmhedberg/SimpylFold'
 "Plug 'chaoren/vim-wordmotion'
+"Plug 'jamessan/vim-gnupg'
+"Plug 'joom/latex-unicoder.vim'
 call plug#end()
+lua require('gitsigns').setup()
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
@@ -344,3 +357,32 @@ hi Folded guibg=#555555 guifg=Cyan
 "autocmd BufRead,BufNewFile *.c,*.cpp,*.h CScopeStart /home/neophile/.cscope/cscope.cfg
 "autocmd BufRead,BufNewFile *.c,*.cpp,*.h cscope add /home/neophile/.cscope/cscope.out
 
+
+
+" Function to permanently delete views created by 'mkview' (and also close without saving the view)
+" Mostly copied from StackOverflow user David Ljung Madison Stellar
+" https://stackoverflow.com/questions/28384159/vim-how-to-remove-clear-views-created-by-mkview-from-inside-of-vim
+function! MyDeleteView()
+  let path = fnamemodify(bufname('%'),':p')
+  " vim's odd =~ escaping for /
+  let path = substitute(path, '=', '==', 'g')
+  if empty($HOME)
+  else
+  	let path = substitute(path, '^'.$HOME, '\~', '')
+  endif
+  let path = substitute(path, '/', '=+', 'g') . '='
+  " view directory
+  let path = &viewdir.'/'.path
+  call delete(path)
+  echo "Deleted: ".path
+  " Exit without saving view
+  augroup remember_folds
+    autocmd!
+  augroup END
+  q
+endfunction
+
+" # Command Delview (and it's abbreviation 'delview')
+command Delview call MyDeleteView()
+" Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>

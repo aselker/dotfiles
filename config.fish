@@ -5,7 +5,7 @@ bind \e\[3\;5~ kill-word
 bind \cH backward-kill-word
 
 function mkcd --wraps=mkdir 
-	mkdir -p $argv; and cd $argv
+    mkdir -p $argv; and cd $argv
 end
 
 function cl --wraps=cd 
@@ -13,7 +13,11 @@ function cl --wraps=cd
 end
 
 function pg --wraps=rg 
-	ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+    ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+end
+
+function hisg --wraps rg
+    rg $argv ~/Notes/cmd_history
 end
 
 alias nv="nvim" # So flag completion is better
@@ -35,27 +39,31 @@ abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
 abbr -a gitpush "git push"
+abbr -a gitpull "git pull"
+abbr -a gitdiff "git diff"
 abbr -a which "command -v"
 abbr -a g "git"
 
 function xterm
-	command xterm -bg black -fg white
+    command xterm -bg black -fg white
 end
 
 function ev --wraps=evince
-	evince $argv 2>/dev/null & disown
+    evince $argv 2>/dev/null & disown
 end
 
 function loc --wraps=locate
-	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ | rg -v \^$HOME/backup-Joby/
+    locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ | rg -v \^$HOME/backup-Joby/
 end
 
 function xcl --wraps=xclip
-	xclip -sel clip
+    xclip -sel clip
 end
 
 function ipd --wraps=ipdb3
-    python3.8 -Werror (command -v ipdb3) -cc $argv
+    #python3 -Werror (command -v ipdb3) -cc $argv
+    ipdb3 -cc $argv
+    #python3 -Werror -m ipdb -- -cc $argv
 end
 
 function rr
@@ -143,9 +151,9 @@ end
 
 
 function makeDocsBackup
-	 #Currently no 'Old', 'Wolfram Mathematica', or 'Backup' (of course)
-	 #tar -cvzf ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Old ~/Documents/Recentia ~/Documents/Models
-	 tar -cvf - ~/Documents/Notes ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz #Parallelizes compression using pigz
+    #Currently no 'Old', 'Wolfram Mathematica', or 'Backup' (of course)
+    #tar -cvzf ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Old ~/Documents/Recentia ~/Documents/Models
+    tar -cvf - ~/Documents/Notes ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz #Parallelizes compression using pigz
 end
 
 
@@ -185,6 +193,14 @@ function savehist --on-event fish_preexec
     echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
 end
 
+function camelcase
+    perl -pe 's#(_|^)(.)#\u$2#g'
+end
+
+function namekill
+    kill (pg $argv | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/')
+end
+
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
 set -x LESS_TERMCAP_md (printf "\033[01;31m")  
@@ -197,9 +213,10 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
-set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin 
+set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
+set -x PATH $PATH ~/Tech/small_scripts
 
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
