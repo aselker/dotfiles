@@ -213,3 +213,7 @@ set -x PYTHONBREAKPOINT ipdb.set_trace
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end
+
+set PYENV_ROOT ~/.pyenv
+command -v pyenv >/dev/null || set -x PATH $PATH $PYENV_ROOT/bin
+pyenv init - | source
