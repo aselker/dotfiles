@@ -32,8 +32,9 @@ set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set tw=140 " Text width, for gqq et al
-set formatoptions-=tc " Don't automatically wrap, even though tw!=0
+set textwidth=140
+set formatoptions-=t " Don't automatically wrap, even though tw!=0
+set formatoptions-=c " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
 set smartcase
 set mouse=a
@@ -41,7 +42,6 @@ set background=dark " so vim can choose better colors
 set termguicolors
 set clipboard=unnamedplus " so the default yank/etc. buffer is "+ for system clipboard
 filetype plugin indent on
-autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
 set splitbelow " By default, open new windows below, not above
 set splitright " By default, open new windows to the right, not left
 set nofixeol " Don't automatically add an EOL at the end of the file
@@ -49,7 +49,6 @@ set undofile
 set gdefault
 let mapleader = ","
 set scrolloff=4
-set list " Display tab characters
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
@@ -132,7 +131,8 @@ augroup remember_folds
   autocmd BufWinEnter * silent! loadview
 augroup END
 
-" Automatically reload files when they change on disk (warn if unsaved edits)
+" Automatically reload files when they change on disk (warn if unsaved edits); triggers after the user doesn't do anything for a moment
+" (CursorHold).
 set autoread
 au CursorHold * silent! checktime " The silent! prevents a bunch of warnings when editing the command window (q:)
 
@@ -151,6 +151,8 @@ au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 
 set foldmethod=syntax " Better for C++ and maybe in general
 autocmd FileType python set foldmethod=indent " Better than syntax for Python
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
+autocmd FileType python set list " Display tab characters
 autocmd FileType yaml,text set foldmethod=indent
 set foldcolumn=0
 "let g:pymode_folding = 1
@@ -244,6 +246,7 @@ let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '
 " requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
 " insert mode.  This also introduced a lag, but it seems more tolerable this way.
 Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
+Plug 'aselker/vim-easy-ctrl-o' " Ctrl-o with df or fd
 
 augroup load_on_insert " Load easyescape (and maybe others later!) on first entering insert mode
   autocmd!
