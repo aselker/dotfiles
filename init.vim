@@ -12,6 +12,11 @@
 "   * Try lewis6991/impatient.nvim once I'm on neovim 0.7+
 "   * https://www.reddit.com/r/neovim/comments/opipij/guide_tips_and_tricks_to_reduce_startup_and/
 "   * Once on 0.7+, switch to filetype.lua ('let g:do_filetype_lua = 1', 'let g:did_load_filetypes = 0')
+" It would be nice if 'n' always searched forwards, and 'N' backwards, whether the original search was '/' or '?'.
+" Fix semantic-highlighting Python after an @ sign used for matrix multiplication (the second argument gets highlighted bright blue like a
+" function name after "def")
+" vim-pencil breaks j and k (it makes them move a wrapped line even when preceded by a number).  Disabled, but it might do some nice things
+"  (does it?).  PR or fork it?  The offending code is vim-pencil/blob/master/autoload/pencil.vim lines 415-418, pretty sure.
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = 'python3.10'
@@ -145,9 +150,10 @@ au BufNewFile,BufRead *.hy set filetype=lisp
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better for Python; sometimes disabled in favor of SimpylFold
+autocmd FileType python set foldmethod=indent " Better than syntax for Python
 autocmd FileType yaml,text set foldmethod=indent
 set foldcolumn=0
+"let g:pymode_folding = 1
 
 
 " Keyboard shortcuts to format
@@ -209,8 +215,15 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
 
+"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+"let g:pymode_options_max_line_length = &textwidth
+"let g:pymode_options_colorcolumn = 0
+"let g:pymode_lint_on_write = 0
+""let g:pymode_syntax_space_errors = 0 " Disable highlighting trailing spaces (because I already do it more subtly)
+"let g:pymode_syntax_all = 0 " Disable all syntax highlighting
+
 "Plug 'airblade/vim-gitgutter'
-Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end
+Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end, to turn this on
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
@@ -325,20 +338,21 @@ let gitgutter_max_signs=5000
 "inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
 
 " vim-pencil stuff; also turns on spell-checking for some filetypes
+" Disabled because it messes with j and k
 set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd,text,rst call pencil#init() | set spell spl=en " en seems better than en_us
+  "autocmd FileType markdown,mkd,text,rst call pencil#init() 
+  autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
 augroup END
-autocmd FileType rst SoftPencil " Don't hard-wrap ReStructuredText files
 
-" j and k go by visible lines, not textual ones
-nnoremap j gj
-nnoremap k gk
-" use gj and gk for textual lines, when e.g. writing a macro and repeatability is important
-nnoremap gj j
-nnoremap gk k
+" j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j)
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <expr> <Up> v:count ? 'j' : 'gj'
+nnoremap <expr> <Down> v:count ? 'k' : 'gk'
+
 
 " Use f11 to toggle spellcheck
 nnoremap <silent> <F11> :set spell!<cr>
