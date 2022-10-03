@@ -70,7 +70,7 @@ bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
-bindsym $mod+x exec xkill
+bindsym --release $mod+x exec xkill
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
