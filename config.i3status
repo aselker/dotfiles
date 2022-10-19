@@ -9,7 +9,7 @@
 general {
         output_format = "i3bar"
         colors = true
-        interval = 6
+        interval = 2
 }
 
 order += "ipv6"
@@ -46,7 +46,7 @@ battery all {
 cpu_temperature 0 {
 
         format = "%degrees°"
-        path = "/sys/class/hwmon/hwmon5/temp1_input"
+        path = "/sys/class/hwmon/hwmon4/temp1_input"
         max_threshold = 85
 
 }
