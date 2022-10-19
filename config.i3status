@@ -46,7 +46,12 @@ battery all {
 cpu_temperature 0 {
 
         format = "%degrees°"
+<<<<<<< HEAD
         path = "/sys/class/hwmon/hwmon4/temp1_input"
+=======
+        #path = "/sys/class/hwmon/hwmon1/temp1_input"
+        path = "/sys/devices/platform/coretemp.0/hwmon/hwmon8/temp1_input"
+>>>>>>> origin/joby_xps_15
         max_threshold = 85
 
 }

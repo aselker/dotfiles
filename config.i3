@@ -62,7 +62,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+o exec nautilus
 
 # screen lock
-bindsym $mod+m exec i3lock -c 000000
+bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -c 000000 -n; killall -SIGUSR2 dunst"
 
 # toggle the touchscreen
 bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
@@ -70,7 +70,7 @@ bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
-bindsym $mod+x exec xkill
+bindsym --release $mod+x exec xkill
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
@@ -169,35 +169,35 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_left HDMI-0
-set $monitor_right DP-2
-set $monitor_small HDMI-0
+set $monitor_secondary eDP-1-1
+set $monitor_primary DP-1-1
+set $monitor_tertiary eDP-1-1
 
-workspace 0 output $monitor_small
-workspace 2 output $monitor_right
-workspace 3 output $monitor_left
-workspace 4 output $monitor_right
-workspace 5 output $monitor_left
-workspace 6 output $monitor_right
-workspace 7 output $monitor_left
-workspace 8 output $monitor_right
-workspace 9 output $monitor_left
-workspace 10 output $monitor_right
-workspace 11 output $monitor_left
-workspace 12 output $monitor_right
-workspace 13 output $monitor_small
-workspace 22 output $monitor_right
-workspace 23 output $monitor_left
-workspace 24 output $monitor_right
-workspace 25 output $monitor_left
-workspace 26 output $monitor_right
-workspace 27 output $monitor_left
-workspace 28 output $monitor_right
-workspace 29 output $monitor_left
-workspace 30 output $monitor_right
-workspace 31 output $monitor_left
-workspace 32 output $monitor_right
-workspace 35 output $monitor_small
+workspace 0 output $monitor_tertiary
+workspace 2 output $monitor_primary
+workspace 3 output $monitor_secondary
+workspace 4 output $monitor_primary
+workspace 5 output $monitor_secondary
+workspace 6 output $monitor_primary
+workspace 7 output $monitor_secondary
+workspace 8 output $monitor_primary
+workspace 9 output $monitor_secondary
+workspace 10 output $monitor_primary
+workspace 11 output $monitor_secondary
+workspace 12 output $monitor_primary
+workspace 13 output $monitor_tertiary
+workspace 22 output $monitor_primary
+workspace 23 output $monitor_secondary
+workspace 24 output $monitor_primary
+workspace 25 output $monitor_secondary
+workspace 26 output $monitor_primary
+workspace 27 output $monitor_secondary
+workspace 28 output $monitor_primary
+workspace 29 output $monitor_secondary
+workspace 30 output $monitor_primary
+workspace 31 output $monitor_secondary
+workspace 32 output $monitor_primary
+workspace 35 output $monitor_tertiary
 
 # Normal workspace keys
 bindsym $mod+grave workspace 0
