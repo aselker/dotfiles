@@ -8,6 +8,10 @@ font:
 
 #background_opacity: 0.9
 
+colors:
+  primary:
+    background: '#101010'
+
 key_bindings:
   - { key: N,        mods: Control|Shift, action: SpawnNewInstance }
   - { key: PageUp,   mods: Shift,         action: ScrollPageUp     }
