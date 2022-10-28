@@ -25,7 +25,6 @@
 "   * sexy_scroller.vim does n/N, but maybe causes artifacts?
 "   * https://www.reddit.com/r/vim/comments/2sltnr/smooth_scroll_search_motions/
 "   * https://github.com/karb94/neoscroll.nvim
-" Get interestingwords to work without overwriting my n and N mappings?
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = 'python3.10'
@@ -263,11 +262,15 @@ Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 " Toggle tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 
-" Disabled because it messes with n and N.  Specifically, it keeps my mappings (so n always goes down, and update the bottom bar count) from
-" working.  Maybe I can get it to work anyways somehow?
-"Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
-"let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-"let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
+let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
+let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsDefaultMappings = 0
+nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+nnoremap <silent> <leader>n :call WordNavigation(1)<cr>
+nnoremap <silent> <leader>N :call WordNavigation(0)<cr>
 
 " NOTE: easyescape seems slow to start, so if you load it on startup, it slows down startup by a lot (~100ms).  I think it's because it
 " requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
@@ -386,7 +389,7 @@ set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  "autocmd FileType markdown,mkd,text,rst call pencil#init() 
+  autocmd FileType markdown,mkd,text,rst call pencil#init()
   autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
 augroup END
 
