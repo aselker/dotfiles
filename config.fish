@@ -196,7 +196,7 @@ function savehist --on-event fish_preexec
 end
 
 function namekill
-    kill (pg $argv | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/')
+    kill (pg $argv[1] | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
 end
 
 # These two are from https://dev.to/acro5piano/convert-snakecase-to-camelcase-in-vim-47lf
