@@ -21,19 +21,23 @@
 " smoothie makes the cursor moves slower sometimes.  This is sometimes necessary, since the cursor can't be off the screen, but someitmes
 "  happens when it wouldn't have to, e.g. gg or G when the beginning/end of the file is already in view.  Disabled experimental bindings
 "  (gg, G), does this happen with any others?
-" smoothie doesn't work for search (it's not designed to), or for page up / down.
+" Smooth scrolling with search?
+"   * smoothie doesn't work for search, or for page up / down.
 "   * sexy_scroller.vim does n/N, but maybe causes artifacts?
 "   * https://www.reddit.com/r/vim/comments/2sltnr/smooth_scroll_search_motions/
 "   * https://github.com/karb94/neoscroll.nvim
+"   * I do zz after my searches, so maybe now they'll work?
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = 'python3.10'
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
+" Consider adding cursorlineopt+=screenline
 set cursorline
-"set nocursorline
-hi CursorLine guibg=#000000
+hi CursorLine guibg=#303030
+set cursorcolumn
+hi CursorColumn guibg=#303030
 set tabstop=4
 set shiftwidth=4 " aka sw
 set noexpandtab
@@ -69,6 +73,7 @@ let &showbreak = '↳ '
 "set cpoptions+=n " Show the showbreak character in the line-number column -- doesn't seem to work?
 set breakindent " When wrapping a line, indent the wrapped part the same amount that the line was indented
 set linebreak " Word-wrapping, basically
+set hidden " Allow switching buffers without saving or discarding changes
 
 " C and D act to end of line, Y should too
 nmap Y y$
@@ -76,8 +81,8 @@ nmap Y y$
 " Center the search hit so it's easier to see - the hn fixes search count (e.g. "11/50" in the bottom bar), though it might break in the
 " first column?
 " Also, make n always go downwards, and N always upwards, regardless of whether / or ? was used to search
-nnoremap <expr> n (v:searchforward ? 'nzzzvhn' : 'Nzzzvhn')
-nnoremap <expr> N (v:searchforward ? 'Nzzzvhn' : 'nzzzvhn')
+nnoremap <expr> n (v:searchforward ? 'nzzzvhn' : 'NzzzvhN')
+nnoremap <expr> N (v:searchforward ? 'Nzzzvhn' : 'nzzzvhN')
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -98,6 +103,11 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Use C-n and C-p to move between files
+nnoremap <C-n> :n<CR>
+nnoremap <C-p> :N<CR>
+
 
 " Use s to open the cmd window
 nnoremap s q:
@@ -339,7 +349,7 @@ nmap <Leader>xc <Plug>(ExchangeClear)
 Plug 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
 
-"Plug 'psliwka/vim-smoothie'
+Plug 'psliwka/vim-smoothie'
 "let g:smoothie_experimental_mappings = 1 " gg and G
 
 " Disabled plugins
