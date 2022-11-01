@@ -26,18 +26,14 @@
 "   * sexy_scroller.vim does n/N, but maybe causes artifacts?
 "   * https://www.reddit.com/r/vim/comments/2sltnr/smooth_scroll_search_motions/
 "   * https://github.com/karb94/neoscroll.nvim
-"   * I do zz after my searches, so maybe now they'll work?
+"   * I do zz after my searches, so smoothie _should_ work, but it doesn't.  It seems a bit more complex than just, "running zvhn
+"   immediately after zz makes the scroll finish early".
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = 'python3.10'
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
-" Consider adding cursorlineopt+=screenline
-set cursorline
-hi CursorLine guibg=#303030
-set cursorcolumn
-hi CursorColumn guibg=#303030
 set tabstop=4
 set shiftwidth=4 " aka sw
 set noexpandtab
@@ -141,6 +137,14 @@ cmap <M-e> <C-f>
 " know a better way to do it
 "nnoremap cw ce
 "nnoremap cW cE
+
+set cursorline
+hi CursorLine guibg=#303030
+set cursorcolumn
+hi CursorColumn guibg=#303030
+" cursorlineopt=screenline,number
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
