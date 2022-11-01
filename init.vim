@@ -352,6 +352,7 @@ nmap <Leader>xc <Plug>(ExchangeClear)
 
 Plug 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
+let g:gundo_prefer_python3 = 1
 
 Plug 'psliwka/vim-smoothie'
 "let g:smoothie_experimental_mappings = 1 " gg and G

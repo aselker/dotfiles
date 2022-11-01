@@ -44,6 +44,15 @@ abbr -a gits "git s"
 abbr -a which "command -v"
 abbr -a g "git"
 
+abbr -a .......... "../../../../../../../../.."
+abbr -a ......... "../../../../../../../.."
+abbr -a ........ "../../../../../../.."
+abbr -a ....... "../../../../../.."
+abbr -a ...... "../../../../.."
+abbr -a ..... "../../../.."
+abbr -a .... "../../.."
+abbr -a ... "../.."
+
 function xterm
     command xterm -bg black -fg white
 end
