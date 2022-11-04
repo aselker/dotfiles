@@ -39,9 +39,9 @@ abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
-abbr -a gitpush "git push"
-abbr -a gitpull "git pull"
-abbr -a gitdiff "git diff"
+# abbr -a gitpush "git push"
+# abbr -a gitpull "git pull"
+# abbr -a gitdiff "git diff"
 abbr -a which "command -v"
 abbr -a g "git"
 
@@ -73,6 +73,8 @@ end
 function ipd --wraps=ipdb3
     #python3 -Werror (command -v ipdb3) -cc $argv
     ipdb3 -cc $argv
+    #ipdb3 -c "c" -c "q" $argv
+    #env PYTHONWARNINGS=error ipdb3 -cc $argv
     #python3 -Werror -m ipdb -- -cc $argv
 end
 
@@ -196,12 +198,16 @@ function savehist --on-event fish_preexec
     echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
 end
 
+function namekill
+    kill (pg $argv[1] | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
+end
+
+# These two are from https://dev.to/acro5piano/convert-snakecase-to-camelcase-in-vim-47lf
 function camelcase
     perl -pe 's#(_|^)(.)#\u$2#g'
 end
-
-function namekill
-    kill (pg $argv | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/')
+function snakecase
+    perl -pe 's#([A-Z])#_\L$1#g' | perl -pe 's#^_##'
 end
 
 #Settings for color output in man pages

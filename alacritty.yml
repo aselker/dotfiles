@@ -4,9 +4,15 @@ shell:
     - --login
 
 font:
-  size: 10
+  size: 11
 
+# Removed because picom/compton can do it better: transparent only when not focused.
 #background_opacity: 0.9
+
+colors:
+  primary:
+    #background: '#101010'
+    background: '#000000'
 
 key_bindings:
   - { key: N,        mods: Control|Shift, action: SpawnNewInstance }
