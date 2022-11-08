@@ -77,8 +77,8 @@ nmap Y y$
 " Center the search hit so it's easier to see - the hn fixes search count (e.g. "11/50" in the bottom bar), though it might break in the
 " first column?
 " Also, make n always go downwards, and N always upwards, regardless of whether / or ? was used to search
-nnoremap <expr> n (v:searchforward ? 'nzzzvhn' : 'NzzzvhN')
-nnoremap <expr> N (v:searchforward ? 'Nzzzvhn' : 'nzzzvhN')
+nnoremap <expr> n (v:searchforward ? 'nzvzzhn' : 'NzvzzhN')
+nnoremap <expr> N (v:searchforward ? 'Nzvzzhn' : 'nzvzzhN')
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -357,6 +357,8 @@ let g:gundo_prefer_python3 = 1
 Plug 'psliwka/vim-smoothie'
 "let g:smoothie_experimental_mappings = 1 " gg and G
 
+Plug 'jamessan/vim-gnupg'
+
 " Disabled plugins
 "Plug 'karb94/neoscroll.nvim' " Note the lua call after plug#end.  This doesn't seem to work, though.
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -400,7 +402,6 @@ let gitgutter_max_signs=5000
 
 " vim-pencil stuff; also turns on spell-checking for some filetypes
 " Disabled because it messes with j and k
-set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
