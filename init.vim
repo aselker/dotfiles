@@ -98,9 +98,11 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Use C-n and C-p to move between files
+" Use C-n, C-p, C-b to move between files
 nnoremap <C-n> :n<CR>
 nnoremap <C-p> :N<CR>
+" Note the trailing space after :b
+nnoremap <C-b> :b 
 
 
 " Use s to open the cmd window
