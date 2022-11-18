@@ -28,9 +28,11 @@
 "   * https://github.com/karb94/neoscroll.nvim
 "   * I do zz after my searches, so smoothie _should_ work, but it doesn't.  It seems a bit more complex than just, "running zvhn
 "   immediately after zz makes the scroll finish early".
+" interestingwords seems kinda broken.  Sometimes when I switch buffers, it gets confused.
+" I have to modify black-macchiato and vim-peekaboo locally.  Fork them?
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
-let g:python3_host_prog = 'python3.10'
+let g:python3_host_prog = '/home/adam.selker/.pyenv/versions/radar-dev/bin/python3'
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
@@ -103,7 +105,6 @@ nnoremap <C-l> <C-w>l
 " Use C-n and C-p to move between files
 nnoremap <C-n> :n<CR>
 nnoremap <C-p> :N<CR>
-
 
 " Use s to open the cmd window
 nnoremap s q:
@@ -182,9 +183,9 @@ autocmd FileType yaml,text set foldmethod=indent
 set foldcolumn=0
 "let g:pymode_folding = 1
 
-
 " Keyboard shortcuts to format
 au FileType python nnoremap <Leader>f :Black<cr>
+au FileType python xmap <Leader>f :BlackMacchiato<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 
 " let :W mean :w, and :Q mean :q
@@ -271,6 +272,12 @@ let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'd
 
 Plug 'psf/black', {'tag': '19.10b0', 'on': 'Black'} " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
+
+Plug 'smbl64/vim-black-macchiato'
+" In black-macchiato.vim, replace:
+" silent execute a:firstline . "," . a:lastline . "!" . cmd
+" with
+" silent execute a:firstline . "," . a:lastline . "!" . cmd . " -l " . &textwidth
 
 Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 " Toggle tagbar with F8
@@ -405,15 +412,20 @@ let gitgutter_max_signs=5000
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd,text,rst call pencil#init()
+  "autocmd FileType markdown,mkd,text,rst call pencil#init()
   autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
 augroup END
 
-" j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j)
+" j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j).
+" Note that vim-pencil interferes with this.
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
 nnoremap <expr> <Down> v:count ? 'j' : 'gj'
 nnoremap <expr> <Up> v:count ? 'k' : 'gk'
+vnoremap <expr> j v:count ? 'j' : 'gj'
+vnoremap <expr> k v:count ? 'k' : 'gk'
+vnoremap <expr> <Down> v:count ? 'j' : 'gj'
+vnoremap <expr> <Up> v:count ? 'k' : 'gk'
 
 
 " Use f11 to toggle spellcheck

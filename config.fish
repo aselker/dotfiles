@@ -12,9 +12,11 @@ function cl --wraps=cd
   cd $argv; and ls
 end
 
-function pg --wraps=rg 
-    ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
-end
+#function pg --wraps=rg 
+#    ps -efly | head -n1
+#    ps -efly | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+#end
+abbr -a pg procs
 
 function hisg --wraps rg
     rg $argv ~/Notes/cmd_history

@@ -18,10 +18,10 @@ font pango:DejaVu Sans Mono 8
 
 # Border settings.
 # normal # -> has title bar and #-pixel border, pixel # -> just the border, none -> no border
-new_window pixel 1
-new_float pixel 1
-#new_window none
-#new_float none
+#new_window pixel 1
+#new_float pixel 1
+new_window none
+new_float none
 
 # Hotkey to toggle borders
 bindsym $mod+b border toggle
