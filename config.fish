@@ -24,6 +24,7 @@ alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
 alias rgc="rg --no-ignore -tcpp" # ripgrep for c++
 alias frg="find | rg"
+alias fd="fdfind"
 
 # Safety!
 alias cp "cp -i"
@@ -38,9 +39,9 @@ abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
-abbr -a gitpush "git push"
-abbr -a gitpull "git pull"
-abbr -a gitdiff "git diff"
+# abbr -a gitpush "git push"
+# abbr -a gitpull "git pull"
+# abbr -a gitdiff "git diff"
 abbr -a which "command -v"
 abbr -a g "git"
 
@@ -62,7 +63,7 @@ function ev --wraps=evince
 end
 
 function loc --wraps=locate
-    locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ | rg -v \^$HOME/backup-Joby/
+	locate $argv | rg -v $argv[1].\*/ | rg -v \^$HOME/.local/share/nvim/ | rg -v \^$HOME/alt-Joby/ 
 end
 
 function xcl --wraps=xclip
@@ -72,6 +73,8 @@ end
 function ipd --wraps=ipdb3
     #python3 -Werror (command -v ipdb3) -cc $argv
     ipdb3 -cc $argv
+    #ipdb3 -c "c" -c "q" $argv
+    #env PYTHONWARNINGS=error ipdb3 -cc $argv
     #python3 -Werror -m ipdb -- -cc $argv
 end
 
@@ -160,14 +163,7 @@ end
 
 
 function makeDocsBackup
-    #Currently no 'Old', 'Wolfram Mathematica', or 'Backup' (of course)
-    #tar -cvzf ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Old ~/Documents/Recentia ~/Documents/Models
-    tar -cvf - ~/Documents/Notes ~/Documents/School ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz #Parallelizes compression using pigz
-end
-
-
-function sendtopeachstone
-  rsync -zlr --progress $argv[1] 192.168.0.184:\"$argv[2]\"
+	 tar -cvf - ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old ~/Documents/Careers ~/Documents/Joby | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz
 end
 
 
@@ -202,12 +198,16 @@ function savehist --on-event fish_preexec
     echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
 end
 
+function namekill
+    kill (pg $argv[1] | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
+end
+
+# These two are from https://dev.to/acro5piano/convert-snakecase-to-camelcase-in-vim-47lf
 function camelcase
     perl -pe 's#(_|^)(.)#\u$2#g'
 end
-
-function namekill
-    kill (pg $argv | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/')
+function snakecase
+    perl -pe 's#([A-Z])#_\L$1#g' | perl -pe 's#^_##'
 end
 
 #Settings for color output in man pages
@@ -222,7 +222,7 @@ set -x LESS_TERMCAP_us (printf "\033[01;32m")
 set -gx EDITOR nvim
 set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 
-set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin
+set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin ~/.cabal/bin
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
 set -x PATH $PATH ~/Tech/small_scripts
@@ -235,7 +235,7 @@ set -x PYTHONBREAKPOINT ipdb.set_trace
 
 # source ~/ros_catkin_ws/install_isolated/share/rosbash/rosfish
 # bass source ~/catkin_ws/devel/setup.bash
-# source ~/.cargo/env
+ source ~/.cargo/env
 
 # The next line updates PATH for the Google Cloud SDK.
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end

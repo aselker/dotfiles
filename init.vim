@@ -1,5 +1,4 @@
 " TODO:
-" More colors for interesting-words
 " Make comments more visible
 " C++ tooling, e.g. CTags
 " When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
@@ -17,15 +16,22 @@
 " function name after "def")
 " vim-pencil breaks j and k (it makes them move a wrapped line even when preceded by a number).  Disabled, but it might do some nice things
 "  (does it?).  PR or fork it?  The offending code is vim-pencil/blob/master/autoload/pencil.vim lines 415-418, pretty sure.
+" vim-peekaboo map is a bit ugly.  Consider removing it, and instead setting peekaboo's prefix to <leader>?
+" In command mode, bind alt+e to ctrl-f, for consistency with fish cmd line
+" smoothie makes the cursor moves slower sometimes.  This is sometimes necessary, since the cursor can't be off the screen, but someitmes
+"  happens when it wouldn't have to, e.g. gg or G when the beginning/end of the file is already in view.  Disabled experimental bindings
+"  (gg, G), does this happen with any others?
+" Smooth scrolling with search?
+"   * smoothie doesn't work for search, or for page up / down.
+"   * sexy_scroller.vim does n/N, but maybe causes artifacts?
+"   * https://www.reddit.com/r/vim/comments/2sltnr/smooth_scroll_search_motions/
+"   * https://github.com/karb94/neoscroll.nvim
+"   * I do zz after my searches, so smoothie _should_ work, but it doesn't.  It seems a bit more complex than just, "running zvhn
+"   immediately after zz makes the scroll finish early".
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
-let g:python3_host_prog = 'python3.10'
-"let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
-set cursorline
-"set nocursorline
-hi CursorLine guibg=#000000
 set tabstop=4
 set shiftwidth=4 " aka sw
 set noexpandtab
@@ -52,7 +58,7 @@ set scrolloff=4
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
-set completeopt+=preview " show autocomplete in a split
+set completeopt+=preview " show autocomplete in a menu
 set completeopt+=longest " Insert the longest common prefix of all matches
 set lazyredraw " Makes macros faster, among other things - but also makes search index not update when you press n or N if you also have the "nzzzv" bindings below
 set updatetime=100
@@ -61,14 +67,16 @@ let &showbreak = '↳ '
 "set cpoptions+=n " Show the showbreak character in the line-number column -- doesn't seem to work?
 set breakindent " When wrapping a line, indent the wrapped part the same amount that the line was indented
 set linebreak " Word-wrapping, basically
+set hidden " Allow switching buffers without saving or discarding changes
 
 " C and D act to end of line, Y should too
 nmap Y y$
 
 " Center the search hit so it's easier to see - the hn fixes search count (e.g. "11/50" in the bottom bar), though it might break in the
 " first column?
-nnoremap n nzzzvhn
-nnoremap N Nzzzvhn
+" Also, make n always go downwards, and N always upwards, regardless of whether / or ? was used to search
+nnoremap <expr> n (v:searchforward ? 'nzvzzhn' : 'NzvzzhN')
+nnoremap <expr> N (v:searchforward ? 'Nzvzzhn' : 'nzvzzhN')
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -76,10 +84,6 @@ imap <F1> <Esc>
 
 " More typo reduction
 "noremap q: :q
-
-" Swap @ and q, because I (should) use q more
-nnoremap @ q
-nnoremap q @
 
 " ctrl-q to run a macro in normal mode
 inoremap <C-q> <C-o>@
@@ -94,6 +98,13 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Use C-n, C-p, C-b to move between files
+nnoremap <C-n> :n<CR>
+nnoremap <C-p> :N<CR>
+" Note the trailing space after :b
+nnoremap <C-b> :b 
+
+
 " Use s to open the cmd window
 nnoremap s q:
 
@@ -103,6 +114,12 @@ noremap <Leader>r :syntax sync fromstart<CR>
 " Swap words
 nnoremap <silent> <Leader>p "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
 "nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
+
+" Hotkey to reload the spell file, because it's synced between computers
+nnoremap <leader>m mkspell! ~/.config/nvim/spell/en.utf-8.add
+
+" For consistency with fish, use alt-e to edit command in window, rather than ctrl-f
+cmap <M-e> <C-f>
 
 " Three failed tries at a greek-letter hotkey
 "inoremap <C-i> "<C-k>"nr2char(getchar())*
@@ -120,6 +137,14 @@ nnoremap <silent> <Leader>p "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 " know a better way to do it
 "nnoremap cw ce
 "nnoremap cW cE
+
+set cursorline
+hi CursorLine guibg=#303030
+set cursorcolumn
+hi CursorColumn guibg=#303030
+" cursorlineopt=screenline,number
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
 
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -217,6 +242,13 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
 
+Plug 'junegunn/vim-peekaboo'
+" Swap @ and q, because I (should) use q more
+" NOTE: In vim-peekaboo/plugin/peekaboo.vim, change the mapping from @ to q
+nnoremap @ q
+
+
+" I think I disabled this because it conflicted with semantic highlighting, even with pymode_syntax_all=0
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 "let g:pymode_options_max_line_length = &textwidth
 "let g:pymode_options_colorcolumn = 0
@@ -224,14 +256,20 @@ Plug 'Konfekt/FastFold'
 ""let g:pymode_syntax_space_errors = 0 " Disable highlighting trailing spaces (because I already do it more subtly)
 "let g:pymode_syntax_all = 0 " Disable all syntax highlighting
 
-"Plug 'airblade/vim-gitgutter'
-Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end, to turn this on
+Plug 'wellle/context.vim'
+let g:context_highlight_tag = '<hide>'
+" TODO: Switch to this once on 0.7
+"Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'nvim-treesitter/nvim-treesitter-context'
+
+Plug 'airblade/vim-gitgutter'
+"Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end, to turn this on
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3', 'darkorchid3', 'darkgoldenrod2']}
 
-Plug 'psf/black', { 'tag': '19.10b0', 'on': 'Black'} " Python formatter
+Plug 'psf/black', {'tag': '19.10b0', 'on': 'Black'} " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
 Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
@@ -241,12 +279,18 @@ nmap <F8> :TagbarToggle<CR>
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsDefaultMappings = 0
+nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+nnoremap <silent> <leader>n :call WordNavigation(1)<cr>
+nnoremap <silent> <leader>N :call WordNavigation(0)<cr>
 
 " NOTE: easyescape seems slow to start, so if you load it on startup, it slows down startup by a lot (~100ms).  I think it's because it
 " requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
 " insert mode.  This also introduced a lag, but it seems more tolerable this way.
 Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
-Plug 'aselker/vim-easy-ctrl-o' " Ctrl-o with df or fd
+Plug 'aselker/vim-easy-ctrl-o' " Ctrl-o with cv or vc
 
 augroup load_on_insert " Load easyescape (and maybe others later!) on first entering insert mode
   autocmd!
@@ -254,7 +298,7 @@ augroup load_on_insert " Load easyescape (and maybe others later!) on first ente
                      \| autocmd! load_on_insert
 augroup END
 
-Plug 'timakro/vim-yadi' " Automatic indentation-type detection (tabs or how many spaces?)
+Plug 'timakro/vim-yadi', { 'branch': 'main' } " Automatic indentation
 autocmd BufRead * DetectIndent " run vim-yadi
 
 Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic highlighting
@@ -265,15 +309,21 @@ let g:colorcoder_saturation = 0.7
 "Plug 'ycm-core/YouCompleteMe'
 ""let g:loaded_youcompleteme = 1 # Disable YouCompleteMe
 
-"Disabled in favor of YouCompleteMe, then re-enabled
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
-autocmd FileType text call deoplete#custom#option('auto_complete', v:false)
+autocmd FileType text let g:deoplete#enable_at_startup = 0
 Plug 'deoplete-plugins/deoplete-jedi'
 
+" Disabled because it causes lag.
+" NOTE: This conflicts with python-mode
+"Plug 'davidhalter/jedi-vim'
+"let g:jedi#goto_command = "<leader>a" " Defaults to <leader>d
+"let g:jedi#goto_stubs_command = "<leader>v" " Defaults to <leader>s
+"let g:jedi#use_splits_not_buffers = "left"
+
 " This doesn't seem to work...
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
+"Plug 'Shougo/echodoc.vim'
+"let g:echodoc#enable_at_startup = 1
 "let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
 "autocmd FileType text let g:echodoc#enable_at_startup = 0
 "let g:echodoc#type="virtual"
@@ -285,6 +335,11 @@ set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT
 " To use a custom highlight for the float window,
 "change Pmenu to your highlight group
 "highlight link EchoDocFloat Pmenu
+
+Plug 'hylang/vim-hy'
+let g:hy_enable_conceal=1 " This also highlights concealed chars, for some reason, so override that.
+highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+Plug 'atisharma/vim-hyfold'
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
@@ -299,9 +354,13 @@ Plug 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
 let g:gundo_prefer_python3 = 1
 
+Plug 'psliwka/vim-smoothie'
+"let g:smoothie_experimental_mappings = 1 " gg and G
+
+Plug 'jamessan/vim-gnupg'
+
 " Disabled plugins
-"Plug 'psliwka/vim-smoothie'
-"let g:smoothie_experimental_mappings = 1
+"Plug 'karb94/neoscroll.nvim' " Note the lua call after plug#end.  This doesn't seem to work, though.
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'MattesGroeger/vim-bookmarks'
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
@@ -310,7 +369,8 @@ let g:gundo_prefer_python3 = 1
 "Plug 'jamessan/vim-gnupg'
 "Plug 'joom/latex-unicoder.vim'
 call plug#end()
-lua require('gitsigns').setup()
+"lua require('gitsigns').setup()
+"lua require('neoscroll').setup()
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
@@ -342,19 +402,18 @@ let gitgutter_max_signs=5000
 
 " vim-pencil stuff; also turns on spell-checking for some filetypes
 " Disabled because it messes with j and k
-set nocompatible
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  "autocmd FileType markdown,mkd,text,rst call pencil#init() 
+  autocmd FileType markdown,mkd,text,rst call pencil#init()
   autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
 augroup END
 
 " j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j)
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
-nnoremap <expr> <Up> v:count ? 'j' : 'gj'
-nnoremap <expr> <Down> v:count ? 'k' : 'gk'
+nnoremap <expr> <Down> v:count ? 'j' : 'gj'
+nnoremap <expr> <Up> v:count ? 'k' : 'gk'
 
 
 " Use f11 to toggle spellcheck
