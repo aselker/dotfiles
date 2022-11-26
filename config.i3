@@ -86,7 +86,7 @@ bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl g
 bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
-bindsym XF86Search exec xset dpms force off
+bindsym --release XF86Search exec xset dpms force off
 
 # kill focused window
 bindsym $mod+q kill

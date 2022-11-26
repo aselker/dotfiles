@@ -20,6 +20,7 @@ alias nv="nvim" # So flag completion is better
 alias rgp="rg -p --no-heading " # ripgrep for piping
 alias rgc="rg --no-ignore -tcpp" # ripgrep for c++
 alias frg="find | rg"
+alias fd="fdfind"
 
 # Safety!
 alias cp "cp -i"
