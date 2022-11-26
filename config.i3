@@ -18,10 +18,10 @@ font pango:DejaVu Sans Mono 8
 
 # Border settings.
 # normal # -> has title bar and #-pixel border, pixel # -> just the border, none -> no border
-new_window pixel 1
-new_float pixel 1
-#new_window none
-#new_float none
+#new_window pixel 1
+#new_float pixel 1
+new_window none
+new_float none
 
 # Hotkey to toggle borders
 bindsym $mod+b border toggle
@@ -62,15 +62,15 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+o exec nautilus
 
 # screen lock
-bindsym $mod+m exec i3lock -c 000000
+bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
 
-# toggle the touchscreen
-bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
+# toggle the touchscreen - disabled on laptop without touchscreen.  Maybe this should disable the touchpad?
+# bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
 
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
-bindsym $mod+x exec xkill
+bindsym --release $mod+x exec xkill
 
 # volume and brightness control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
@@ -81,9 +81,9 @@ bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
 bindsym $mod+apostrophe exec amixer set Capture toggle
 
-bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.80 - $(brightnessctl max) * 0.001; if ($(brightnessctl get) <= 1) 0 else if (x < 0) 1 else x\\" | bc | awk '{printf(\\"%d\n\\",$1 + 0.5)}')"
-bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) == 0) 1 else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
-bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
+bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.80; if (x < 0) 0 else if (x > ($(brightnessctl get)-1)) ($(brightnessctl get)-1) else x \\" | bc | awk '{printf(\\"%d\n\\",$1 + 0.5)}')"
+bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) < 4) ($(brightnessctl get) + 1) else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
+bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 0
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 bindsym --release XF86Search exec xset dpms force off
@@ -167,35 +167,35 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_left HDMI-0
-set $monitor_right DP-2
-set $monitor_small HDMI-0
+set $monitor_primary DP-0
+set $monitor_secondary HDMI-0
+set $monitor_tertiary HDMI-0
 
-workspace 0 output $monitor_small
-workspace 2 output $monitor_right
-workspace 3 output $monitor_left
-workspace 4 output $monitor_right
-workspace 5 output $monitor_left
-workspace 6 output $monitor_right
-workspace 7 output $monitor_left
-workspace 8 output $monitor_right
-workspace 9 output $monitor_left
-workspace 10 output $monitor_right
-workspace 11 output $monitor_left
-workspace 12 output $monitor_right
-workspace 13 output $monitor_small
-workspace 22 output $monitor_right
-workspace 23 output $monitor_left
-workspace 24 output $monitor_right
-workspace 25 output $monitor_left
-workspace 26 output $monitor_right
-workspace 27 output $monitor_left
-workspace 28 output $monitor_right
-workspace 29 output $monitor_left
-workspace 30 output $monitor_right
-workspace 31 output $monitor_left
-workspace 32 output $monitor_right
-workspace 35 output $monitor_small
+workspace 0 output $monitor_tertiary
+workspace 2 output $monitor_primary
+workspace 3 output $monitor_secondary
+workspace 4 output $monitor_primary
+workspace 5 output $monitor_secondary
+workspace 6 output $monitor_primary
+workspace 7 output $monitor_secondary
+workspace 8 output $monitor_primary
+workspace 9 output $monitor_secondary
+workspace 10 output $monitor_primary
+workspace 11 output $monitor_secondary
+workspace 12 output $monitor_primary
+workspace 13 output $monitor_tertiary
+workspace 22 output $monitor_primary
+workspace 23 output $monitor_secondary
+workspace 24 output $monitor_primary
+workspace 25 output $monitor_secondary
+workspace 26 output $monitor_primary
+workspace 27 output $monitor_secondary
+workspace 28 output $monitor_primary
+workspace 29 output $monitor_secondary
+workspace 30 output $monitor_primary
+workspace 31 output $monitor_secondary
+workspace 32 output $monitor_primary
+workspace 35 output $monitor_tertiary
 
 # Normal workspace keys
 bindsym $mod+grave workspace 0

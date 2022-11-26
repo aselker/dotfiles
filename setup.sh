@@ -1,17 +1,24 @@
 #!/usr/bin/bash
 
+# Set up a new machine.  I do not recommend running this!  It's more of a reference.
+
 # TODO:
-# * Bashrc is not perfect, might have two copies of the "don't do anything"
-# * LADSPA setup
-# * Wallpaper
+# * LADSPA setup, maybe
 # * Symlink the rest of the config files
 # * List firefox addons
-# * Small scripts
-# * brightnessctl setuid or something?
+# * Small scripts, and symlink ocr_cp etc. to ~/.local/bin
+# * brightnessctl setuid or something?  This might depend on the hardware
 # * Replace fish-in-bashrc with chsh like normal.  Or not, chsh doesn't seem to work on Joby machines.
+# * Fix adding the fish thing to the top of .bashrc.  It duplicates the first bit that makes the bashrc not do anything if not interactive, and also the string is embedded incorrectly in this script.
+# * Make sure this is still correct for Ubuntu 22.10 and beyond
+# 	* Syncthing repo still necessary?
+# 	* Signal repo
 
 # Stuff this won't do:
 # * Firefox addons
+# * Wallpaper files
+# * Syncthing setup, since other computers need to add the new one
+# * Copy xorg.conf.d files
 
 echo "# If not running interactively, don't do anything
 case $- in
@@ -32,11 +39,10 @@ printf "Package: *\nPin: origin apt.syncthing.net\nPin-Priority: 990\n" | sudo t
 
 # Signal repo
 echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" |   sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
-wget -O- https://updates.signal.org/desktop/apt/keys.asc |\
-  sudo apt-key add -
+wget -O- https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
 
 sudo apt update
-sudo apt install fish neovim exuberant-ctags syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh tesseract-ocr
+sudo apt install fish neovim syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh tesseract-ocr i3-wm
 pip3 install black
 
 # Alacritty
@@ -48,9 +54,16 @@ cargo install ripgrep
 
 mkdir -p ~/.config/fish
 ln -s ~/.dotfiles/config.fish ~/.config/fish/config.fish
-mkdir -p ~/.config/nvim/
+mkdir -p ~/.config/nvim
 ln -s ~/.dotfiles/init.vim ~/.config/nvim/init.vim
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+mkdir -p ~/.config/i3
+ln -s ~/.dotfiles/config.i3 ~/.config/i3/config
+ln -s ~/.dotfiles/mem.sh ~/.config/i3/mem.sh
+mkdir -p ~/.config/i3status
+ln -s ~/.dotfiles/config.i3status ~/.config/i3status/config
+mkdir -p ~/.config/alacritty
+ln -s ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml
+ln -s ~/.dotfiles/Xresources ~/.Xresources
 
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

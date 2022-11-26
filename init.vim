@@ -1,29 +1,46 @@
 " TODO:
-" .txt files set foldmethod=manual, but should be indent by default.
-" More colors for interesting-words
 " Make comments more visible
 " C++ tooling, e.g. CTags
 " When exit with jk using easyescape, and the line is blank except for whitespace, pressing "." afterwards
 "  doesn't repeat the action, because the jk exit does stuff (it deletes the whitespace).  Same problem I had
 "  before with filling the default register with the deleted whitespace.
-"
 " Rewriting the screen in gnome terminal was sometimes slow, and both relativenumber and cursorline cause a
-" lot of rewriting.  But in alacritty + compton, it's faster.
+"  lot of rewriting.  But in alacritty + compton, it's faster.
+" Autocomplete could be better.  Try coc.nvim?
+" Startup could be faster.  About 150ms right now.
+"   * Try lewis6991/impatient.nvim once I'm on neovim 0.7+
+"   * https://www.reddit.com/r/neovim/comments/opipij/guide_tips_and_tricks_to_reduce_startup_and/
+"   * Once on 0.7+, switch to filetype.lua ('let g:do_filetype_lua = 1', 'let g:did_load_filetypes = 0')
+" It would be nice if 'n' always searched forwards, and 'N' backwards, whether the original search was '/' or '?'.
+" Fix semantic-highlighting Python after an @ sign used for matrix multiplication (the second argument gets highlighted bright blue like a
+" function name after "def")
+" vim-pencil breaks j and k (it makes them move a wrapped line even when preceded by a number).  Disabled, but it might do some nice things
+"  (does it?).  PR or fork it?  The offending code is vim-pencil/blob/master/autoload/pencil.vim lines 415-418, pretty sure.
+" vim-peekaboo map is a bit ugly.  Consider removing it, and instead setting peekaboo's prefix to <leader>?
+" In command mode, bind alt+e to ctrl-f, for consistency with fish cmd line
+" smoothie makes the cursor moves slower sometimes.  This is sometimes necessary, since the cursor can't be off the screen, but someitmes
+"  happens when it wouldn't have to, e.g. gg or G when the beginning/end of the file is already in view.  Disabled experimental bindings
+"  (gg, G), does this happen with any others?
+" Smooth scrolling with search?
+"   * smoothie doesn't work for search, or for page up / down.
+"   * sexy_scroller.vim does n/N, but maybe causes artifacts?
+"   * https://www.reddit.com/r/vim/comments/2sltnr/smooth_scroll_search_motions/
+"   * https://github.com/karb94/neoscroll.nvim
+"   * I do zz after my searches, so smoothie _should_ work, but it doesn't.  It seems a bit more complex than just, "running zvhn
+"   immediately after zz makes the scroll finish early".
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 
 set modelines=0 " Because they're vulnerable
-set cursorline
-"set nocursorline
-hi CursorLine guibg=#000000
 set tabstop=4
 set shiftwidth=4 " aka sw
 set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set tw=120 " Text width, for gqq et al
-set formatoptions-=tc " Don't automatically wrap, even though tw!=0
+set textwidth=140
+set formatoptions-=t " Don't automatically wrap, even though tw!=0
+set formatoptions-=c " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
 set smartcase
 set mouse=a
@@ -31,7 +48,6 @@ set background=dark " so vim can choose better colors
 set termguicolors
 set clipboard=unnamedplus " so the default yank/etc. buffer is "+ for system clipboard
 filetype plugin indent on
-autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
 set splitbelow " By default, open new windows below, not above
 set splitright " By default, open new windows to the right, not left
 set nofixeol " Don't automatically add an EOL at the end of the file
@@ -39,20 +55,28 @@ set undofile
 set gdefault
 let mapleader = ","
 set scrolloff=4
-set list " Display tabs
 "set listchars=tab:>·,trail:·
 set notimeout
 set ttimeout
-set completeopt-=preview " Don't show autocomplete in a split
-set lazyredraw " Makes macros faster, among other things
+set completeopt+=preview " show autocomplete in a menu
+set completeopt+=longest " Insert the longest common prefix of all matches
+set lazyredraw " Makes macros faster, among other things - but also makes search index not update when you press n or N if you also have the "nzzzv" bindings below
 set updatetime=100
+set statusline=%F\ %h%w%m%r%=%-14.(%l,%c%V%)\ %P " Roughly same as stock, except %f -> %F shows the full path to the file being edited
+let &showbreak = '↳ '
+"set cpoptions+=n " Show the showbreak character in the line-number column -- doesn't seem to work?
+set breakindent " When wrapping a line, indent the wrapped part the same amount that the line was indented
+set linebreak " Word-wrapping, basically
+set hidden " Allow switching buffers without saving or discarding changes
 
 " C and D act to end of line, Y should too
 nmap Y y$
 
-" Center the search hit so it's easier to see
-nnoremap n nzzzv
-nnoremap N Nzzzv
+" Center the search hit so it's easier to see - the hn fixes search count (e.g. "11/50" in the bottom bar), though it might break in the
+" first column?
+" Also, make n always go downwards, and N always upwards, regardless of whether / or ? was used to search
+nnoremap <expr> n (v:searchforward ? 'nzvzzhn' : 'NzvzzhN')
+nnoremap <expr> N (v:searchforward ? 'Nzvzzhn' : 'nzvzzhN')
 
 " Map f1 to esc because I usually hit it while trying to press esc
 nmap <F1> <Esc>
@@ -60,10 +84,6 @@ imap <F1> <Esc>
 
 " More typo reduction
 "noremap q: :q
-
-" Swap @ and q, because I (should) use q more
-nnoremap @ q
-nnoremap q @
 
 " ctrl-q to run a macro in normal mode
 inoremap <C-q> <C-o>@
@@ -78,12 +98,28 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Use C-n, C-p, C-b to move between files
+nnoremap <C-n> :n<CR>
+nnoremap <C-p> :N<CR>
+" Note the trailing space after :b
+nnoremap <C-b> :b 
+
+
+" Use s to open the cmd window
+nnoremap s q:
+
 " Use <Leader>r to redo syntax highlighting, if it's confused
 noremap <Leader>r :syntax sync fromstart<CR>
 
 " Swap words
-nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
+nnoremap <silent> <Leader>p "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh<CR>
 "nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>
+
+" Hotkey to reload the spell file, because it's synced between computers
+nnoremap <leader>m mkspell! ~/.config/nvim/spell/en.utf-8.add
+
+" For consistency with fish, use alt-e to edit command in window, rather than ctrl-f
+cmap <M-e> <C-f>
 
 " Three failed tries at a greek-letter hotkey
 "inoremap <C-i> "<C-k>"nr2char(getchar())*
@@ -102,6 +138,14 @@ nnoremap <silent> <Leader>w "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>:noh
 "nnoremap cw ce
 "nnoremap cW cE
 
+set cursorline
+hi CursorLine guibg=#303030
+set cursorcolumn
+hi CursorColumn guibg=#303030
+" cursorlineopt=screenline,number
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+
 " Jump to where you were if re-opening file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -112,9 +156,10 @@ augroup remember_folds
   autocmd BufWinEnter * silent! loadview
 augroup END
 
-" Automatically reload files when they change on disk (warn if unsaved edits)
+" Automatically reload files when they change on disk (warn if unsaved edits); triggers after the user doesn't do anything for a moment
+" (CursorHold).
 set autoread
-au CursorHold * checktime
+au CursorHold * silent! checktime " The silent! prevents a bunch of warnings when editing the command window (q:)
 
 au BufNewFile,BufRead *.scad set filetype=c "Use C-style highlighting for openscad files
 au BufNewFile,BufRead *.ino set filetype=cpp "Consider Arduino files as C++
@@ -125,22 +170,24 @@ au BufNewFile,BufRead *.tpp set filetype=cpp "C++ template file
 au BufNewFile,BufRead *.sage set filetype=python
 au BufNewFile,BufRead *.fish set filetype=sh
 au BufNewFile,BufRead *.shader set filetype=cpp
+au BufNewFile,BufRead *.hy set filetype=lisp
 
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
-" Format Python code 
-" au BufWritePre *.py execute ':Black'
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better for Python; sometimes disabled in favor of SimpylFold
-autocmd FileType yaml,txt set foldmethod=indent
+autocmd FileType python set foldmethod=indent " Better than syntax for Python
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
+autocmd FileType python set list " Display tab characters
+autocmd FileType yaml,text set foldmethod=indent
 set foldcolumn=0
+"let g:pymode_folding = 1
 
 
 " Keyboard shortcuts to format
 au FileType python nnoremap <Leader>f :Black<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 
-" let :W mean :w, and similar
+" let :W mean :w, and :Q mean :q
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
 
@@ -188,37 +235,68 @@ autocmd InsertLeave * set iminsert=0
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'reedes/vim-pencil'
+Plug 'vim-scripts/taglist.vim'
+Plug 'mfulz/cscope.nvim', {'for': ['c', 'cpp']}
+Plug 'wfxr/minimap.vim', {'on': 'Minimap'} " Requires nvim 0.5.0+ to work
+Plug 'scrooloose/nerdcommenter' " Quick block commenting
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'Konfekt/FastFold'
+
+Plug 'junegunn/vim-peekaboo'
+" Swap @ and q, because I (should) use q more
+" NOTE: In vim-peekaboo/plugin/peekaboo.vim, change the mapping from @ to q
+nnoremap @ q
+
+
+" I think I disabled this because it conflicted with semantic highlighting, even with pymode_syntax_all=0
+"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+"let g:pymode_options_max_line_length = &textwidth
+"let g:pymode_options_colorcolumn = 0
+"let g:pymode_lint_on_write = 0
+""let g:pymode_syntax_space_errors = 0 " Disable highlighting trailing spaces (because I already do it more subtly)
+"let g:pymode_syntax_all = 0 " Disable all syntax highlighting
+
+Plug 'wellle/context.vim'
+let g:context_highlight_tag = '<hide>'
+" TODO: Switch to this once on 0.7
+"Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'nvim-treesitter/nvim-treesitter-context'
 
 Plug 'airblade/vim-gitgutter'
+"Plug 'lewis6991/gitsigns.nvim' " Note the lua call after plug#end, to turn this on
 
 Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1 
+let g:rainbow_active = 1
 let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'darkorange3', 'seagreen3', 'darkorchid3', 'darkgoldenrod2']}
 
-"Plug 'jamessan/vim-gnupg'
-
-"Plug 'joom/latex-unicoder.vim'
-
-Plug 'psf/black', { 'tag': '19.10b0' } " Python formatter
+Plug 'psf/black', {'tag': '19.10b0', 'on': 'Black'} " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
 
-Plug 'vim-scripts/taglist.vim'
-
-Plug 'mfulz/cscope.nvim'
-
-Plug 'wfxr/minimap.vim' " Requires nvim 0.5.0+ to work; I'm on 0.4.4 right now
-
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 " Toggle tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
 let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsDefaultMappings = 0
+nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>K :call UncolorAllWords()<cr>
+nnoremap <silent> <leader>n :call WordNavigation(1)<cr>
+nnoremap <silent> <leader>N :call WordNavigation(0)<cr>
 
-Plug 'scrooloose/nerdcommenter' " Quick block commenting
+" NOTE: easyescape seems slow to start, so if you load it on startup, it slows down startup by a lot (~100ms).  I think it's because it
+" requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
+" insert mode.  This also introduced a lag, but it seems more tolerable this way.
+Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
+Plug 'aselker/vim-easy-ctrl-o' " Ctrl-o with cv or vc
 
-Plug 'zhou13/vim-easyescape' " Escape with jk or kj
+augroup load_on_insert " Load easyescape (and maybe others later!) on first entering insert mode
+  autocmd!
+  autocmd InsertEnter * call plug#load('vim-easyescape') " Can add stuff here in a comma-separated list
+                     \| autocmd! load_on_insert
+augroup END
 
 Plug 'timakro/vim-yadi', { 'branch': 'main' } " Automatic indentation
 autocmd BufRead * DetectIndent " run vim-yadi
@@ -227,29 +305,44 @@ Plug 'blahgeek/neovim-colorcoder', { 'do' : ':UpdateRemotePlugins' } " Semantic 
 let g:colorcoder_enable_filetypes = ['c', 'h', 'cpp', 'python', 'sh']
 let g:colorcoder_saturation = 0.7
 
+" Disabled in favor of deoplete
+"Plug 'ycm-core/YouCompleteMe'
+""let g:loaded_youcompleteme = 1 # Disable YouCompleteMe
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
-autocmd FileType text,markdown,mkd call deoplete#custom#option('auto_complete', v:false)
+autocmd FileType text let g:deoplete#enable_at_startup = 0
 Plug 'deoplete-plugins/deoplete-jedi'
 
-Plug 'Shougo/echodoc.vim'
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
+" Disabled because it causes lag.
+" NOTE: This conflicts with python-mode
+"Plug 'davidhalter/jedi-vim'
+"let g:jedi#goto_command = "<leader>a" " Defaults to <leader>d
+"let g:jedi#goto_stubs_command = "<leader>v" " Defaults to <leader>s
+"let g:jedi#use_splits_not_buffers = "left"
+
+" This doesn't seem to work...
+"Plug 'Shougo/echodoc.vim'
+"let g:echodoc#enable_at_startup = 1
+"let g:echodoc#events = ["CompleteDone", "CursorMovedI"]
 "autocmd FileType text let g:echodoc#enable_at_startup = 0
 "let g:echodoc#type="virtual"
 "let g:echodoc#type = 'floating'
 " These two are useful for echodoc#type=echo
 set shortmess+=c " Disable some messages that would overwrite the modeline
 set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT --
+"set cmdheight=2
 " To use a custom highlight for the float window,
 "change Pmenu to your highlight group
 "highlight link EchoDocFloat Pmenu
 
+Plug 'hylang/vim-hy'
+let g:hy_enable_conceal=1 " This also highlights concealed chars, for some reason, so override that.
+highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+Plug 'atisharma/vim-hyfold'
+
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
-
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'Konfekt/FastFold'
 
 Plug 'tommcdo/vim-exchange'
 vmap <Leader>x <Plug>(Exchange)
@@ -257,15 +350,27 @@ nmap <Leader>x <Plug>(Exchange)
 nmap <Leader>xx <Plug>(ExchangeLine)
 nmap <Leader>xc <Plug>(ExchangeClear)
 
+Plug 'sjl/gundo.vim'
+nnoremap <F5> :GundoToggle<CR>
+let g:gundo_prefer_python3 = 1
+
+Plug 'psliwka/vim-smoothie'
+"let g:smoothie_experimental_mappings = 1 " gg and G
+
+Plug 'jamessan/vim-gnupg'
+
 " Disabled plugins
-"Plug 'psliwka/vim-smoothie'
-"let g:smoothie_experimental_mappings = 1
+"Plug 'karb94/neoscroll.nvim' " Note the lua call after plug#end.  This doesn't seem to work, though.
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'MattesGroeger/vim-bookmarks'
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 "Plug 'tmhedberg/SimpylFold'
 "Plug 'chaoren/vim-wordmotion'
+"Plug 'jamessan/vim-gnupg'
+"Plug 'joom/latex-unicoder.vim'
 call plug#end()
+"lua require('gitsigns').setup()
+"lua require('neoscroll').setup()
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
 let g:rustfmt_autosave = 1
@@ -296,20 +401,20 @@ let gitgutter_max_signs=5000
 "inoremap <C-l> <Esc>:call unicoder#start(1)<CR>
 
 " vim-pencil stuff; also turns on spell-checking for some filetypes
-set nocompatible
+" Disabled because it messes with j and k
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd,text,rst call pencil#init() | set spell spl=en " en seems better than en_us
+  autocmd FileType markdown,mkd,text,rst call pencil#init()
+  autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
 augroup END
-autocmd FileType rst SoftPencil " Don't hard-wrap ReStructuredText files
 
-" j and k go by visible lines, not textual ones
-nnoremap j gj
-nnoremap k gk
-" use gj and gk for textual lines, when e.g. writing a macro and repeatability is important
-nnoremap gj j
-nnoremap gk k
+" j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j)
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+nnoremap <expr> <Down> v:count ? 'j' : 'gj'
+nnoremap <expr> <Up> v:count ? 'k' : 'gk'
+
 
 " Use f11 to toggle spellcheck
 nnoremap <silent> <F11> :set spell!<cr>
@@ -328,3 +433,32 @@ hi Folded guibg=#555555 guifg=Cyan
 "autocmd BufRead,BufNewFile *.c,*.cpp,*.h CScopeStart /home/neophile/.cscope/cscope.cfg
 "autocmd BufRead,BufNewFile *.c,*.cpp,*.h cscope add /home/neophile/.cscope/cscope.out
 
+
+
+" Function to permanently delete views created by 'mkview' (and also close without saving the view)
+" Mostly copied from StackOverflow user David Ljung Madison Stellar
+" https://stackoverflow.com/questions/28384159/vim-how-to-remove-clear-views-created-by-mkview-from-inside-of-vim
+function! MyDeleteView()
+  let path = fnamemodify(bufname('%'),':p')
+  " vim's odd =~ escaping for /
+  let path = substitute(path, '=', '==', 'g')
+  if empty($HOME)
+  else
+  	let path = substitute(path, '^'.$HOME, '\~', '')
+  endif
+  let path = substitute(path, '/', '=+', 'g') . '='
+  " view directory
+  let path = &viewdir.'/'.path
+  call delete(path)
+  echo "Deleted: ".path
+  " Exit without saving view
+  augroup remember_folds
+    autocmd!
+  augroup END
+  q
+endfunction
+
+" # Command Delview (and it's abbreviation 'delview')
+command Delview call MyDeleteView()
+" Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>

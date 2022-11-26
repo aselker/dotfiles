@@ -5,7 +5,7 @@ bind \e\[3\;5~ kill-word
 bind \cH backward-kill-word
 
 function mkcd --wraps=mkdir 
-	mkdir -p $argv; and cd $argv
+    mkdir -p $argv; and cd $argv
 end
 
 function cl --wraps=cd 
@@ -13,7 +13,11 @@ function cl --wraps=cd
 end
 
 function pg --wraps=rg 
-	ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+    ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+end
+
+function hisg --wraps rg
+    rg $argv ~/Notes/cmd_history
 end
 
 alias nv="nvim" # So flag completion is better
@@ -35,15 +39,27 @@ abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
 abbr -a gits "git s"
+# abbr -a gitpush "git push"
+# abbr -a gitpull "git pull"
+# abbr -a gitdiff "git diff"
 abbr -a which "command -v"
 abbr -a g "git"
 
+abbr -a .......... "../../../../../../../../.."
+abbr -a ......... "../../../../../../../.."
+abbr -a ........ "../../../../../../.."
+abbr -a ....... "../../../../../.."
+abbr -a ...... "../../../../.."
+abbr -a ..... "../../../.."
+abbr -a .... "../../.."
+abbr -a ... "../.."
+
 function xterm
-	command xterm -bg black -fg white
+    command xterm -bg black -fg white
 end
 
 function ev --wraps=evince
-	evince $argv 2>/dev/null & disown
+    evince $argv 2>/dev/null & disown
 end
 
 function loc --wraps=locate
@@ -51,7 +67,15 @@ function loc --wraps=locate
 end
 
 function xcl --wraps=xclip
-	xclip -sel clip
+    xclip -sel clip
+end
+
+function ipd --wraps=ipdb3
+    #python3 -Werror (command -v ipdb3) -cc $argv
+    ipdb3 -cc $argv
+    #ipdb3 -c "c" -c "q" $argv
+    #env PYTHONWARNINGS=error ipdb3 -cc $argv
+    #python3 -Werror -m ipdb -- -cc $argv
 end
 
 function rr
@@ -160,12 +184,30 @@ function meeting_notes
   nv ~/Notes/joby/meetings/$argv"_"(date +"%Y-%m-%d %H.%M.%S").txt
 end
 
+function updatezoom
+    curl -sL https://zoom.us/client/latest/zoom_amd64.deb -o /tmp/zoom_amd64.deb
+    sudo dpkg -i /tmp/zoom_amd64.deb
+    rm /tmp/zoom_amd64.deb
+end
+
 # a security thing
 alias sudo='sudo'
 
 # Save history without deduplication
 function savehist --on-event fish_preexec
     echo (hostname)'|'(date)'|'(echo $argv | string collect)'|'>> ~/Notes/cmd_history
+end
+
+function namekill
+    kill (pg $argv[1] | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
+end
+
+# These two are from https://dev.to/acro5piano/convert-snakecase-to-camelcase-in-vim-47lf
+function camelcase
+    perl -pe 's#(_|^)(.)#\u$2#g'
+end
+function snakecase
+    perl -pe 's#([A-Z])#_\L$1#g' | perl -pe 's#^_##'
 end
 
 #Settings for color output in man pages
@@ -183,6 +225,7 @@ set -gx RIPGREP_CONFIG_PATH ~/.dotfiles/ripgreprc
 set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/v1.41/bin ~/Install/STM32CubeProgrammer/bin /usr/lib/ccache ~/go/bin ~/.cargo/bin /opt/Xilinx/SDK/2018.1/bin ~/.cabal/bin
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
+set -x PATH $PATH ~/Tech/small_scripts
 
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
