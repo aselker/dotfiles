@@ -184,7 +184,9 @@ set foldcolumn=0
 "let g:pymode_folding = 1
 
 " Keyboard shortcuts to format
-au FileType python nnoremap <Leader>f :Black<cr>
+au FileType python nnoremap <Leader>F :Black<cr>
+" NOTE: Normal-mode <Leader>f will save the file.  Visual mode (macchiato) won't, and <Leader>F won't.
+au FileType python nnoremap <silent> <Leader>f :w<cr>:silent execute '!darker -l ' . &textwidth . ' %'<cr>:e<cr>
 au FileType python xmap <Leader>f :BlackMacchiato<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 
