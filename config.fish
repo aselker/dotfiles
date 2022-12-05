@@ -207,7 +207,7 @@ function savehist --on-event fish_preexec
 end
 
 function namekill
-    kill (pg $argv[1] | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
+    kill (procs $argv[1] | sed '1d;2d' | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
 end
 
 # These two are from https://dev.to/acro5piano/convert-snakecase-to-camelcase-in-vim-47lf
@@ -234,6 +234,7 @@ set -x PATH $PATH ~/.local/bin ~/.cabal /usr/local/cuda/bin /opt/microchip/xc16/
 # set -x PATH $PATH  ~/Projects/ecp5/ecp5-toolchain-linux_x86_64-v1.6.9/bin
 set -x PATH $PATH ~/Projects/ecp5/litex/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/bin/
 set -x PATH $PATH ~/Tech/small_scripts
+set -x PATH $PATH /opt/nvidia/nsight-systems/2021.3.2/target-linux-x64
 
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
