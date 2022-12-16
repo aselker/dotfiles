@@ -81,9 +81,9 @@ bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
 bindsym $mod+apostrophe exec amixer set Capture toggle
 
-bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.80; if (x < 0) 0 else if (x > ($(brightnessctl get)-1)) ($(brightnessctl get)-1) else x \\" | bc | awk '{printf(\\"%d\n\\",$1 + 0.5)}')"
-bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) < 4) ($(brightnessctl get) + 1) else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
-bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 0
+bindsym XF86MonBrightnessDown exec "brightnessctl set $(echo \\"x=$(brightnessctl get) * 0.80 - $(brightnessctl max) * 0.001; if ($(brightnessctl get) <= 1) 0 else if (x < 0) 1 else x\\" | bc | awk '{printf(\\"%d\n\\",$1 + 0.5)}')"
+bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) == 0) 1 else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
+bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 bindsym --release XF86Search exec xset dpms force off
