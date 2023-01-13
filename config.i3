@@ -87,6 +87,7 @@ bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 0
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 bindsym XF86Display exec sudo /usr/bin/thinkpad_turn_off_leds.sh
+bindsym XF86Messenger exec sudo /usr/bin/reload_psmouse.sh
 
 bindsym --release XF86Favorites exec "sleep 1 && xset dpms force off"
 
@@ -169,9 +170,9 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_primary DP-0
-set $monitor_secondary HDMI-0
-set $monitor_tertiary HDMI-0
+set $monitor_primary DisplayPort-1
+set $monitor_secondary eDP
+set $monitor_tertiary eDP
 
 workspace 0 output $monitor_tertiary
 workspace 2 output $monitor_primary
@@ -227,9 +228,10 @@ bindsym $mod+F9 workspace 29
 bindsym $mod+F10 workspace 30
 bindsym $mod+F11 workspace 31
 bindsym $mod+F12 workspace 32
-bindsym $mod+Print workspace 33
-bindsym $mod+Insert workspace 34
-bindsym $mod+Delete workspace 35
+bindsym $mod+Home workspace 33
+bindsym $mod+End workspace 34
+bindsym $mod+Insert workspace 35
+bindsym $mod+Delete workspace 36
 
 # move focused container to workspace
 bindsym $mod+Shift+Prior move container to workspace prev
@@ -262,9 +264,10 @@ bindsym $mod+Shift+F9 move container to workspace 29
 bindsym $mod+Shift+F10 move container to workspace 30
 bindsym $mod+Shift+F11 move container to workspace 31
 bindsym $mod+Shift+F12 move container to workspace 32
-bindsym $mod+Shift+Print move container to workspace 33
-bindsym $mod+Shift+Insert move container to workspace 34
-bindsym $mod+Shift+Delete move container to workspace 35
+bindsym $mod+Shift+Home move container to workspace 33
+bindsym $mod+Shift+End move container to workspace 34
+bindsym $mod+Shift+Insert move container to workspace 35
+bindsym $mod+Shift+Delete move container to workspace 36
 
 bindsym $mod+Ctrl+grave exec i3_swap_workspaces.sh 0
 bindsym $mod+Ctrl+1 exec i3_swap_workspaces.sh 1
@@ -293,9 +296,10 @@ bindsym $mod+Ctrl+F9 exec i3_swap_workspaces.sh 29
 bindsym $mod+Ctrl+F10 exec i3_swap_workspaces.sh 30
 bindsym $mod+Ctrl+F11 exec i3_swap_workspaces.sh 31
 bindsym $mod+Ctrl+F12 exec i3_swap_workspaces.sh 32
-bindsym $mod+Ctrl+Print exec i3_swap_workspaces.sh 33
-bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 34
-bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 35
+bindsym $mod+Ctrl+Home exec i3_swap_workspaces.sh 33
+bindsym $mod+Ctrl+End exec i3_swap_workspaces.sh 34
+bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 35
+bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 36
 
 # Move windows to scratchpad, and show the scratchpad
 bindsym $mod+n scratchpad show

@@ -38,7 +38,7 @@ set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set textwidth=140
+set textwidth=120
 set formatoptions-=t " Don't automatically wrap, even though tw!=0
 set formatoptions-=c " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
