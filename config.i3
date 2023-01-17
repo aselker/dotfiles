@@ -170,8 +170,8 @@ bindsym $mod+Prior workspace prev
 bindsym $mod+Next workspace Next
 
 # Bind workspaces to monitors
-set $monitor_primary DisplayPort-1
-set $monitor_secondary eDP
+set $monitor_primary eDP
+set $monitor_secondary DisplayPort-1
 set $monitor_tertiary eDP
 
 workspace 0 output $monitor_tertiary
