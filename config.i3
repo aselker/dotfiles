@@ -353,6 +353,9 @@ bindsym $mod+r mode "resize"
 # Make some windows default to floating
 # for_window [class="Matplotlib"] floating enable
 
+# Default workspaces
+assign [class="Signal"] 36
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
