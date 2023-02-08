@@ -30,6 +30,9 @@
 "   immediately after zz makes the scroll finish early".
 " interestingwords seems kinda broken.  Sometimes when I switch buffers, it gets confused.
 " I have to modify black-macchiato and vim-peekaboo locally.  Fork them?
+" Python indentation could be better.
+" Make digraphs better, using unicode.vim
+" Figure out how to install digraph_search.vim (https://www.vim.org/scripts/script.php?script_id=5724), using Plug or otherwise
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = '/home/adam.selker/.pyenv/versions/radar-dev/bin/python3'
@@ -153,8 +156,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Remember folds if you're re-opening file
 augroup remember_folds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  autocmd BufWinLeave ?* mkview
+  autocmd BufWinEnter ?* silent! loadview
 augroup END
 
 " Automatically reload files when they change on disk (warn if unsaved edits); triggers after the user doesn't do anything for a moment
@@ -176,7 +179,7 @@ au BufNewFile,BufRead *.hy set filetype=lisp
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better than syntax for Python
+"autocmd FileType python set foldmethod=indent " Better than syntax for Python
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
 autocmd FileType python set list " Display tab characters
 autocmd FileType yaml,text set foldmethod=indent
@@ -244,6 +247,7 @@ Plug 'wfxr/minimap.vim', {'on': 'Minimap'} " Requires nvim 0.5.0+ to work
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
+Plug 'chrisbra/unicode.vim'
 
 Plug 'junegunn/vim-peekaboo'
 " Swap @ and q, because I (should) use q more
@@ -373,7 +377,7 @@ Plug 'jamessan/vim-gnupg'
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'MattesGroeger/vim-bookmarks'
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-"Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
 "Plug 'chaoren/vim-wordmotion'
 "Plug 'jamessan/vim-gnupg'
 "Plug 'joom/latex-unicoder.vim'
