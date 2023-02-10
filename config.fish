@@ -12,9 +12,11 @@ function cl --wraps=cd
   cd $argv; and ls
 end
 
-function pg --wraps=rg 
-    ps -ef | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
-end
+#function pg --wraps=rg 
+#    ps -efly | head -n1
+#    ps -efly | rg (echo $argv | sed -e "s/^\(.\)/[\\0]/g")
+#end
+abbr -a pg procs
 
 function hisg --wraps rg
     rg $argv ~/Notes/cmd_history
@@ -38,7 +40,7 @@ abbr -a -- - "cd -"
 abbr -a dr "docker"
 abbr -a p "pushd"
 abbr -a po "popd"
-abbr -a gits "git s"
+# abbr -a gits "git s"
 # abbr -a gitpush "git push"
 # abbr -a gitpull "git pull"
 # abbr -a gitdiff "git diff"
@@ -199,7 +201,7 @@ function savehist --on-event fish_preexec
 end
 
 function namekill
-    kill (pg $argv[1] | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
+    kill (procs $argv[1] | sed '1d;2d' | sed 's/^[^0-9]*\([0-9]*\)[^0-9].*$/\1/') $argv[2..-1]
 end
 
 # These two are from https://dev.to/acro5piano/convert-snakecase-to-camelcase-in-vim-47lf
