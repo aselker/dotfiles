@@ -28,6 +28,7 @@
 "   * https://github.com/karb94/neoscroll.nvim
 "   * I do zz after my searches, so smoothie _should_ work, but it doesn't.  It seems a bit more complex than just, "running zvhn
 "   immediately after zz makes the scroll finish early".
+" Bind s (normal mode) to something useful, since I never use it.
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 
@@ -339,7 +340,7 @@ set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT
 Plug 'hylang/vim-hy'
 let g:hy_enable_conceal=1 " This also highlights concealed chars, for some reason, so override that.
 highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-Plug 'atisharma/vim-hyfold'
+"Plug 'atisharma/vim-hyfold'
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'

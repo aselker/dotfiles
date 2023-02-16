@@ -64,8 +64,8 @@ bindsym $mod+o exec nautilus
 # screen lock
 bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
 
-# toggle the touchscreen - disabled on laptop without touchscreen.  Maybe this should disable the touchpad?
-# bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
+# toggle the touchscreen
+ bindsym --release $mod+t exec ~/.local/bin/toggletouchscreen.fish
 
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
@@ -87,7 +87,7 @@ bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 0
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 bindsym XF86Display exec sudo /usr/bin/thinkpad_turn_off_leds.sh
-bindsym XF86Messenger exec sudo /usr/bin/reload_psmouse.sh
+bindsym XF86Tools exec sudo /usr/bin/reload_psmouse.sh
 
 bindsym --release XF86Favorites exec "sleep 1 && xset dpms force off"
 

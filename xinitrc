@@ -10,4 +10,4 @@ systemctl --user start pulseaudio.service;
 #bash -c "sleep 60 && systemctl --user start syncthing.service" &
 export MOZ_USE_XINPUT2=1; # Firefox smoother scrolling?
 xkbcomp /home/neophile/.dotfiles/hjkl.xkb $DISPLAY; # Set keymap
-signal &
+signal-desktop &
