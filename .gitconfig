@@ -13,7 +13,7 @@
 	cdiff = diff --compact-summary
 	;smbranch = "submodule foreach -q --recursive 'branch=\"$(git config -f $toplevel.gitmodules submodule.$name.branch)\"; git checkout $branch'"
 	;chout = !git checkout $1 && git submodule update --recursive && git smbranch && true
-	chout = !git checkout $1 && git submodule update --recursive && true
+	chout = !git checkout $@ && git submodule update --recursive && true
 [color]
 	ui = auto
 [diff]

@@ -28,9 +28,15 @@
 "   * https://github.com/karb94/neoscroll.nvim
 "   * I do zz after my searches, so smoothie _should_ work, but it doesn't.  It seems a bit more complex than just, "running zvhn
 "   immediately after zz makes the scroll finish early".
+" interestingwords seems kinda broken.  Sometimes when I switch buffers, it gets confused.
+" I have to modify black-macchiato and vim-peekaboo locally.  Fork them?
+" Python indentation could be better.
+" Make digraphs better, using unicode.vim
+" Figure out how to install digraph_search.vim (https://www.vim.org/scripts/script.php?script_id=5724), using Plug or otherwise
 " Bind s (normal mode) to something useful, since I never use it.
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
+"let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
 set tabstop=4
@@ -105,7 +111,6 @@ nnoremap <C-p> :N<CR>
 " Note the trailing space after :b
 nnoremap <C-b> :b 
 
-
 " Use s to open the cmd window
 nnoremap s q:
 
@@ -153,8 +158,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Remember folds if you're re-opening file
 augroup remember_folds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  autocmd BufWinLeave ?* mkview
+  autocmd BufWinEnter ?* silent! loadview
 augroup END
 
 " Automatically reload files when they change on disk (warn if unsaved edits); triggers after the user doesn't do anything for a moment
@@ -176,16 +181,18 @@ au BufNewFile,BufRead *.hy set filetype=lisp
 au BufNewFile,BufRead *.hs set expandtab "Expand tabs in Haskell files
 
 set foldmethod=syntax " Better for C++ and maybe in general
-autocmd FileType python set foldmethod=indent " Better than syntax for Python
+"autocmd FileType python set foldmethod=indent " Better than syntax for Python
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 " To agree with Black
 autocmd FileType python set list " Display tab characters
 autocmd FileType yaml,text set foldmethod=indent
 set foldcolumn=0
 "let g:pymode_folding = 1
 
-
 " Keyboard shortcuts to format
 au FileType python nnoremap <Leader>f :Black<cr>
+" NOTE: Normal-mode <Leader>F will save the file.  Visual mode (macchiato) won't, and <Leader>f won't.
+au FileType python nnoremap <silent> <Leader>F :w<cr>:silent execute '!darker -l ' . &textwidth . ' %'<cr>:e<cr>
+au FileType python xmap <Leader>f :BlackMacchiato<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
 
 " let :W mean :w, and :Q mean :q
@@ -242,6 +249,7 @@ Plug 'wfxr/minimap.vim', {'on': 'Minimap'} " Requires nvim 0.5.0+ to work
 Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
+Plug 'chrisbra/unicode.vim'
 
 Plug 'junegunn/vim-peekaboo'
 " Swap @ and q, because I (should) use q more
@@ -272,6 +280,12 @@ let g:rainbow_conf = {'guifgs': ['lightslateblue', 'firebrick', 'royalblue3', 'd
 
 Plug 'psf/black', {'tag': '19.10b0', 'on': 'Black'} " Python formatter
 let g:black_linelength = &textwidth "Set Black textwidth to Vim textwidth
+
+Plug 'smbl64/vim-black-macchiato'
+" In black-macchiato.vim, replace:
+" silent execute a:firstline . "," . a:lastline . "!" . cmd
+" with
+" silent execute a:firstline . "," . a:lastline . "!" . cmd . " -l " . &textwidth
 
 Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
 " Toggle tagbar with F8
@@ -365,7 +379,7 @@ Plug 'jamessan/vim-gnupg'
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'MattesGroeger/vim-bookmarks'
 "Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-"Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
 "Plug 'chaoren/vim-wordmotion'
 "Plug 'jamessan/vim-gnupg'
 "Plug 'joom/latex-unicoder.vim'
@@ -406,15 +420,20 @@ let gitgutter_max_signs=5000
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd,text,rst call pencil#init()
+  "autocmd FileType markdown,mkd,text,rst call pencil#init()
   autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
 augroup END
 
-" j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j)
+" j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j).
+" Note that vim-pencil interferes with this.
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
 nnoremap <expr> <Down> v:count ? 'j' : 'gj'
 nnoremap <expr> <Up> v:count ? 'k' : 'gk'
+vnoremap <expr> j v:count ? 'j' : 'gj'
+vnoremap <expr> k v:count ? 'k' : 'gk'
+vnoremap <expr> <Down> v:count ? 'j' : 'gj'
+vnoremap <expr> <Up> v:count ? 'k' : 'gk'
 
 
 " Use f11 to toggle spellcheck
