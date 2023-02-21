@@ -33,6 +33,9 @@
 " Python indentation could be better.
 " Make digraphs better, using unicode.vim
 " Figure out how to install digraph_search.vim (https://www.vim.org/scripts/script.php?script_id=5724), using Plug or otherwise
+" Consider automatically making directories if the current file is in a dir that doesn't exist yet.  See: 
+"   * https://vi.stackexchange.com/questions/678/how-do-i-save-a-file-in-a-directory-that-does-not-yet-exist/679#679
+"   * https://vi.stackexchange.com/questions/695/how-can-i-stop-vim-from-writing-a-file-without-throwing-an-error?rq=1
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 let g:python3_host_prog = '/home/adam.selker/.pyenv/versions/radar-dev/bin/python3'
