@@ -6,4 +6,4 @@ sleep 0.1;
 bash -c "while true; do feh --bg-fill --recursive --randomize ~/Media/Pictures/Wallpaper/*; sleep 1200; done # Wallpaper randomizer" &
 pulseaudio --start &
 export MOZ_USE_XINPUT2=1 # Firefox touch scrolling
-xkbcomp /home/neophile/.dotfiles/hjkl.xkb $DISPLAY; # Set keymap
+xkbcomp /home/adam.selker/.dotfiles/hjkl.xkb $DISPLAY; # Set keymap
