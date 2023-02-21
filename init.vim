@@ -36,6 +36,7 @@
 " Consider automatically making directories if the current file is in a dir that doesn't exist yet.  See: 
 "   * https://vi.stackexchange.com/questions/678/how-do-i-save-a-file-in-a-directory-that-does-not-yet-exist/679#679
 "   * https://vi.stackexchange.com/questions/695/how-can-i-stop-vim-from-writing-a-file-without-throwing-an-error?rq=1
+" Bind s (normal mode) to something useful, since I never use it.
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
@@ -47,7 +48,7 @@ set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set textwidth=140
+set textwidth=120
 set formatoptions-=t " Don't automatically wrap, even though tw!=0
 set formatoptions-=c " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
@@ -356,7 +357,7 @@ set noshowmode "Let echodoc work in echo mode, w/o overwriting it with -- INSERT
 Plug 'hylang/vim-hy'
 let g:hy_enable_conceal=1 " This also highlights concealed chars, for some reason, so override that.
 highlight Conceal ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-Plug 'atisharma/vim-hyfold'
+"Plug 'atisharma/vim-hyfold'
 
 Plug 'bkad/CamelCaseMotion'
 let g:camelcasemotion_key = '<leader>'
