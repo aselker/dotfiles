@@ -304,7 +304,7 @@ nnoremap <silent> <leader>N :call WordNavigation(0)<cr>
 " requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
 " insert mode.  This also introduced a lag, but it seems more tolerable this way.
 Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
-Plug 'aselker/vim-easy-ctrl-o', {'on': []} " Ctrl-o with cv or vc
+Plug 'aselker/vim-easy-ctrl-o', {'on': []} " Ctrl-o with cv or vc -- doesn't seem to work?
 
 augroup load_on_insert " Load easyescape (and maybe others later!) on first entering insert mode
   autocmd!

@@ -168,12 +168,6 @@ function makeDocsBackup
 	 tar -cvf - ~/Documents/Projects ~/Documents/Programming/ ~/Documents/Assorted ~/Documents/Models ~/Documents/Old ~/Documents/Careers ~/Documents/Joby | pigz > ~/Documents/Backup/DocsBackup-(date -Idate).tar.gz
 end
 
-
-function protontricks-flat
-  flatpak run --command=protontricks com.valvesoftware.Steam --no-runtime $argv
-end
-
-
 function tlog
   if [ -z "$argv" ]
     cat ~/Notes/techlog.txt
