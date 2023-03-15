@@ -37,8 +37,9 @@
 "   * https://vi.stackexchange.com/questions/678/how-do-i-save-a-file-in-a-directory-that-does-not-yet-exist/679#679
 "   * https://vi.stackexchange.com/questions/695/how-can-i-stop-vim-from-writing-a-file-without-throwing-an-error?rq=1
 " Bind s (normal mode) to something useful, since I never use it.
+" Don't highlight "a vs. b" or "a etc. and b" as wrong because of capitalization: "vs." and "etc." are words
 
-"let g:python3_host_prog = expand('/usr/bin/python3.8')
+let g:python3_host_prog = expand('/home/adam.selker/.pyenv/versions/radar-dev/bin/python3')
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable
@@ -48,7 +49,7 @@ set noexpandtab
 set number
 set relativenumber
 "set norelativenumber
-set textwidth=120
+set textwidth=140
 set formatoptions-=t " Don't automatically wrap, even though tw!=0
 set formatoptions-=c " Don't automatically wrap, even though tw!=0
 set ignorecase " necessary for the next line.
@@ -192,8 +193,8 @@ set foldcolumn=0
 "let g:pymode_folding = 1
 
 " Keyboard shortcuts to format
-au FileType python nnoremap <Leader>f :Black<cr>
 " NOTE: Normal-mode <Leader>F will save the file.  Visual mode (macchiato) won't, and <Leader>f won't.
+au FileType python nnoremap <Leader>f :Black<cr>
 au FileType python nnoremap <silent> <Leader>F :w<cr>:silent execute '!darker -l ' . &textwidth . ' %'<cr>:e<cr>
 au FileType python xmap <Leader>f :BlackMacchiato<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
@@ -253,10 +254,19 @@ Plug 'scrooloose/nerdcommenter' " Quick block commenting
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'Konfekt/FastFold'
 Plug 'chrisbra/unicode.vim'
+Plug 'will133/vim-dirdiff'
 
 Plug 'junegunn/vim-peekaboo'
 " Swap @ and q, because I (should) use q more
-" NOTE: In vim-peekaboo/plugin/peekaboo.vim, change the mapping from @ to q
+" NOTE: In vim-peekaboo/plugin/peekaboo.vim, change the mapping from @ to q.  That is, change:
+" execute 'nmap <buffer> <expr> '.prefix.    '@     peekaboo#peek(v:count1, ''@'', 0)'
+" to
+" execute 'nmap <buffer> <expr> '.prefix.    'q     peekaboo#peek(v:count1, ''@'', 0)'
+" , and change
+" execute 'nunmap <buffer> '.prefix.'@'
+" to 
+" execute 'nunmap <buffer> '.prefix.'q'
+" .
 nnoremap @ q
 
 
@@ -296,7 +306,7 @@ nmap <F8> :TagbarToggle<CR>
 
 Plug 'lfv89/vim-interestingwords' " ,k to highlight all instances of a word
 let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222', '28','1','2','3','4','5','6','7','25','9','10','34','12','13','14','15','16','125','124','19']
-let g:interestingWordsGUIColors = ['#ff0000', '#5555ff', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
+let g:interestingWordsGUIColors = ['#5555ff', '#ff0000', '#00ff00', '#c88823', '#ff9724', '#ff2c4b', '#cc00ff', '#ff0088', '#00ccff', '#ffffff', '#aaaaaa']
 let g:interestingWordsDefaultMappings = 0
 nnoremap <silent> <leader>k :call InterestingWords('n')<cr>
 vnoremap <silent> <leader>k :call InterestingWords('v')<cr>
@@ -421,11 +431,13 @@ let gitgutter_max_signs=5000
 " vim-pencil stuff; also turns on spell-checking for some filetypes
 " Disabled because it messes with j and k
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
-augroup pencil
-  autocmd!
-  "autocmd FileType markdown,mkd,text,rst call pencil#init()
-  autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
-augroup END
+"augroup pencil
+"  autocmd!
+"  autocmd FileType markdown,mkd,text,rst call pencil#init()
+"augroup END
+
+autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
+autocmd FileType markdown,mkd,text,rst set textwidth=0
 
 " j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j).
 " Note that vim-pencil interferes with this.
