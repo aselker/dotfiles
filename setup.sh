@@ -42,7 +42,7 @@ echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" |   s
 wget -O- https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
 
 sudo apt update
-sudo apt install fish neovim syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh tesseract-ocr i3-wm
+sudo apt install fish neovim syncthing signal-desktop cargo brightnessctl pavucontrol keepassxc compton feh tesseract-ocr i3-wm moreutils
 pip3 install black
 
 # Alacritty

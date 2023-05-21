@@ -2,6 +2,7 @@ nm-applet &
 picom &
 #killall -q xcape; 
 pkill -f "Wallpaper randomizer"; 
+killall -q redshift;
 sleep 0.1; 
 
 # xcape -e "Control_L=Escape" &
@@ -11,3 +12,4 @@ systemctl --user start pulseaudio.service;
 export MOZ_USE_XINPUT2=1; # Firefox smoother scrolling?
 xkbcomp /home/neophile/.dotfiles/hjkl.xkb $DISPLAY; # Set keymap
 signal-desktop &
+redshift -l 37.8271784:-122.2913078 &

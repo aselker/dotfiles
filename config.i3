@@ -359,9 +359,10 @@ assign [class="Signal"] 36
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        # disable scrollign to change workspaces
+        # disable scrolling to change workspaces
         bindsym button4 nop
         bindsym button5 nop
+        mode hide
 
         status_command ~/.config/i3/mem.sh
 }

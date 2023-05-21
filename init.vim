@@ -34,6 +34,7 @@
 " Make digraphs better, using unicode.vim
 " Figure out how to install digraph_search.vim (https://www.vim.org/scripts/script.php?script_id=5724), using Plug or otherwise
 " Bind s (normal mode) to something useful, since I never use it.
+" vim (not neovim) has the option "smoothscroll", that lets me scroll partially through long wrapped lines.  Can I do this in neovim?
 
 "let g:python3_host_prog = expand('/usr/bin/python3.8')
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
@@ -126,6 +127,10 @@ nnoremap <leader>m mkspell! ~/.config/nvim/spell/en.utf-8.add
 
 " For consistency with fish, use alt-e to edit command in window, rather than ctrl-f
 cmap <M-e> <C-f>
+
+" Scroll only one line at a time with the scroll wheel / touchpad two-finger scroll
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
 
 " Three failed tries at a greek-letter hotkey
 "inoremap <C-i> "<C-k>"nr2char(getchar())*
@@ -418,11 +423,13 @@ let gitgutter_max_signs=5000
 " vim-pencil stuff; also turns on spell-checking for some filetypes
 " Disabled because it messes with j and k
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
-augroup pencil
-  autocmd!
-  "autocmd FileType markdown,mkd,text,rst call pencil#init()
-  autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.  Does this belong in the pencil group?
-augroup END
+" augroup pencil
+"   autocmd!
+"   autocmd FileType markdown,mkd,text,rst call pencil#init()
+" augroup END
+
+autocmd FileType markdown,mkd,text,rst set spell spl=en " en seems better than en_us.
+autocmd FileType markdown,mkd,text,rst set textwidth=0
 
 " j and k go by visible (maybe wrapped) lines, not textual ones, unless there's a number (e.g. 4j).
 " Note that vim-pencil interferes with this.
