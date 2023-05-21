@@ -9,6 +9,10 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+input "type:keyboard" {
+    xkb_options caps:ctrl_modifier
+}
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -20,8 +24,8 @@ font pango:DejaVu Sans Mono 8
 # normal # -> has title bar and #-pixel border, pixel # -> just the border, none -> no border
 #new_window pixel 1
 #new_float pixel 1
-new_window none
-new_float none
+default_border none
+default_floating_border none
 
 # Hotkey to toggle borders
 bindsym $mod+b border toggle
@@ -56,7 +60,7 @@ client.background       #ffffff
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # start a file manager
 bindsym $mod+o exec nautilus
@@ -72,7 +76,7 @@ bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
 bindsym --release $mod+x exec xkill
 
-# volume and brightness control
+# volume control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
 bindcode 121 exec amixer -D pulse set Master toggle
 bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
@@ -81,9 +85,10 @@ bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
 bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
 bindsym $mod+apostrophe exec amixer set Capture toggle
 
+# brightness control
 bindsym XF86MonBrightnessDown exec /home/neophile/.dotfiles/brightness_down.sh
 bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) < 4) ($(brightnessctl get) + 1) else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
-bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 0
+bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 bindsym XF86Display exec sudo /usr/bin/thinkpad_turn_off_leds.sh
@@ -314,11 +319,9 @@ bindsym $mod+u move workspace to output right
 # bindsym $mod+bracketright exec ~/.config/i3/i3-display-swap.sh
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+r reload
+# Exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
