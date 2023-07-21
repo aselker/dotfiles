@@ -35,8 +35,11 @@
 " Figure out how to install digraph_search.vim (https://www.vim.org/scripts/script.php?script_id=5724), using Plug or otherwise
 " Bind s (normal mode) to something useful, since I never use it.
 " vim (not neovim) has the option "smoothscroll", that lets me scroll partially through long wrapped lines.  Can I do this in neovim?
+" Bind ctrl-s to save in insert mode?
+" Big visible change btwn normal and insert modes?
+" Make spellcheck highlighting less aggressive, I think
 
-"let g:python3_host_prog = expand('/usr/bin/python3.8')
+let g:python3_host_prog = expand('/home/neophile/.pyenv/versions/3.11.3/bin/python3')
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
 
 set modelines=0 " Because they're vulnerable

@@ -3,15 +3,31 @@
 #
 # Should you change your keyboard layout some time, delete
 # this file and re-run i3-config-wizard(1).
-#
 
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-input "type:keyboard" {
-    xkb_options caps:ctrl_modifier
+#input "type:keyboard" {
+#    xkb_options caps:ctrl_modifier
+#}
+
+output eDP-1 resolution 3840x2160 scale 2
+
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+        tap enabled
+        pointer_accel 0.6
+        click_method clickfinger
 }
+
+input "2:10:TPPS/2_Elan_TrackPoint" {
+        pointer_accel 0.2
+}
+
+input "7119:2208:HID_1bcf:08a0_Mouse" {
+        #button_mapping 1 2 3 4 5 6 7 2 2 10 11 12 13 14 15 16
+}
+
 
 set $mod Mod4
 
@@ -66,7 +82,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+o exec nautilus
 
 # screen lock
-bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
+bindsym $mod+m exec "killall -SIGUSR1 dunst; swaylock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
 
 # toggle the touchscreen
  bindsym --release $mod+t exec ~/.local/bin/toggletouchscreen.fish
@@ -74,7 +90,10 @@ bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -i ~/Tech/lockscreen.png -n;
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
 
-bindsym --release $mod+x exec xkill
+# Take a timestamped screenshot with grimshot
+bindsym --release $mod+z exec ~/.dotfiles/screenshot.sh
+
+# bindsym --release $mod+x exec xkill
 
 # volume control
 #bindsym $mod+XF86Mute exec amixer set Master toggle
@@ -172,7 +191,7 @@ bindsym $mod+Shift+a exec ~/.local/bin/i3_move_to_parent.sh
 
 # switch to workspace
 bindsym $mod+Prior workspace prev
-bindsym $mod+Next workspace Next
+bindsym $mod+Next workspace next
 
 # Bind workspaces to monitors
 set $monitor_primary eDP
@@ -240,7 +259,7 @@ bindsym $mod+Delete workspace 36
 
 # move focused container to workspace
 bindsym $mod+Shift+Prior move container to workspace prev
-bindsym $mod+Shift+Next move container to workspace Next
+bindsym $mod+Shift+Next move container to workspace next
 
 bindsym $mod+Shift+grave move container to workspace 0
 bindsym $mod+Shift+1 move container to workspace 1
@@ -321,7 +340,7 @@ bindsym $mod+u move workspace to output right
 # reload the configuration file
 bindsym $mod+Shift+r reload
 # Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -370,4 +389,16 @@ bar {
         status_command ~/.config/i3/mem.sh
 }
 
-exec /bin/bash ~/.xinitrc #Run the xinitrc script, regardless of how i3 was started.
+exec ~/.dotfiles/sway_wallpaper_randomizer.sh
+exec redshift -l 37.8271784:-122.2913078
+exec signal-desktop --no-sandbox
+exec dunst
+exec systemctl --user start pulseaudio.service
+exec /home/neophile/.pyenv/shims/python3 /home/neophile/Install/sway/sway/contrib/inactive-windows-transparency.py
+
+# TODO: What do these lines do???
+# https://www.reddit.com/r/swaywm/comments/whnek7/simple_gui_pinentry_program/
+# They make pinentry-gnome3 work, and therefore nvim editing encrypted files; something something dbus?
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XAUTHORITY
+exec dbus-update-activation-environment DISPLAY WAYLAND_DISPLAY XAUTHORITY
+
