@@ -85,24 +85,34 @@ bindsym $mod+o exec nautilus
 bindsym $mod+m exec "killall -SIGUSR1 dunst; swaylock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
 
 # toggle the touchscreen
- bindsym --release $mod+t exec ~/.local/bin/toggletouchscreen.fish
+bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
 
 # copy text with OCR
-bindsym --release $mod+c exec ~/.local/bin/ocr_cp
+bindsym $mod+c exec ~/.local/bin/ocr_cp
 
 # Take a timestamped screenshot with grimshot
-bindsym --release $mod+z exec ~/.dotfiles/screenshot.sh
+bindsym $mod+z exec ~/.dotfiles/screenshot.sh
 
-# bindsym --release $mod+x exec xkill
+# xkill doesn't work in wayland
+# bindsym --release $mod+x exec xkill 
+
+# flip the screen, mostly for note-taking with a stylus
+bindsym $mod+x exec ~/Tech/small_scripts/sway_flip_screen.sh
 
 # volume control
-#bindsym $mod+XF86Mute exec amixer set Master toggle
-bindcode 121 exec amixer -D pulse set Master toggle
-bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
-bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 6%- unmute
-bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
-bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
-bindsym $mod+apostrophe exec amixer set Capture toggle
+# #bindsym $mod+XF86Mute exec amixer set Master toggle
+# bindcode 121 exec amixer -D pulse set Master toggle
+# bindsym XF86AudioLowerVolume exec amixer -D pulse set Master 1%- unmute
+# bindsym Shift+XF86AudioLowerVolume exec amixer -D pulse set Master 6%- unmute
+# bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master 1%+ unmute
+# bindsym Shift+XF86AudioRaiseVolume exec amixer -D pulse set Master 6%+ unmute
+# bindsym $mod+apostrophe exec amixer set Capture toggle
+bindcode 121 exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioLowerVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%- && wpctl set-mute @DEFAULT_AUDIO_SINK@ 0"
+bindsym Shift+XF86AudioLowerVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 6%- && wpctl set-mute @DEFAULT_AUDIO_SINK@ 0"
+bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+ && wpctl set-mute @DEFAULT_AUDIO_SINK@ 0"
+bindsym Shift+XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 6%+ && wpctl set-mute @DEFAULT_AUDIO_SINK@ 0"
+bindsym $mod+apostrophe exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 # brightness control
 bindsym XF86MonBrightnessDown exec /home/neophile/.dotfiles/brightness_down.sh
@@ -134,7 +144,7 @@ bindsym $mod+Shift+p exec dmenu_run_wrapper
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+p exec --no-startup-id i3-dmenu-desktop_wrapper
+bindsym $mod+p exec i3-dmenu-desktop_wrapper
 
 # change focus
 bindsym $mod+h focus left
@@ -389,6 +399,7 @@ bar {
         status_command ~/.config/i3/mem.sh
 }
 
+exec pkill -f sway_wallpaper_randomizer.sh
 exec ~/.dotfiles/sway_wallpaper_randomizer.sh
 exec redshift -l 37.8271784:-122.2913078
 exec signal-desktop --no-sandbox

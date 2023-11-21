@@ -80,6 +80,9 @@ set breakindent " When wrapping a line, indent the wrapped part the same amount 
 set linebreak " Word-wrapping, basically
 set hidden " Allow switching buffers without saving or discarding changes
 
+" TODO: Don't disable wrap in diff mode; instead copy the global setting.
+"autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+
 " C and D act to end of line, Y should too
 nmap Y y$
 
@@ -396,7 +399,8 @@ call plug#end()
 "lua require('neoscroll').setup()
 
 " Turn on rust autofmt on safe.  Where the heck do we install rust, tho?
-let g:rustfmt_autosave = 1
+" Disabled because it's annoyingly slow.  TODO: do it on ,f like Python.
+" let g:rustfmt_autosave = 1
 
 " au BufWritePost *.go GoImports
 
