@@ -99,6 +99,10 @@ bindsym $mod+z exec ~/.dotfiles/screenshot.sh
 # flip the screen, mostly for note-taking with a stylus
 bindsym $mod+x exec ~/Tech/small_scripts/sway_flip_screen.sh
 
+# Dismiss notifications with $mod+., or all notifications with $mod+shift+. (aka $mod+>)
+bindsym $mod+period exec dunstctl close
+bindsym $mod+greater exec dunstctl close-all
+
 # volume control
 # #bindsym $mod+XF86Mute exec amixer set Master toggle
 # bindcode 121 exec amixer -D pulse set Master toggle
@@ -303,37 +307,37 @@ bindsym $mod+Shift+End move container to workspace 34
 bindsym $mod+Shift+Insert move container to workspace 35
 bindsym $mod+Shift+Delete move container to workspace 36
 
-bindsym $mod+Ctrl+grave exec i3_swap_workspaces.sh 0
-bindsym $mod+Ctrl+1 exec i3_swap_workspaces.sh 1
-bindsym $mod+Ctrl+2 exec i3_swap_workspaces.sh 2
-bindsym $mod+Ctrl+3 exec i3_swap_workspaces.sh 3
-bindsym $mod+Ctrl+4 exec i3_swap_workspaces.sh 4
-bindsym $mod+Ctrl+5 exec i3_swap_workspaces.sh 5
-bindsym $mod+Ctrl+6 exec i3_swap_workspaces.sh 6
-bindsym $mod+Ctrl+7 exec i3_swap_workspaces.sh 7
-bindsym $mod+Ctrl+8 exec i3_swap_workspaces.sh 8
-bindsym $mod+Ctrl+9 exec i3_swap_workspaces.sh 9
-bindsym $mod+Ctrl+0 exec i3_swap_workspaces.sh 10
-bindsym $mod+Ctrl+minus exec i3_swap_workspaces.sh 11
-bindsym $mod+Ctrl+equal exec i3_swap_workspaces.sh 12
-bindsym $mod+Ctrl+BackSpace exec i3_swap_workspaces.sh 13
-bindsym $mod+Ctrl+Escape exec i3_swap_workspaces.sh 20
-bindsym $mod+Ctrl+F1 exec i3_swap_workspaces.sh 21
-bindsym $mod+Ctrl+F2 exec i3_swap_workspaces.sh 22
-bindsym $mod+Ctrl+F3 exec i3_swap_workspaces.sh 23
-bindsym $mod+Ctrl+F4 exec i3_swap_workspaces.sh 24
-bindsym $mod+Ctrl+F5 exec i3_swap_workspaces.sh 25
-bindsym $mod+Ctrl+F6 exec i3_swap_workspaces.sh 26
-bindsym $mod+Ctrl+F7 exec i3_swap_workspaces.sh 27
-bindsym $mod+Ctrl+F8 exec i3_swap_workspaces.sh 28
-bindsym $mod+Ctrl+F9 exec i3_swap_workspaces.sh 29
-bindsym $mod+Ctrl+F10 exec i3_swap_workspaces.sh 30
-bindsym $mod+Ctrl+F11 exec i3_swap_workspaces.sh 31
-bindsym $mod+Ctrl+F12 exec i3_swap_workspaces.sh 32
-bindsym $mod+Ctrl+Home exec i3_swap_workspaces.sh 33
-bindsym $mod+Ctrl+End exec i3_swap_workspaces.sh 34
-bindsym $mod+Ctrl+Insert exec i3_swap_workspaces.sh 35
-bindsym $mod+Ctrl+Delete exec i3_swap_workspaces.sh 36
+bindsym $mod+Ctrl+grave exec sway_swap_workspaces.sh 0
+bindsym $mod+Ctrl+1 exec sway_swap_workspaces.sh 1
+bindsym $mod+Ctrl+2 exec sway_swap_workspaces.sh 2
+bindsym $mod+Ctrl+3 exec sway_swap_workspaces.sh 3
+bindsym $mod+Ctrl+4 exec sway_swap_workspaces.sh 4
+bindsym $mod+Ctrl+5 exec sway_swap_workspaces.sh 5
+bindsym $mod+Ctrl+6 exec sway_swap_workspaces.sh 6
+bindsym $mod+Ctrl+7 exec sway_swap_workspaces.sh 7
+bindsym $mod+Ctrl+8 exec sway_swap_workspaces.sh 8
+bindsym $mod+Ctrl+9 exec sway_swap_workspaces.sh 9
+bindsym $mod+Ctrl+0 exec sway_swap_workspaces.sh 10
+bindsym $mod+Ctrl+minus exec sway_swap_workspaces.sh 11
+bindsym $mod+Ctrl+equal exec sway_swap_workspaces.sh 12
+bindsym $mod+Ctrl+BackSpace exec sway_swap_workspaces.sh 13
+bindsym $mod+Ctrl+Escape exec sway_swap_workspaces.sh 20
+bindsym $mod+Ctrl+F1 exec sway_swap_workspaces.sh 21
+bindsym $mod+Ctrl+F2 exec sway_swap_workspaces.sh 22
+bindsym $mod+Ctrl+F3 exec sway_swap_workspaces.sh 23
+bindsym $mod+Ctrl+F4 exec sway_swap_workspaces.sh 24
+bindsym $mod+Ctrl+F5 exec sway_swap_workspaces.sh 25
+bindsym $mod+Ctrl+F6 exec sway_swap_workspaces.sh 26
+bindsym $mod+Ctrl+F7 exec sway_swap_workspaces.sh 27
+bindsym $mod+Ctrl+F8 exec sway_swap_workspaces.sh 28
+bindsym $mod+Ctrl+F9 exec sway_swap_workspaces.sh 29
+bindsym $mod+Ctrl+F10 exec sway_swap_workspaces.sh 30
+bindsym $mod+Ctrl+F11 exec sway_swap_workspaces.sh 31
+bindsym $mod+Ctrl+F12 exec sway_swap_workspaces.sh 32
+bindsym $mod+Ctrl+Home exec sway_swap_workspaces.sh 33
+bindsym $mod+Ctrl+End exec sway_swap_workspaces.sh 34
+bindsym $mod+Ctrl+Insert exec sway_swap_workspaces.sh 35
+bindsym $mod+Ctrl+Delete exec sway_swap_workspaces.sh 36
 
 # Move windows to scratchpad, and show the scratchpad
 bindsym $mod+n scratchpad show
