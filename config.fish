@@ -212,6 +212,17 @@ function snakecase
     perl -pe 's#([A-Z])#_\L$1#g' | perl -pe 's#^_##'
 end
 
+function frg --description "rg tui built with fzf and bat"
+    rg --ignore-case --color=always --line-number --no-heading "$argv" |
+        fzf --ansi \
+            --color 'hl:-1:underline,hl+:-1:underline:reverse' \
+            --delimiter ':' \
+            --preview "batcat --color=always {1} --theme='Solarized (light)' --highlight-line {2}" \
+            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+            --bind "enter:become($EDITOR +{2} {1})"
+end
+
+
 #Settings for color output in man pages
 set -x LESS_TERMCAP_mb (printf "\033[01;31m")  
 set -x LESS_TERMCAP_md (printf "\033[01;31m")  

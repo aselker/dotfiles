@@ -83,7 +83,7 @@ bindsym $mod+apostrophe exec amixer set Capture toggle
 
 bindsym XF86MonBrightnessDown exec /home/neophile/.dotfiles/brightness_down.sh
 bindsym XF86MonBrightnessUp exec brightnessctl set $(echo "if ($(brightnessctl get) < 4) ($(brightnessctl get) + 1) else $(brightnessctl get) * 1.20 + $(brightnessctl max) * 0.0015" | bc)
-bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 0
+bindsym Shift+XF86MonBrightnessDown exec brightnessctl set 1
 bindsym Shift+XF86MonBrightnessUp exec brightnessctl set $(brightnessctl max)
 
 bindsym XF86Display exec sudo /usr/bin/thinkpad_turn_off_leds.sh

@@ -38,6 +38,7 @@
 " Bind ctrl-s to save in insert mode?
 " Big visible change btwn normal and insert modes?
 " Make spellcheck highlighting less aggressive, I think
+" Ideally, make spellcheck ignore stuff that's not even remotely a word, like "EE290C"
 
 let g:python3_host_prog = expand('/home/neophile/.pyenv/versions/3.11.3/bin/python3')
 "let g:python3_host_skip_check=1 " Doesn't actually speed anything up, afaict
@@ -205,6 +206,8 @@ au FileType python nnoremap <Leader>f :Black<cr>
 au FileType python nnoremap <silent> <Leader>F :w<cr>:silent execute '!darker -l ' . &textwidth . ' %'<cr>:e<cr>
 au FileType python xmap <Leader>f :BlackMacchiato<cr>
 au FileType cpp nnoremap <Leader>f :py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
+" au FileType rust nnoremap <Leader>f :RustFmt<cr>
+" au FileType rust xmap <Leader>f :RustFmtRange<cr>
 
 " let :W mean :w, and :Q mean :q
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
@@ -316,7 +319,7 @@ nnoremap <silent> <leader>N :call WordNavigation(0)<cr>
 " requires python3 to be started, or something.  Unfortunately I haven't yet found a way to fix this, so instead lazy-load on entering
 " insert mode.  This also introduced a lag, but it seems more tolerable this way.
 Plug 'zhou13/vim-easyescape', {'on': []} " Escape with jk or kj
-Plug 'aselker/vim-easy-ctrl-o' " Ctrl-o with cv or vc
+Plug 'aselker/vim-easy-ctrl-o', {'on': []} " Ctrl-o with df or fd
 
 augroup load_on_insert " Load easyescape (and maybe others later!) on first entering insert mode
   autocmd!
