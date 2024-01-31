@@ -64,8 +64,8 @@ bindsym $mod+o exec nautilus
 # screen lock
 bindsym $mod+m exec "killall -SIGUSR1 dunst; i3lock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
 
-# toggle the touchscreen - disabled on laptop without touchscreen.  Maybe this should disable the touchpad?
-# bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
+# toggle the touchscreen
+bindsym $mod+t exec ~/.local/bin/toggletouchscreen.fish
 
 # copy text with OCR
 bindsym --release $mod+c exec ~/.local/bin/ocr_cp
@@ -350,7 +350,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        # disable scrollign to change workspaces
+        mode hide
+        # disable scrolling to change workspaces
         bindsym button4 nop
         bindsym button5 nop
 

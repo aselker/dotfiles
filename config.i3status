@@ -46,7 +46,7 @@ battery all {
 cpu_temperature 0 {
 
         format = "%degrees°"
-        path = "/sys/devices/platform/thinkpad_hwmon/hwmon/hwmon5/temp1_input"
+        path = "/sys/class/hwmon/hwmon5/temp1_input"
         max_threshold = 85
 
 }
