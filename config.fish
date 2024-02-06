@@ -254,3 +254,19 @@ set -x PYTHONBREAKPOINT ipdb.set_trace
 # if [ -f '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc' ]; . '~/Install/google-cloud-sdk/google-cloud-sdk/path.fish.inc'; end
 
 pyenv init - | source
+
+function conda_init
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    if test -f /home/neophile/Install/miniforge3/bin/conda
+        eval /home/neophile/Install/miniforge3/bin/conda "shell.fish" "hook" $argv | source
+    else
+        if test -f "/home/neophile/Install/miniforge3/etc/fish/conf.d/conda.fish"
+            . "/home/neophile/Install/miniforge3/etc/fish/conf.d/conda.fish"
+        else
+            set -x PATH "/home/neophile/Install/miniforge3/bin" $PATH
+        end
+    end
+    # <<< conda initialize <<<
+end
+

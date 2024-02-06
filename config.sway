@@ -12,7 +12,7 @@
 #    xkb_options caps:ctrl_modifier
 #}
 
-output eDP-1 resolution 3840x2160 scale 2
+output eDP-1 resolution 3840x2160 scale 1
 
 input "2:7:SynPS/2_Synaptics_TouchPad" {
         tap enabled
@@ -76,10 +76,12 @@ client.background       #ffffff
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # start a file manager
 bindsym $mod+o exec nautilus
+
+bindsym $mod+backslash exec firefox
 
 # screen lock
 bindsym $mod+m exec "killall -SIGUSR1 dunst; swaylock -i ~/Tech/lockscreen.png -n; killall -SIGUSR2 dunst"
@@ -405,7 +407,7 @@ bar {
 
 exec pkill -f sway_wallpaper_randomizer.sh
 exec ~/.dotfiles/sway_wallpaper_randomizer.sh
-exec redshift -l 37.8271784:-122.2913078
+#exec redshift -l 37.8271784:-122.2913078
 exec signal-desktop --no-sandbox
 exec dunst
 exec systemctl --user start pulseaudio.service

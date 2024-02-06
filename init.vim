@@ -218,6 +218,7 @@ nnoremap <esc> :noh<return><esc>
 
 " Ctrl-backspace deletes a word in insert mode
 inoremap <C-H> <C-W>
+inoremap <C-BS> <C-W>
 
 " Ctrl-delete deletes a word forward in insert mode
 inoremap <C-Del> <C-o>de
