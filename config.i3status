@@ -9,7 +9,7 @@
 general {
         output_format = "i3bar"
         colors = true
-        interval = 2
+        interval = 6
 }
 
 order += "ipv6"
