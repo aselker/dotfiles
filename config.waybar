@@ -94,7 +94,8 @@
     },
     "cpu": {
         "format": "{max_frequency} GHz  {usage}%",
-        "tooltip": false
+        "tooltip": false,
+        "on-click": "gnome-system-monitor",
     },
     "memory": {
         "format": "{avail:.1f} GiB  {swapAvail:.2g} GiB swap",
@@ -119,9 +120,9 @@
             "critical": 10
         },
         "format-time": "{H}:{M}",
-        "format": "{capacity}% {icon} {power}W | {time}",
-        "format-charging": "{capacity}%  {power}W {time}",
-        "format-plugged": "{capacity}%  {power}W {time}",
+        "format": "{capacity}% {icon} {power:.1f}W | {time}",
+        "format-charging": "{capacity}% ⚡ {power:.1f}W {time}",
+        "format-plugged": "{capacity}% ☑ {power:.1f}W {time}",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
@@ -142,6 +143,7 @@
     "wireplumber": {
         "format": "🔊{volume}%",
         "format-muted": "🔇{volume}%",
+        "on-click": "pavucontrol",
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float

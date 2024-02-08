@@ -1,7 +1,7 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 16px;
 }
 
 window#waybar {
@@ -111,12 +111,12 @@ button:hover {
     background-color: #64727D;
 }
 
-#battery {
-    background-color: #ffffff;
+#battery, #battery.plugged {
+    background-color: #b1b8be;
     color: #000000;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging {
     color: #ffffff;
     background-color: #26A65B;
 }
@@ -143,12 +143,12 @@ label:focus {
 }
 
 #cpu {
-    background-color: #2ecc71;
-    color: #000000;
+    background-color: #64727d;
 }
 
 #memory {
-    background-color: #9b59b6;
+    background-color: #b1b8be;
+    color: #000000;
 }
 
 #disk {
@@ -160,7 +160,8 @@ label:focus {
 }
 
 #network {
-    background-color: #2980b9;
+    background-color: #b1b8be;
+    color: #000000;
 }
 
 #network.disconnected {
@@ -201,11 +202,11 @@ label:focus {
 }
 
 #temperature {
-    background-color: #f0932b;
+    background-color: #64727D;
 }
 
 #temperature.critical {
-    background-color: #eb4d4b;
+    background-color: #f53c3c;
 }
 
 #tray {
