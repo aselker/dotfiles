@@ -146,6 +146,17 @@ label:focus {
     background-color: #64727d;
 }
 
+#custom-cpu,
+#custom-cpufreq {
+    background-color: #64727d;
+    font-family: "Sparks Dot-line Thick";
+}
+
+#custom-mem {
+    background-color: #b1b8be;
+    font-family: "Sparks Dot-line Thick";
+}
+
 #memory {
     background-color: #b1b8be;
     color: #000000;

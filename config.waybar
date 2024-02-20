@@ -9,9 +9,9 @@
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
     "modules-center": ["sway/window"],
-    "modules-right": ["wireplumber", "network", "cpu", "memory", "temperature", "battery", "clock", "tray"],
+    "modules-right": ["wireplumber", "network", "custom/cpufreq", "cpu", "custom/cpu", "memory", "temperature", "battery", "clock", "tray"],
     // Modules configuration
      "sway/workspaces": {
          "disable-scroll": true,
@@ -119,7 +119,7 @@
             "warning": 20,
             "critical": 10
         },
-        "format-time": "{H}:{M}",
+        "format-time": "{H}:{M:02}",
         "format": "{capacity}% {icon} {power:.1f}W | {time}",
         "format-charging": "{capacity}% ⚡ {power:.1f}W {time}",
         "format-plugged": "{capacity}% ☑ {power:.1f}W {time}",
@@ -127,9 +127,6 @@
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
-    },
-    "battery#bat2": {
-        "bat": "BAT2"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
@@ -175,6 +172,21 @@
         "escape": true,
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    }
+    },
+    "custom/cpu": {
+        "format": "{} %",
+        "exec": "/home/neophile/Install/waybar-custom-modules/target/release/cpu -i 3s --sparkline 12",
+        "return-type": "json",
+    },
+    "custom/cpufreq": {
+        "format": "{} GHz",
+        "exec": "/home/neophile/Install/waybar-custom-modules/target/release/cpufreq -i 3s --sparkline 12",
+        "return-type": "json",
+    },
+    "custom/mem": {
+        "format": "{}",
+        "exec": "/home/neophile/Install/waybar-custom-modules/target/release/mem -i 3s --sparkline 12",
+        "return-type": "json",
+    },
 }
 

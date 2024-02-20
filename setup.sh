@@ -13,6 +13,7 @@
 # * Make sure this is still correct for Ubuntu 22.10 and beyond
 # 	* Syncthing repo still necessary?
 # 	* Signal repo
+# * Install waybar-custom-modules, including https://github.com/aftertheflood/sparks/blob/master/output/otf/Sparks-Dotline-Thick.otf
 
 # Stuff this won't do:
 # * Firefox addons
